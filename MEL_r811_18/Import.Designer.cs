@@ -31,7 +31,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.loadMachines_button = new System.Windows.Forms.Button();
             this.saveMachines_button = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.addContraint_button = new System.Windows.Forms.Button();
             this.loadParts_button = new System.Windows.Forms.Button();
             this.loadVendors_button = new System.Windows.Forms.Button();
             this.saveParts_button = new System.Windows.Forms.Button();
@@ -42,6 +42,7 @@
             this.loadPR_Details_button = new System.Windows.Forms.Button();
             this.savePR_button = new System.Windows.Forms.Button();
             this.savePR_Details_button = new System.Windows.Forms.Button();
+            this.removeConstraint_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -75,15 +76,15 @@
             this.saveMachines_button.UseVisualStyleBackColor = true;
             this.saveMachines_button.Click += new System.EventHandler(this.SaveMachinesToDB);
             // 
-            // button3
+            // addContraint_button
             // 
-            this.button3.Location = new System.Drawing.Point(171, 592);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Reset";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.Reset);
+            this.addContraint_button.Location = new System.Drawing.Point(171, 592);
+            this.addContraint_button.Name = "addContraint_button";
+            this.addContraint_button.Size = new System.Drawing.Size(75, 23);
+            this.addContraint_button.TabIndex = 3;
+            this.addContraint_button.Text = "Reset";
+            this.addContraint_button.UseVisualStyleBackColor = true;
+            this.addContraint_button.Click += new System.EventHandler(this.Reset);
             // 
             // loadParts_button
             // 
@@ -190,11 +191,22 @@
             this.savePR_Details_button.UseVisualStyleBackColor = true;
             this.savePR_Details_button.Click += new System.EventHandler(this.SavePR_DetaisToDB);
             // 
+            // removeConstraint_button
+            // 
+            this.removeConstraint_button.Location = new System.Drawing.Point(171, 563);
+            this.removeConstraint_button.Name = "removeConstraint_button";
+            this.removeConstraint_button.Size = new System.Drawing.Size(75, 23);
+            this.removeConstraint_button.TabIndex = 14;
+            this.removeConstraint_button.Text = "Remove";
+            this.removeConstraint_button.UseVisualStyleBackColor = true;
+            this.removeConstraint_button.Click += new System.EventHandler(this.RemoveContraints);
+            // 
             // Import
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(290, 627);
+            this.Controls.Add(this.removeConstraint_button);
             this.Controls.Add(this.savePR_Details_button);
             this.Controls.Add(this.savePR_button);
             this.Controls.Add(this.loadPR_Details_button);
@@ -205,7 +217,7 @@
             this.Controls.Add(this.loadVendors_button);
             this.Controls.Add(this.saveParts_button);
             this.Controls.Add(this.loadParts_button);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.addContraint_button);
             this.Controls.Add(this.saveMachines_button);
             this.Controls.Add(this.loadMachines_button);
             this.Controls.Add(this.listView1);
@@ -220,7 +232,7 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button loadMachines_button;
         private System.Windows.Forms.Button saveMachines_button;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button addContraint_button;
         private System.Windows.Forms.Button loadParts_button;
         private System.Windows.Forms.Button loadVendors_button;
         private System.Windows.Forms.Button saveParts_button;
@@ -231,5 +243,6 @@
         private System.Windows.Forms.Button loadPR_Details_button;
         private System.Windows.Forms.Button savePR_button;
         private System.Windows.Forms.Button savePR_Details_button;
+        private System.Windows.Forms.Button removeConstraint_button;
     }
 }

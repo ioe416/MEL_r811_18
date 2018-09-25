@@ -25,7 +25,7 @@ namespace MEL_r811_18
         string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public string q;
-        public string conn_string = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Joe\source\repos\MEL_r811_18\MEL_r811_18\MEL.mdf; Integrated Security = True";
+        public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ioe41\Source\Repos\MEL_r811_18\MEL_r811_18\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
 
         public Import(MainScreen ms)
@@ -103,14 +103,15 @@ namespace MEL_r811_18
         private void SaveEmployeeToDB(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            string removePR_FK = "ALTER TABLE PR DROP CONSTRAINT [FK_PR_EmployeeID]";
-            string addPR_FK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_EmployeeID] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID])";
+            removeConstraint_button.PerformClick();
+            //string removePR_FK = "ALTER TABLE PR DROP CONSTRAINT [FK_PR_EmployeeID]";
+            //string addPR_FK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_EmployeeID] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID])";
             string truncateEmployee = "TRUNCATE TABLE Employee";
 
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
-            SqlCommand removepr_fk = new SqlCommand(removePR_FK, conn);
-            removepr_fk.ExecuteNonQuery();
+            //SqlCommand removepr_fk = new SqlCommand(removePR_FK, conn);
+            //removepr_fk.ExecuteNonQuery();
             SqlCommand truncateemployee = new SqlCommand(truncateEmployee, conn);
             truncateemployee.ExecuteNonQuery();
             conn.Close();
@@ -119,7 +120,7 @@ namespace MEL_r811_18
             {
                 using (SqlConnection connection = new SqlConnection(conn_string))
                 {
-                    String query = "SET IDENTITY_INSERT Employee ON; INSERT INTO Employee (EmployeeID,EmployeeName,Craft,Phone,Email) " +
+                    String query = "SET IDENTITY_INSERT Employee ON; INSERT INTO Employee (EmployeeID,Tech,Craft,EmployeePhone,EmployeeEmail) " +
                         "VALUES (@EmployeeID,@EmployeeName,@Craft,@Phone,@Email); SET IDENTITY_INSERT Machines OFF";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -154,12 +155,12 @@ namespace MEL_r811_18
                 }
             }
 
-            conn.Open();
-            SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
-            addpr_fk.ExecuteNonQuery();
+            //conn.Open();
+            //SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
+            //addpr_fk.ExecuteNonQuery();
 
-            conn.Close();
-
+            //conn.Close();
+            addContraint_button.PerformClick();
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -236,22 +237,23 @@ namespace MEL_r811_18
         private void SaveMachinesToDB(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            string removeFK = "ALTER TABLE Machines DROP CONSTRAINT[FK_Machines_Department]";
-            string removeIDENTITY = "ALTER TABLE Machines DROP CONSTRAINT[PK_Machines]";
-            string removePR_FK = "ALTER TABLE PR DROP CONSTRAINT [FK_PR_Machines]";
-            string addFK = "ALTER TABLE Machines ADD CONSTRAINT[FK_Machines_Department] FOREIGN KEY([DepartmentID]) REFERENCES[dbo].[Department]([DepartmentID])";
-            string addPR_FK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Machines] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
-            string addIDENTITY = "ALTER TABLE Machines ADD CONSTRAINT[PK_Machines] PRIMARY KEY CLUSTERED([MachineID] ASC)";
+            removeConstraint_button.PerformClick();
+            //string removeFK = "IF OBJECT_ID('dbo.[FK_Machines_Department]') IS NOT NULL ALTER TABLE Machines DROP CONSTRAINT[FK_Machines_Department]";
+            //string removePR_FK = "IF OBJECT_ID('dbo.[FK_PR_Machines]') IS NOT NULL ALTER TABLE PR DROP CONSTRAINT [FK_PR_Machines]";
+            //string removeIDENTITY = "IF OBJECT_ID('dbo.[PK_Machines]') IS NOT NULL ALTER TABLE Machines DROP CONSTRAINT[PK_Machines]";
+            //string addPR_FK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Machines] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
+            //string addFK = "ALTER TABLE Machines ADD CONSTRAINT[FK_Machines_Department] FOREIGN KEY([DepartmentID]) REFERENCES[dbo].[Department]([DepartmentID])";
+            //string addIDENTITY = "ALTER TABLE Machines ADD CONSTRAINT[PK_Machines] PRIMARY KEY CLUSTERED([MachineID] ASC)";
             string truncateMachines = "TRUNCATE TABLE Machines";
 
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
-            SqlCommand removefk = new SqlCommand(removeFK, conn);
-            removefk.ExecuteNonQuery();
-            SqlCommand removepr_fk = new SqlCommand(removePR_FK, conn);
-            removepr_fk.ExecuteNonQuery();
-            SqlCommand removeidentity = new SqlCommand(removeIDENTITY, conn);
-            removeidentity.ExecuteNonQuery();
+            //SqlCommand removefk = new SqlCommand(removeFK, conn);
+            //removefk.ExecuteNonQuery();
+            //SqlCommand removepr_fk = new SqlCommand(removePR_FK, conn);
+            //removepr_fk.ExecuteNonQuery();
+            //SqlCommand removeidentity = new SqlCommand(removeIDENTITY, conn);
+            //removeidentity.ExecuteNonQuery();
             SqlCommand truncatemachines = new SqlCommand(truncateMachines, conn);
             truncatemachines.ExecuteNonQuery();
             conn.Close();
@@ -311,16 +313,16 @@ namespace MEL_r811_18
                 }
             }
 
-            conn.Open();
-            SqlCommand addfk = new SqlCommand(addFK, conn);
-            addfk.ExecuteNonQuery();
-            SqlCommand addidentity = new SqlCommand(addIDENTITY, conn);
-            addidentity.ExecuteNonQuery();
-            SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
-            addpr_fk.ExecuteNonQuery();
+            //conn.Open();
+            //SqlCommand addfk = new SqlCommand(addFK, conn);
+            //addfk.ExecuteNonQuery();
+            //SqlCommand addidentity = new SqlCommand(addIDENTITY, conn);
+            //addidentity.ExecuteNonQuery();
+            //SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
+            //addpr_fk.ExecuteNonQuery();
 
-            conn.Close();
-
+            //conn.Close();
+            addContraint_button.PerformClick();
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -395,21 +397,17 @@ namespace MEL_r811_18
         private void SavePartsToDB(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-
-            string removePR_Details_FK = "ALTER TABLE PR_Details DROP CONSTRAINT [FK_PR_Details_Parts]";
-
-            string addPR_FK = "ALTER TABLE PR_Details ADD CONSTRAINT [FK_PR_Details_Parts] FOREIGN KEY ([PartID]) REFERENCES [dbo].[Parts]([PartID])";
-
+            removeConstraint_button.PerformClick();
+            //string removePR_Details_FK = "ALTER TABLE PR_Details DROP CONSTRAINT [FK_PR_Details_Parts]";
+            //string addPR_FK = "ALTER TABLE PR_Details ADD CONSTRAINT [FK_PR_Details_Parts] FOREIGN KEY ([PartID]) REFERENCES [dbo].[Parts]([PartID])";
             string truncateParts = "TRUNCATE TABLE Parts";
 
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
-
-            SqlCommand removepr_fk = new SqlCommand(removePR_Details_FK, conn);
-            removepr_fk.ExecuteNonQuery();
-
-            SqlCommand truncatemachines = new SqlCommand(truncateParts, conn);
-            truncatemachines.ExecuteNonQuery();
+            //SqlCommand removepr_fk = new SqlCommand(removePR_Details_FK, conn);
+            //removepr_fk.ExecuteNonQuery();
+            SqlCommand truncateparts = new SqlCommand(truncateParts, conn);
+            truncateparts.ExecuteNonQuery();
             conn.Close();
 
             foreach (Part p in partList)
@@ -457,13 +455,13 @@ namespace MEL_r811_18
                 }
             }
 
-            conn.Open();
+            //conn.Open();
 
-            SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
-            addpr_fk.ExecuteNonQuery();
+            //SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
+            //addpr_fk.ExecuteNonQuery();
 
-            conn.Close();
-
+            //conn.Close();
+            addContraint_button.PerformClick();
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -541,32 +539,30 @@ namespace MEL_r811_18
         private void SavePRToDB(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            string removeEmployeeIdFK = "ALTER TABLE PR DROP CONSTRAINT[FK_PR_EmployeeID]";
-            string removeMachinesFK = " ALTER TABLE PR DROP CONSTRAINT[FK_PR_Machines]";
-            string removeDepartmentFK = " ALTER TABLE PR DROP CONSTRAINT[FK_PR_Department]";
-            string removeVendorsFK = " ALTER TABLE PR DROP CONSTRAINT[FK_PR_Vendors]";
-
-            string addEmployeeIdFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_EmployeeID] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID])";
-            string addMachinesFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Machines] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
-            string addDepartmentFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([DepartmentID])";
-            string addVendorsFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Vendors] FOREIGN KEY ([VendorID]) REFERENCES [dbo].[Vendors] ([VendorID])";
-
-            //string addIDENTITY = "ALTER TABLE Machines ADD CONSTRAINT[PK_Machines] PRIMARY KEY CLUSTERED([OrderID] ASC)";
-
-            string truncateMachines = "TRUNCATE TABLE Machines";
+            removeConstraint_button.PerformClick();
+            //string removeEmployeeIdFK = "ALTER TABLE PR DROP CONSTRAINT[FK_PR_EmployeeID]";
+            //string removeMachinesFK = " ALTER TABLE PR DROP CONSTRAINT[FK_PR_Machines]";
+            //string removeDepartmentFK = " ALTER TABLE PR DROP CONSTRAINT[FK_PR_Department]";
+            //string removeVendorsFK = " ALTER TABLE PR DROP CONSTRAINT[FK_PR_Vendors]";
+            //string addEmployeeIdFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_EmployeeID] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID])";
+            //string addMachinesFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Machines] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
+            //string addDepartmentFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([DepartmentID])";
+            //string addVendorsFK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Vendors] FOREIGN KEY ([VendorID]) REFERENCES [dbo].[Vendors] ([VendorID])";
+            //string addIDENTITY = "ALTER TABLE Machines ADD CONSTRAINT[PK_Machines] PRIMARY KEY CLUSTERED([OrderID] ASC)"
+            string truncatePR = "TRUNCATE TABLE PR";
 
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
-            SqlCommand removefk = new SqlCommand(removeEmployeeIdFK, conn);
-            removefk.ExecuteNonQuery();
-            SqlCommand removefk2 = new SqlCommand(removeMachinesFK, conn);
-            removefk2.ExecuteNonQuery();
-            SqlCommand removefk3 = new SqlCommand(removeDepartmentFK, conn);
-            removefk3.ExecuteNonQuery();
-            SqlCommand removefk4 = new SqlCommand(removeVendorsFK, conn);
-            removefk4.ExecuteNonQuery();
-            SqlCommand truncatePR = new SqlCommand(truncateMachines, conn);
-            truncatePR.ExecuteNonQuery();
+            //SqlCommand removefk = new SqlCommand(removeEmployeeIdFK, conn);
+            //removefk.ExecuteNonQuery();
+            //SqlCommand removefk2 = new SqlCommand(removeMachinesFK, conn);
+            //removefk2.ExecuteNonQuery();
+            //SqlCommand removefk3 = new SqlCommand(removeDepartmentFK, conn);
+            //removefk3.ExecuteNonQuery();
+            //SqlCommand removefk4 = new SqlCommand(removeVendorsFK, conn);
+            //removefk4.ExecuteNonQuery();
+            SqlCommand truncatepr = new SqlCommand(truncatePR, conn);
+            truncatepr.ExecuteNonQuery();
 
             conn.Close();
 
@@ -605,19 +601,19 @@ namespace MEL_r811_18
                 }
             }
 
-            conn.Open();
+            //conn.Open();
 
-            SqlCommand addEmployeeFK = new SqlCommand(addEmployeeIdFK, conn);
-            addEmployeeFK.ExecuteNonQuery();
-            SqlCommand addMachineFK = new SqlCommand(addMachinesFK, conn);
-            addMachineFK.ExecuteNonQuery();
-            SqlCommand addDepartFK = new SqlCommand(addDepartmentFK, conn);
-            addDepartFK.ExecuteNonQuery();
-            SqlCommand addVendorFK = new SqlCommand(addVendorsFK, conn);
-            addVendorFK.ExecuteNonQuery();
+            //SqlCommand addEmployeeFK = new SqlCommand(addEmployeeIdFK, conn);
+            //addEmployeeFK.ExecuteNonQuery();
+            //SqlCommand addMachineFK = new SqlCommand(addMachinesFK, conn);
+            //addMachineFK.ExecuteNonQuery();
+            //SqlCommand addDepartFK = new SqlCommand(addDepartmentFK, conn);
+            //addDepartFK.ExecuteNonQuery();
+            //SqlCommand addVendorFK = new SqlCommand(addVendorsFK, conn);
+            //addVendorFK.ExecuteNonQuery();
 
-            conn.Close();
-
+            //conn.Close();
+            addContraint_button.PerformClick();
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -695,27 +691,27 @@ namespace MEL_r811_18
         private void SavePR_DetaisToDB(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-
+            removeConstraint_button.PerformClick();
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
 
-            //PR_Details Contraint strings
-            string query_del_PK_PRDetails = "IF OBJECT_ID('dbo.[PK_PRDetails]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [PK_PRDetails]";// PRIMARY KEY CLUSTERED ([OrderID] ASC)";
-            string query_del_FK_PR_Details_Parts = "IF OBJECT_ID('dbo.[FK_PR_Details_Parts]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [FK_PR_Details_Parts]";// FOREIGN KEY ([PartID]) REFERENCES [dbo].[Parts] ([PartID])";
-            string query_del_FK_Table_PR = "IF OBJECT_ID('dbo.[FK_Table_PR]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [FK_Table_PR]";// FOREIGN KEY ([OrderID]) REFERENCES [dbo].[PR] ([OrderID])";
+            ////PR_Details Contraint strings
+            //string query_del_PK_PRDetails = "IF OBJECT_ID('dbo.[PK_PRDetails]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [PK_PRDetails]";// PRIMARY KEY CLUSTERED ([OrderID] ASC)";
+            //string query_del_FK_PR_Details_Parts = "IF OBJECT_ID('dbo.[FK_PR_Details_Parts]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [FK_PR_Details_Parts]";// FOREIGN KEY ([PartID]) REFERENCES [dbo].[Parts] ([PartID])";
+            //string query_del_FK_Table_PR = "IF OBJECT_ID('dbo.[FK_Table_PR]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [FK_Table_PR]";// FOREIGN KEY ([OrderID]) REFERENCES [dbo].[PR] ([OrderID])";
 
-            //Drop PR_Details Constraints
-            SqlCommand drop_PK_PRDetails = new SqlCommand(query_del_PK_PRDetails, conn);
-            drop_PK_PRDetails.ExecuteNonQuery();
-            SqlCommand drop_FK_PR_Details_Parts = new SqlCommand(query_del_FK_PR_Details_Parts, conn);
-            drop_FK_PR_Details_Parts.ExecuteNonQuery();
-            SqlCommand drop_FK_Table_PR = new SqlCommand(query_del_FK_Table_PR, conn);
-            drop_FK_Table_PR.ExecuteNonQuery();
+            ////Drop PR_Details Constraints
+            //SqlCommand drop_PK_PRDetails = new SqlCommand(query_del_PK_PRDetails, conn);
+            //drop_PK_PRDetails.ExecuteNonQuery();
+            //SqlCommand drop_FK_PR_Details_Parts = new SqlCommand(query_del_FK_PR_Details_Parts, conn);
+            //drop_FK_PR_Details_Parts.ExecuteNonQuery();
+            //SqlCommand drop_FK_Table_PR = new SqlCommand(query_del_FK_Table_PR, conn);
+            //drop_FK_Table_PR.ExecuteNonQuery();
 
             string truncatePRDetails = "TRUNCATE TABLE PR_Details";
 
-            SqlCommand truncatePR = new SqlCommand(truncatePRDetails, conn);
-            truncatePR.ExecuteNonQuery();
+            SqlCommand truncateprdetails = new SqlCommand(truncatePRDetails, conn);
+            truncateprdetails.ExecuteNonQuery();
 
             conn.Close();
 
@@ -752,7 +748,7 @@ namespace MEL_r811_18
                     }
                 }
             }
-
+            addContraint_button.PerformClick();
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -828,14 +824,15 @@ namespace MEL_r811_18
         private void SaveVendorsToDB(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            string removePR_FK = "ALTER TABLE PR DROP CONSTRAINT [FK_PR_Vendors]";
-            string addPR_FK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Vendors] FOREIGN KEY ([VendorID]) REFERENCES [dbo].[Vendors] ([VendorID])";
+            removeConstraint_button.PerformClick();
+            //string removePR_FK = "ALTER TABLE PR DROP CONSTRAINT [FK_PR_Vendors]";
+            //string addPR_FK = "ALTER TABLE PR ADD CONSTRAINT [FK_PR_Vendors] FOREIGN KEY ([VendorID]) REFERENCES [dbo].[Vendors] ([VendorID])";
             string truncateVendors = "TRUNCATE TABLE Vendors";
 
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
-            SqlCommand removepr_fk = new SqlCommand(removePR_FK, conn);
-            removepr_fk.ExecuteNonQuery();
+            //SqlCommand removepr_fk = new SqlCommand(removePR_FK, conn);
+            //removepr_fk.ExecuteNonQuery();
             SqlCommand truncatevendors = new SqlCommand(truncateVendors, conn);
             truncatevendors.ExecuteNonQuery();
             conn.Close();
@@ -844,7 +841,7 @@ namespace MEL_r811_18
             {
                 using (SqlConnection connection = new SqlConnection(conn_string))
                 {
-                    String query = "SET IDENTITY_INSERT Vendors ON; INSERT INTO Vendors (VendorID,VendorNumber,VendorName,Contact,Email,Phone) " +
+                    String query = "SET IDENTITY_INSERT Vendors ON; INSERT INTO Vendors (VendorID,VendorNumber,VendorName,Contact,VendorEmail,VendorPhone) " +
                         "VALUES (@VendorID,@VendorNumber,@VendorName,@Contact,@Email,@Phone); SET IDENTITY_INSERT Machines OFF";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -894,12 +891,12 @@ namespace MEL_r811_18
                 }
             }
 
-            conn.Open();
-            SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
-            addpr_fk.ExecuteNonQuery();
+            //conn.Open();
+            //SqlCommand addpr_fk = new SqlCommand(addPR_FK, conn);
+            //addpr_fk.ExecuteNonQuery();
 
-            conn.Close();
-
+            //conn.Close();
+            addContraint_button.PerformClick();
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -910,8 +907,15 @@ namespace MEL_r811_18
             SqlConnection conn = new SqlConnection(conn_string);
             conn.Open();
 
+            //Vendor Contraint strings
+            string query_add_PK_Vendors = "IF OBJECT_ID('dbo.[PK_Vendors]') IS NULL ALTER TABLE dbo.Vendors ADD CONSTRAINT [PK_Vendors] PRIMARY KEY CLUSTERED ([VendorID] ASC)";
+
+            //Add Vendor Constraints
+            SqlCommand add_PK_Vendors = new SqlCommand(query_add_PK_Vendors, conn);
+            add_PK_Vendors.ExecuteNonQuery();
+
             //Department Contraint strings
-            string query_add_PK_Department = "IF OBJECT_ID('dbo.[PK_Department]') IS NULL ALTER TABLE dbo.Employee ADD CONSTRAINT[PK_Department] PRIMARY KEY CLUSTERED([DepartmentID] ASC)";
+            string query_add_PK_Department = "IF OBJECT_ID('dbo.[PK_Department]') IS NULL ALTER TABLE dbo.Department ADD CONSTRAINT[PK_Department] PRIMARY KEY CLUSTERED([DepartmentID] ASC)";
 
             //Add Department Constraints
             SqlCommand add_PK_Department = new SqlCommand(query_add_PK_Department, conn);
@@ -941,7 +945,7 @@ namespace MEL_r811_18
             //PR Contraint strings
             string query_add_PK_PR = "IF OBJECT_ID('dbo.[PK_PR]') IS NULL ALTER TABLE dbo.PR ADD CONSTRAINT[PK_PR] PRIMARY KEY CLUSTERED([OrderID] ASC)";
             string query_add_FK_PR_Employee = "IF OBJECT_ID('dbo.[FK_PR_Employee]') IS NULL ALTER TABLE dbo.PR ADD CONSTRAINT [FK_PR_Employee] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID])";
-            string query_add_FK_PR_Machine = "IF OBJECT_ID('dbo.[FK_PR_Machine]') IS NULL ALTER TABLE dbo.PR ADD CONSTRAINT [FK_PR_Machine] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
+            string query_add_FK_PR_Machine = "IF OBJECT_ID('dbo.[FK_PR_Machines]') IS NULL ALTER TABLE dbo.PR ADD CONSTRAINT [FK_PR_Machines] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
             string query_add_FK_PR_Department = "IF OBJECT_ID('dbo.[FK_PR_Department]') IS NULL ALTER TABLE dbo.PR ADD CONSTRAINT [FK_PR_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([DepartmentID])";
             string query_add_FK_PR_Vendor = "IF OBJECT_ID('dbo.[FK_PR_Vendor]') IS NULL ALTER TABLE dbo.PR ADD CONSTRAINT [FK_PR_Vendor] FOREIGN KEY ([VendorID]) REFERENCES [dbo].[Vendors] ([VendorID])";
 
@@ -969,13 +973,80 @@ namespace MEL_r811_18
             add_FK_PR_Details_Parts.ExecuteNonQuery();
             SqlCommand add_FK_Table_PR = new SqlCommand(query_add_FK_Table_PR, conn);
             add_FK_Table_PR.ExecuteNonQuery();
+ 
+            conn.Close();
+        }
+        private void RemoveContraints(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(conn_string);
+            conn.Open();
+
+            //PR_Details Contraint strings
+            string query_remove_PK_PRDetails = "IF OBJECT_ID('dbo.[PK_PRDetails]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [PK_PRDetails]";
+            string query_remove_FK_PR_Details_Parts = "IF OBJECT_ID('dbo.[FK_PR_Details_Parts]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [FK_PR_Details_Parts]";
+            string query_remove_FK_Table_PR = "IF OBJECT_ID('dbo.[FK_Table_PR]') IS NOT NULL ALTER TABLE dbo.PR_Details DROP CONSTRAINT [FK_Table_PR]";
+
+            //Remove PR_Details Constraints
+            SqlCommand remove_PK_PRDetails = new SqlCommand(query_remove_PK_PRDetails, conn);
+            remove_PK_PRDetails.ExecuteNonQuery();
+            SqlCommand remove_FK_PR_Details_Parts = new SqlCommand(query_remove_FK_PR_Details_Parts, conn);
+            remove_FK_PR_Details_Parts.ExecuteNonQuery();
+            SqlCommand remove_FK_Table_PR = new SqlCommand(query_remove_FK_Table_PR, conn);
+            remove_FK_Table_PR.ExecuteNonQuery();
+
+            //PR Contraint strings
+            string query_remove_PK_PR = "IF OBJECT_ID('dbo.[PK_PR]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT[PK_PR]";
+            string query_remove_FK_PR_Employee = "IF OBJECT_ID('dbo.[FK_PR_Employee]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Employee]";
+            string query_remove_FK_PR_Machine = "IF OBJECT_ID('dbo.[FK_PR_Machines]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Machines]";
+            string query_remove_FK_PR_Department = "IF OBJECT_ID('dbo.[FK_PR_Department]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Department]";
+            string query_remove_FK_PR_Vendor = "IF OBJECT_ID('dbo.[FK_PR_Vendor]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Vendor]";
+
+            //Remove PR Constraints          
+            SqlCommand remove_PK_PR = new SqlCommand(query_remove_PK_PR, conn);
+            remove_PK_PR.ExecuteNonQuery();
+            SqlCommand remove_FK_PR_Employee = new SqlCommand(query_remove_FK_PR_Employee, conn);
+            remove_FK_PR_Employee.ExecuteNonQuery();
+            SqlCommand remove_FK_PR_Machine = new SqlCommand(query_remove_FK_PR_Machine, conn);
+            remove_FK_PR_Machine.ExecuteNonQuery();
+            SqlCommand remove_FK_PR_Department = new SqlCommand(query_remove_FK_PR_Department, conn);
+            remove_FK_PR_Department.ExecuteNonQuery();
+            SqlCommand remove_FK_PR_Vendor = new SqlCommand(query_remove_FK_PR_Vendor, conn);
+            remove_FK_PR_Vendor.ExecuteNonQuery();
+
+            //Department Contraint Strings
+            string query_remove_PK_Department = "IF OBJECT_ID('dbo.[PK_Department]') IS NOT NULL ALTER TABLE dbo.Department DROP CONSTRAINT [PK_Department]";
+
+            //Remove Department Contraints
+            SqlCommand remove_PK_Department = new SqlCommand(query_remove_PK_Department, conn);
+            remove_PK_Department.ExecuteNonQuery();
+
+            //Employee Contraint strings
+            string query_remove_PK_Employee = "IF OBJECT_ID('dbo.[PK_Employee]') IS NOT NULL ALTER TABLE dbo.Employee DROP CONSTRAINT [PK_Employee]";
+
+            //Remove Employee Constraints
+            SqlCommand remove_PK_Employee = new SqlCommand(query_remove_PK_Employee, conn);
+            remove_PK_Employee.ExecuteNonQuery();
+
+            //Machines Contraint strings
+            string query_remove_PK_Machines = "IF OBJECT_ID('dbo.[PK_Machines]') IS NOT NULL ALTER TABLE dbo.Machines DROP CONSTRAINT [PK_Machines]";
+
+            //Remove Machine Constraints
+            SqlCommand remove_PK_Machines = new SqlCommand(query_remove_PK_Machines, conn);
+            remove_PK_Machines.ExecuteNonQuery();
+
+            //Parts Contraint strings
+            string query_remove_PK_Part = "IF OBJECT_ID('dbo.[PK_Part]') IS NOT NULL ALTER TABLE dbo.Parts DROP CONSTRAINT [PK_Part]";
+
+            //Remove Parts Constraints
+            SqlCommand remove_PK_Part = new SqlCommand(query_remove_PK_Part, conn);
+            remove_PK_Part.ExecuteNonQuery();
 
             //Vendor Contraint strings
-            string query_add_PK_Vendors = "IF OBJECT_ID('dbo.[PK_Vendors]') IS NULL ALTER TABLE dbo.Vendors ADD CONSTRAINT [PK_Vendors] PRIMARY KEY CLUSTERED ([VendorID] ASC)";
+            string query_remove_PK_Vendors = "IF OBJECT_ID('dbo.[PK_Vendors]') IS NOT NULL ALTER TABLE dbo.Vendors DROP CONSTRAINT [PK_Vendors]";
 
-            //Add Vendor Constraints
-            SqlCommand add_PK_Vendors = new SqlCommand(query_add_PK_Vendors, conn);
-            add_PK_PR.ExecuteNonQuery();
+            //Remove Vendor Constraints
+            SqlCommand remove_PK_Vendors = new SqlCommand(query_remove_PK_Vendors, conn);
+            remove_PK_Vendors.ExecuteNonQuery();
 
             conn.Close();
         }

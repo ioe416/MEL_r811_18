@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 //using System.Collections.Generic;
 //using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Runtime.InteropServices;
+//using System.Runtime.InteropServices;
 using System.Text;
 //using System.Drawing;
 //using System.Linq;
@@ -13,7 +13,7 @@ using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Microsoft.Office.Interop.Excel;
+//using Microsoft.Office.Interop.Excel;
 
 namespace MEL_r811_18
 {
@@ -476,3 +476,4 @@ namespace MEL_r811_18
         }
     }
 }
+                                  

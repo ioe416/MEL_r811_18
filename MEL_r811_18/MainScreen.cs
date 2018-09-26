@@ -475,5 +475,18 @@ namespace MEL_r811_18
             get;
         }
     }
+    class Department
+    {
+        public int DepartmentID
+        {
+            set;
+            get;
+        }
+        public string DepartmentName
+        {
+            set;
+            get;
+        }
+    }
 }
                                   

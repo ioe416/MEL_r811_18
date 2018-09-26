@@ -47,6 +47,8 @@
             this.partHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.purchaseHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usageHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.machineToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openPoTab = new System.Windows.Forms.TabPage();
@@ -75,13 +77,6 @@
             this.tasksTab = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.toDoTab = new System.Windows.Forms.TabPage();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vendorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.partsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.machineToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.employeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.purchaseRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pRDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -213,13 +208,13 @@
             // newPartToolStripMenuItem
             // 
             this.newPartToolStripMenuItem.Name = "newPartToolStripMenuItem";
-            this.newPartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newPartToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.newPartToolStripMenuItem.Text = "New Part";
             // 
             // editPartToolStripMenuItem
             // 
             this.editPartToolStripMenuItem.Name = "editPartToolStripMenuItem";
-            this.editPartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editPartToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.editPartToolStripMenuItem.Text = "Edit Part";
             // 
             // partHistoryToolStripMenuItem
@@ -228,20 +223,35 @@
             this.purchaseHistoryToolStripMenuItem,
             this.usageHistoryToolStripMenuItem});
             this.partHistoryToolStripMenuItem.Name = "partHistoryToolStripMenuItem";
-            this.partHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.partHistoryToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.partHistoryToolStripMenuItem.Text = "Part History";
             // 
             // purchaseHistoryToolStripMenuItem
             // 
             this.purchaseHistoryToolStripMenuItem.Name = "purchaseHistoryToolStripMenuItem";
-            this.purchaseHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.purchaseHistoryToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.purchaseHistoryToolStripMenuItem.Text = "Purchase History";
             // 
             // usageHistoryToolStripMenuItem
             // 
             this.usageHistoryToolStripMenuItem.Name = "usageHistoryToolStripMenuItem";
-            this.usageHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.usageHistoryToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.usageHistoryToolStripMenuItem.Text = "Usage History";
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.machineToolStripMenuItem1});
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.importToolStripMenuItem.Text = "Import";
+            // 
+            // machineToolStripMenuItem1
+            // 
+            this.machineToolStripMenuItem1.Name = "machineToolStripMenuItem1";
+            this.machineToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.machineToolStripMenuItem1.Text = "Import";
+            this.machineToolStripMenuItem1.Click += new System.EventHandler(this.MachineToolStripMenuItem1_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -562,56 +572,6 @@
             this.toDoTab.TabIndex = 1;
             this.toDoTab.Text = "To Do";
             // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.employeeToolStripMenuItem,
-            this.machineToolStripMenuItem1,
-            this.partsToolStripMenuItem2,
-            this.pRDetailsToolStripMenuItem,
-            this.purchaseRequestToolStripMenuItem,
-            this.vendorsToolStripMenuItem});
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-            this.importToolStripMenuItem.Text = "Import";
-            // 
-            // vendorsToolStripMenuItem
-            // 
-            this.vendorsToolStripMenuItem.Name = "vendorsToolStripMenuItem";
-            this.vendorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.vendorsToolStripMenuItem.Text = "Vendors";
-            // 
-            // partsToolStripMenuItem2
-            // 
-            this.partsToolStripMenuItem2.Name = "partsToolStripMenuItem2";
-            this.partsToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-            this.partsToolStripMenuItem2.Text = "Parts";
-            // 
-            // machineToolStripMenuItem1
-            // 
-            this.machineToolStripMenuItem1.Name = "machineToolStripMenuItem1";
-            this.machineToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.machineToolStripMenuItem1.Text = "Machine";
-            this.machineToolStripMenuItem1.Click += new System.EventHandler(this.MachineToolStripMenuItem1_Click);
-            // 
-            // employeeToolStripMenuItem
-            // 
-            this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.employeeToolStripMenuItem.Text = "Employee";
-            // 
-            // purchaseRequestToolStripMenuItem
-            // 
-            this.purchaseRequestToolStripMenuItem.Name = "purchaseRequestToolStripMenuItem";
-            this.purchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.purchaseRequestToolStripMenuItem.Text = "Purchase Request";
-            // 
-            // pRDetailsToolStripMenuItem
-            // 
-            this.pRDetailsToolStripMenuItem.Name = "pRDetailsToolStripMenuItem";
-            this.pRDetailsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pRDetailsToolStripMenuItem.Text = "PR_Details";
-            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -704,11 +664,6 @@
         private System.Windows.Forms.ToolStripLabel of_toolStripLabel;
         private System.Windows.Forms.ToolStripLabel currentRecord_toolStripLabel;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem employeeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem machineToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem partsToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem pRDetailsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem purchaseRequestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vendorsToolStripMenuItem;
     }
 }

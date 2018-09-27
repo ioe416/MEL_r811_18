@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 //using System.Diagnostics;
 //using System.Drawing;
 //using System.Linq;
@@ -603,6 +604,7 @@ namespace MEL_r811_18
             Marshal.ReleaseComObject(xlApp);
 
             SavePRToDB();
+            //DateHelp();
             this.Cursor = Cursors.Default;
         }
         private void SavePRToDB()
@@ -627,7 +629,7 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@OrderID", pr.OrderID);
+                        command.Parameters.AddWithValue("@OrderID", pr.OrderID); 
                         command.Parameters.AddWithValue("@VendorID", pr.VendorID_PR);
                         if (String.IsNullOrEmpty(pr.DateIssued))
                         {
@@ -635,10 +637,17 @@ namespace MEL_r811_18
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@DateIsssued", pr.DateIssued);
+                            command.Parameters.AddWithValue("@DateIsssued", pr.DateIssued); 
                         }
                         command.Parameters.AddWithValue("@DepartmentID", pr.DepartmentID_PR);
-                        command.Parameters.AddWithValue("@MachineID", pr.MachineID_PR);
+                        if (pr.MachineID_PR == 0 )
+                        {
+                            command.Parameters.AddWithValue("@MachineID", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@MachineID", pr.MachineID_PR);
+                        }                       
                         command.Parameters.AddWithValue("@EmployeeID", pr.EmployeeID_PR);
                         command.Parameters.AddWithValue("@DeliverTo", pr.DeliverTo);
                         if (String.IsNullOrEmpty(pr.PONumber))
@@ -661,10 +670,10 @@ namespace MEL_r811_18
             }
 
             this.Cursor = Cursors.Default;
-            //LoadPR_DetaisFromExcel();
+            LoadPR_DetaisFromExcel();
         }
 
-        private void LoadPR_DetaisFromExcel(object sender, EventArgs e)
+        private void LoadPR_DetaisFromExcel()
         {
             MessageBox.Show("Please select the file that contains the Order Details you want to import");
             string fname = "";
@@ -711,8 +720,8 @@ namespace MEL_r811_18
                 header.Name = "PD";
                 listView1.Columns.Add(header);
 
-                //listView1.Items.Add(pd.OrderID.ToString());
-                //listView1.EnsureVisible(listView1.Items.Count - 1);
+                listView1.Items.Add(pd.OrderID.ToString());
+                listView1.EnsureVisible(listView1.Items.Count - 1);
 
             }
 
@@ -1094,6 +1103,15 @@ namespace MEL_r811_18
         private void import_button_Click(object sender, EventArgs e)
         {
             LoadDepartmentFromExcel();
+            //LoadPRFromExcel();
+        }
+
+        private void DateHelp()
+        {
+            foreach (PR pr in prList)
+            {
+                Debug.WriteLine(pr.DateIssued);
+            }
         }
     }
     

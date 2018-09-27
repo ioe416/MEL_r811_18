@@ -55,7 +55,7 @@ namespace MEL_r811_18
             {
                 fname = fdlg.FileName;
             }
-
+            MessageBox.Show(fname);
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
             Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];

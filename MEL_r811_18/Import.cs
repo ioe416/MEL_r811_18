@@ -26,6 +26,7 @@ namespace MEL_r811_18
         List<PR_Details> pr_detailsList = new List<PR_Details>();
         string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
+        public string fname = ""; 
         public string q;
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
@@ -41,26 +42,27 @@ namespace MEL_r811_18
         private void LoadDepartmentFromExcel()
         {
             removeConstraint_button.PerformClick();
-            MessageBox.Show("Please select the file that contains the Departments you want to import");
+            //MessageBox.Show("Please select the file that contains the Departments you want to import");
             string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
-
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
+            this.Cursor = Cursors.WaitCursor;
+            fname = @"C:\Users\ioe41\Documents\MEL\Department.xlsx";
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
             Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
-            this.Cursor = Cursors.WaitCursor;
+            
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
@@ -73,16 +75,17 @@ namespace MEL_r811_18
                 };
                 departmentList.Add(dep);
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "Department";
-                listView1.Columns.Add(header);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "Department";
+                //listView1.Columns.Add(header);
 
-                listView1.Items.Add(dep.DepartmentName);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //listView1.Items.Add(dep.DepartmentName);
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
+                label1.Text = "Loading: " + dep.DepartmentID + " " + dep.DepartmentName;
             }
 
             //cleanup  
@@ -103,7 +106,7 @@ namespace MEL_r811_18
 
             //saveDepartment_button.Enabled = true;
             SaveDepartmentToDB();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SaveDepartmentToDB()
         {
@@ -126,6 +129,7 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Writing: " + dep.DepartmentID + " " + dep.DepartmentName;
                         command.Parameters.AddWithValue("@DepartmentID", dep.DepartmentID);
                         command.Parameters.AddWithValue("@DepartmentName", dep.DepartmentName);
 
@@ -145,20 +149,20 @@ namespace MEL_r811_18
 
         private void LoadEmployeeFromExcel()
         {
-            MessageBox.Show("Please select the file that contains the Employees you want to import");
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
+            //MessageBox.Show("Please select the file that contains the Employees you want to import");
+            fname = @"C:\Users\ioe41\Documents\MEL\OrderedBy.xlsx";
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -180,16 +184,18 @@ namespace MEL_r811_18
                 };
                 employeeList.Add(emp);
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                label1.Text = "Loading: " + emp.EmployeeID + " " + emp.Tech + " "
+                    + emp.Craft + " " + emp.EmployeePhone + " " + emp.EmployeeEmail;
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "Tech";
-                listView1.Columns.Add(header);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "Tech";
+                //listView1.Columns.Add(header);
 
-                listView1.Items.Add(emp.Tech);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //listView1.Items.Add(emp.Tech);
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
             }
 
             //cleanup  
@@ -209,7 +215,7 @@ namespace MEL_r811_18
             Marshal.ReleaseComObject(xlApp);
 
             SaveEmployeeToDB();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SaveEmployeeToDB()
         {
@@ -232,6 +238,8 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Writing: " + emp.EmployeeID + " " + emp.Tech + " "
+                            + emp.Craft + " " + emp.EmployeePhone + " " + emp.EmployeeEmail;
                         command.Parameters.AddWithValue("@EmployeeID", emp.EmployeeID);
                         command.Parameters.AddWithValue("@EmployeeName", emp.Tech);
                         command.Parameters.AddWithValue("@Craft", emp.Craft);
@@ -268,20 +276,20 @@ namespace MEL_r811_18
 
         private void LoadMachinesFromExcel()
         {
-            MessageBox.Show("Please select the file that contains the Machines you want to import");
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
+            //MessageBox.Show("Please select the file that contains the Machines you want to import");
+            fname = @"C:\Users\ioe41\Documents\MEL\Machines.xlsx";
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -304,17 +312,19 @@ namespace MEL_r811_18
                     DepartmentID_Machine = Convert.ToInt16(xlWorksheet.Cells[i, 7].Value),
                 };
                 machineList.Add(m);
+                label1.Text = "Loading: " + m.MachineID + " " + m.BTNumber + " "
+                    + m.CommonName + " " + m.Make + " " + m.Model + " " + m.Serial + " " + m.DepartmentID_Machine;
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "BTNumber";
-                listView1.Columns.Add(header);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "BTNumber";
+                //listView1.Columns.Add(header);
 
-                listView1.Items.Add(m.BTNumber);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //listView1.Items.Add(m.BTNumber);
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
             }
 
             //cleanup  
@@ -334,7 +344,7 @@ namespace MEL_r811_18
             Marshal.ReleaseComObject(xlApp);
 
             SaveMachinesToDB();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SaveMachinesToDB()
         {
@@ -357,6 +367,8 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Writing: " + m.MachineID + " " + m.BTNumber + " "
+                            + m.CommonName + " " + m.Make + " " + m.Model + " " + m.Serial + " " + m.DepartmentID_Machine;
                         command.Parameters.AddWithValue("@MachineID", m.MachineID);
                         command.Parameters.AddWithValue("@BTNumber", m.BTNumber);
                         if (String.IsNullOrEmpty(m.CommonName))
@@ -409,20 +421,20 @@ namespace MEL_r811_18
 
         private void LoadPartsFromExcel()
         {
-            MessageBox.Show("Please select the file that contains the Parts you want to import");
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
+            //MessageBox.Show("Please select the file that contains the Parts you want to import");
+            fname = @"C:\Users\ioe41\Documents\MEL\Parts.xlsx";
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -444,16 +456,19 @@ namespace MEL_r811_18
                 };
                 partList.Add(p);
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                label1.Text = "Loading: " + p.PartID + " " + p.PartNumber + " "
+                    + p.PartDescription + " " + p.UnitPrice;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "PartNumber";
-                listView1.Columns.Add(header);
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                listView1.Items.Add(p.PartNumber);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "PartNumber";
+                //listView1.Columns.Add(header);
+
+                //listView1.Items.Add(p.PartNumber);
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
             }
 
             //cleanup  
@@ -473,7 +488,7 @@ namespace MEL_r811_18
             Marshal.ReleaseComObject(xlApp);
 
             SavePartsToDB();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SavePartsToDB()
         {
@@ -496,6 +511,9 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Writing: " + p.PartID + " " + p.PartNumber + " "
+                            + p.PartDescription + " " + p.UnitPrice;
+
                         command.Parameters.AddWithValue("@PartID", p.PartID);
                         if (String.IsNullOrEmpty(p.PartNumber))
                         {
@@ -537,20 +555,20 @@ namespace MEL_r811_18
 
         private void LoadPRFromExcel()
         {
-            MessageBox.Show("Please select the file that contains the Purchase Requisitions you want to import");
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
+            //MessageBox.Show("Please select the file that contains the Purchase Requisitions you want to import");
+            fname = @"C:\Users\ioe41\Documents\MEL\Purchase_Requisition.xlsx";
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -575,16 +593,20 @@ namespace MEL_r811_18
                 };
                 prList.Add(pr);
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                label1.Text = "Loading: " + pr.OrderID + " " + pr.VendorID_PR + " " + pr.DateIssued + " "
+                    + pr.DepartmentID_PR + " " + pr.MachineID_PR + " " + pr.EmployeeID_PR + " " + pr.DeliverTo + " "
+                    + pr.PONumber;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "PR";
-                listView1.Columns.Add(header);
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                listView1.Items.Add(pr.PONumber);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "PR";
+                //listView1.Columns.Add(header);
+
+                //listView1.Items.Add(pr.PONumber);
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
             }
 
             //cleanup  
@@ -605,7 +627,7 @@ namespace MEL_r811_18
 
             SavePRToDB();
             //DateHelp();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SavePRToDB()
         {
@@ -629,6 +651,10 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Writing: " + pr.OrderID + " " + pr.VendorID_PR + " " + pr.DateIssued + " "
+                        + pr.DepartmentID_PR + " " + pr.MachineID_PR + " " + pr.EmployeeID_PR + " " + pr.DeliverTo + " "
+                        + pr.PONumber;
+
                         command.Parameters.AddWithValue("@OrderID", pr.OrderID); 
                         command.Parameters.AddWithValue("@VendorID", pr.VendorID_PR);
                         if (String.IsNullOrEmpty(pr.DateIssued))
@@ -675,20 +701,20 @@ namespace MEL_r811_18
 
         private void LoadPR_DetaisFromExcel()
         {
-            MessageBox.Show("Please select the file that contains the Order Details you want to import");
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
+            //MessageBox.Show("Please select the file that contains the Order Details you want to import");
+            fname = @"C:\Users\ioe41\Documents\MEL\OrderDetails.xlsx";
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -702,26 +728,31 @@ namespace MEL_r811_18
             {
                 PR_Details pd = new PR_Details
                 {
-                    OrderID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value),
-                    Quantity = Convert.ToInt16(xlWorksheet.Cells[i, 2].Value),
-                    Unit = Convert.ToString(xlWorksheet.Cells[i, 3].Value),
-                    PartID_PRD = Convert.ToInt16(xlWorksheet.Cells[i, 4].Value),
-                    Per = Convert.ToString(xlWorksheet.Cells[i, 5].Value),
-                    DueDate = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
-                    Received = Convert.ToBoolean(xlWorksheet.Cells[i, 7].Value),
+                    OrderDetailsID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value),
+                    OrderID = Convert.ToInt16(xlWorksheet.Cells[i, 2].Value),
+                    Quantity = Convert.ToInt16(xlWorksheet.Cells[i, 3].Value),
+                    Unit = Convert.ToString(xlWorksheet.Cells[i, 4].Value),
+                    PartID_PRD = Convert.ToInt16(xlWorksheet.Cells[i, 5].Value),
+                    Per = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
+                    DueDate = Convert.ToString(xlWorksheet.Cells[i, 7].Value),
+                    Received = Convert.ToBoolean(xlWorksheet.Cells[i, 8].Value),
                 };
                 pr_detailsList.Add(pd);
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                label1.Text = "Loading: " + pd.OrderDetailsID + " " + pd.OrderID + " " + pd.Quantity + " "
+                    + pd.Unit + " " + pd.PartID_PRD + " " + pd.Per + " " + pd.DueDate + " "
+                    + pd.Received;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "PD";
-                listView1.Columns.Add(header);
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                listView1.Items.Add(pd.OrderID.ToString());
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "PD";
+                //listView1.Columns.Add(header);
+
+                //listView1.Items.Add(pd.OrderID.ToString());
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
 
             }
 
@@ -742,7 +773,7 @@ namespace MEL_r811_18
             Marshal.ReleaseComObject(xlApp);
 
             SavePR_DetaisToDB();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SavePR_DetaisToDB()
         {
@@ -762,11 +793,15 @@ namespace MEL_r811_18
             {
                 using (SqlConnection connection = new SqlConnection(conn_string))
                 {
-                    String query = "SET IDENTITY_INSERT PR_Details ON; INSERT INTO PR_Details (OrderID,Quantity,Unit,PartID,Per,DueDate,Received) " +
-                        "VALUES (@OrderID,@Quantity,@Unit,@PartID,@Per,@DueDate,@Received); SET IDENTITY_INSERT PR_Details OFF";
+                    String query = "SET IDENTITY_INSERT PR_Details ON; INSERT INTO PR_Details (OrderDetailsID,OrderID,Quantity,Unit,PartID,Per,DueDate,Received) " +
+                        "VALUES (@OrderDetailsID,@OrderID,@Quantity,@Unit,@PartID,@Per,@DueDate,@Received); SET IDENTITY_INSERT PR_Details OFF";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Writing: " + pd.OrderDetailsID + " " + pd.OrderID + " " + pd.Quantity + " "
+                        + pd.Unit + " " + pd.PartID_PRD + " " + pd.Per + " " + pd.DueDate + " "
+                        + pd.Received;
+                        command.Parameters.AddWithValue("@OrderDetailsID", pd.OrderDetailsID);
                         command.Parameters.AddWithValue("@OrderID", pd.OrderID);
                         command.Parameters.AddWithValue("@Quantity", pd.Quantity);
                         if (String.IsNullOrEmpty(pd.Unit))
@@ -813,20 +848,20 @@ namespace MEL_r811_18
 
         private void LoadVendorsFromExcel()
         {
-            MessageBox.Show("Please select the file that contains the Vendors you want to import");
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog
-            {
-                Title = "Excel File Dialog",
-                InitialDirectory = @"c:\Documents\",
-                Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-            if (fdlg.ShowDialog() == DialogResult.OK)
-            {
-                fname = fdlg.FileName;
-            }
+            //MessageBox.Show("Please select the file that contains the Vendors you want to import");
+            fname = @"C:\Users\ioe41\Documents\MEL\Vendors.xlsx";
+            //OpenFileDialog fdlg = new OpenFileDialog
+            //{
+            //    Title = "Excel File Dialog",
+            //    InitialDirectory = @"c:\Documents\",
+            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
+            //    FilterIndex = 2,
+            //    RestoreDirectory = true
+            //};
+            //if (fdlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    fname = fdlg.FileName;
+            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -849,16 +884,19 @@ namespace MEL_r811_18
                 };
                 vendorList.Add(v);
 
-                listView1.View = View.Details;
-                listView1.HeaderStyle = ColumnHeaderStyle.None;
+                label1.Text = "Loading: " + v.VendorID + " " + v.VendorNumber + " " + v.VendorName + " "
+                    + v.Contact + " " + v.VendorEmail + " " + v.VendorPhone;
 
-                ColumnHeader header = new ColumnHeader();
-                header.Text = "";
-                header.Name = "VendorName";
-                listView1.Columns.Add(header);
+                //listView1.View = View.Details;
+                //listView1.HeaderStyle = ColumnHeaderStyle.None;
 
-                listView1.Items.Add(v.VendorName);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
+                //ColumnHeader header = new ColumnHeader();
+                //header.Text = "";
+                //header.Name = "VendorName";
+                //listView1.Columns.Add(header);
+
+                //listView1.Items.Add(v.VendorName);
+                //listView1.EnsureVisible(listView1.Items.Count - 1);
             }
 
             //cleanup  
@@ -878,7 +916,7 @@ namespace MEL_r811_18
             Marshal.ReleaseComObject(xlApp);
 
             SaveVendorsToDB();
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
         }
         private void SaveVendorsToDB()
         {
@@ -901,6 +939,9 @@ namespace MEL_r811_18
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        label1.Text = "Loading: " + v.VendorID + " " + v.VendorNumber + " " + v.VendorName + " "
+                            + v.Contact + " " + v.VendorEmail + " " + v.VendorPhone;
+
                         command.Parameters.AddWithValue("@VendorID", v.VendorID);
                         if (String.IsNullOrEmpty(v.VendorNumber))
                         {
@@ -1011,7 +1052,7 @@ namespace MEL_r811_18
             add_FK_PR_Vendor.ExecuteNonQuery();
 
             //PR_Details Contraint strings
-            string query_add_PK_PRDetails = "IF OBJECT_ID('dbo.[PK_PRDetails]') IS NULL ALTER TABLE dbo.PR_Details ADD CONSTRAINT [PK_PRDetails] PRIMARY KEY CLUSTERED ([OrderDetailsID] ASC)";
+            string query_add_PK_PRDetails = "IF OBJECT_ID('dbo.[PK_PR_Details]') IS NULL ALTER TABLE dbo.PR_Details ADD CONSTRAINT [PK_PR_Details] PRIMARY KEY CLUSTERED ([OrderDetailsID] ASC)";
             string query_add_FK_PR_Details_Parts = "IF OBJECT_ID('dbo.[FK_PR_Details_Parts]') IS NULL ALTER TABLE dbo.PR_Details ADD CONSTRAINT [FK_PR_Details_Parts] FOREIGN KEY ([PartID]) REFERENCES [dbo].[Parts] ([PartID])";
             string query_add_FK_Table_PR = "IF OBJECT_ID('dbo.[FK_Table_PR]') IS NULL ALTER TABLE dbo.PR_Details ADD CONSTRAINT [FK_Table_PR] FOREIGN KEY ([OrderID]) REFERENCES [dbo].[PR] ([OrderID])";
 

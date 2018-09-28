@@ -20,7 +20,7 @@ namespace MEL_r811_18
     public partial class MainScreen : Form
     {
         public string q;
-        public string conn_string = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Joe\source\repos\MEL_r811_18\MEL_r811_18\MEL.mdf; Integrated Security = True";
+        public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         public string open_po_count;
         SqlConnection conn = null;
         public string today = DateTime.Today.ToString();
@@ -145,29 +145,53 @@ namespace MEL_r811_18
                 conn = new SqlConnection(conn_string);
                 conn.Open();
 
-                q = "SELECT PR_Details.Quantity, PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
-                    "FROM(Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID)" +
-                    "WHERE PR_Details.Received = 0";
+                q = "SELECT Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                    "WHERE PR_Details.Received = 'False'";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
-                SqlCommandBuilder scb = new SqlCommandBuilder(dataAdapter);
-                var ds = new DataSet();
-                dataAdapter.Fill(ds);
-                openPO_dataGridView.ReadOnly = true;
-                openPO_dataGridView.DataSource = ds.Tables[0];
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                openPO_dataGridView.DataSource = dt;
 
-                openPO_dataGridView.Columns[0].FillWeight = 50;
-                openPO_dataGridView.Columns[1].FillWeight = 40;
-                openPO_dataGridView.Columns[2].FillWeight = 100;
-                openPO_dataGridView.Columns[3].FillWeight = 200;
-                openPO_dataGridView.Columns[4].FillWeight = 50;
-                openPO_dataGridView.Columns[5].FillWeight = 50;
+                openPO_dataGridView.Columns[0].FillWeight = 80;
+                openPO_dataGridView.Columns[0].HeaderText = "Vendor";
+                openPO_dataGridView.Columns[0].ReadOnly = true;
+
+                openPO_dataGridView.Columns[1].FillWeight = 50;
+                openPO_dataGridView.Columns[1].HeaderText = "PO Number";
+                openPO_dataGridView.Columns[1].ReadOnly = true;
+
+                openPO_dataGridView.Columns[2].FillWeight = 50;
+                openPO_dataGridView.Columns[2].HeaderText = "Qty";
+                openPO_dataGridView.Columns[2].ReadOnly = true;
+
+                openPO_dataGridView.Columns[3].FillWeight = 40;
+                openPO_dataGridView.Columns[3].Visible = false;
+
+                openPO_dataGridView.Columns[4].FillWeight = 100;
+                openPO_dataGridView.Columns[4].HeaderText = "Part Number";
+                openPO_dataGridView.Columns[4].ReadOnly = true;
+
+                openPO_dataGridView.Columns[5].FillWeight = 200;
+                openPO_dataGridView.Columns[5].HeaderText = "Description";
+                openPO_dataGridView.Columns[5].ReadOnly = true;
+
                 openPO_dataGridView.Columns[6].FillWeight = 50;
-                //OpenPOs_DataGridView.Columns[7].FillWeight = 200;
+                openPO_dataGridView.Columns[6].Visible = false;
 
-                open_po_count = openPO_dataGridView.Rows.Count.ToString();
-                totalRecords_toolStripLabel.Text = open_po_count;
+                openPO_dataGridView.Columns[7].FillWeight = 50;
+                openPO_dataGridView.Columns[7].HeaderText = "DUE";
+                openPO_dataGridView.Columns[7].ReadOnly = true;
+
+                openPO_dataGridView.Columns[8].FillWeight = 50;
+                openPO_dataGridView.Columns[8].HeaderText = "Rec'd";
+                openPO_dataGridView.Columns[8].ReadOnly = false;
+
+                //open_pr_count = openPR_dataGridView.Rows.Count.ToString();
+                //totalRecords_toolStripLabel.Text = open_po_count;
 
                 conn.Close();
             }
@@ -184,28 +208,52 @@ namespace MEL_r811_18
                 conn = new SqlConnection(conn_string);
                 conn.Open();
 
-                q = "SELECT PR_Details.Quantity, PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
-                    "FROM(Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID)" +
+                q = "SELECT Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
                     "WHERE PR_Details.DueDate < '" + today + "'";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
-                SqlCommandBuilder scb = new SqlCommandBuilder(dataAdapter);
-                var ds = new DataSet();
-                dataAdapter.Fill(ds);
-                overduePO_dataGridView.ReadOnly = false;
-                overduePO_dataGridView.DataSource = ds.Tables[0];
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                overduePO_dataGridView.DataSource = dt;
 
-                overduePO_dataGridView.Columns[0].FillWeight = 50;
-                overduePO_dataGridView.Columns[1].FillWeight = 40;
-                overduePO_dataGridView.Columns[2].FillWeight = 100;
-                overduePO_dataGridView.Columns[3].FillWeight = 200;
-                overduePO_dataGridView.Columns[4].FillWeight = 50;
-                overduePO_dataGridView.Columns[5].FillWeight = 50;
+                overduePO_dataGridView.Columns[0].FillWeight = 80;
+                overduePO_dataGridView.Columns[0].HeaderText = "Vendor";
+                overduePO_dataGridView.Columns[0].ReadOnly = true;
+
+                overduePO_dataGridView.Columns[1].FillWeight = 50;
+                overduePO_dataGridView.Columns[1].HeaderText = "PO Number";
+                overduePO_dataGridView.Columns[1].ReadOnly = true;
+
+                overduePO_dataGridView.Columns[2].FillWeight = 50;
+                overduePO_dataGridView.Columns[2].HeaderText = "Qty";
+                overduePO_dataGridView.Columns[2].ReadOnly = true;
+
+                overduePO_dataGridView.Columns[3].FillWeight = 40;
+                overduePO_dataGridView.Columns[3].Visible = false;
+
+                overduePO_dataGridView.Columns[4].FillWeight = 100;
+                overduePO_dataGridView.Columns[4].HeaderText = "Part Number";
+                overduePO_dataGridView.Columns[4].ReadOnly = true;
+
+                overduePO_dataGridView.Columns[5].FillWeight = 200;
+                overduePO_dataGridView.Columns[5].HeaderText = "Description";
+                overduePO_dataGridView.Columns[5].ReadOnly = true;
+
                 overduePO_dataGridView.Columns[6].FillWeight = 50;
-                //OpenPOs_DataGridView.Columns[7].FillWeight = 200;
+                overduePO_dataGridView.Columns[6].Visible = false;
 
-                //open_po_count = openPO_dataGridView.Rows.Count.ToString();
+                overduePO_dataGridView.Columns[7].FillWeight = 50;
+                overduePO_dataGridView.Columns[7].HeaderText = "DUE";
+                overduePO_dataGridView.Columns[7].ReadOnly = true;
+
+                overduePO_dataGridView.Columns[8].FillWeight = 50;
+                overduePO_dataGridView.Columns[8].HeaderText = "Rec'd";
+                overduePO_dataGridView.Columns[8].ReadOnly = false;
+
+                //open_pr_count = openPR_dataGridView.Rows.Count.ToString();
                 //totalRecords_toolStripLabel.Text = open_po_count;
 
                 conn.Close();
@@ -223,28 +271,53 @@ namespace MEL_r811_18
                 conn = new SqlConnection(conn_string);
                 conn.Open();
 
-                q = "SELECT PR.PONumber, PR_Details.Quantity, Parts.PartNumber, Parts.PartDescription, PR_Details.DueDate, Vendors.VendorName " +
-                    "FROM (((Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID)" +
-                    "INNER JOIN PR ON PR_Details.OrderID = PR.OrderID)" +
-                    "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID)" +
-                    "WHERE PR.PONumber IS NULL AND PR_Details.Received = 0";
+                q = "SELECT Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                    "WHERE PR.PONumber IS NULL AND PR_Details.Received = 'False'";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
-                SqlCommandBuilder scb = new SqlCommandBuilder(dataAdapter);
-                var ds = new DataSet();
-                dataAdapter.Fill(ds);
-                openPR_dataGridView.ReadOnly = false;
-                openPR_dataGridView.DataSource = ds.Tables[0];
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                openPR_dataGridView.DataSource = dt;
 
-                openPR_dataGridView.Columns[0].FillWeight = 75;
-                openPR_dataGridView.Columns[1].FillWeight = 40;
-                openPR_dataGridView.Columns[2].FillWeight = 80;
-                openPR_dataGridView.Columns[3].FillWeight = 125;
-                openPR_dataGridView.Columns[4].FillWeight = 50;
-                openPR_dataGridView.Columns[5].FillWeight = 125;
+                openPR_dataGridView.Columns[0].FillWeight = 80;
+                openPR_dataGridView.Columns[0].HeaderText = "Vendor";
+                openPR_dataGridView.Columns[0].ReadOnly = true;
 
-                //open_po_count = openPO_dataGridView.Rows.Count.ToString();
+                openPR_dataGridView.Columns[1].FillWeight = 50;
+                openPR_dataGridView.Columns[1].HeaderText = "PO Number";
+                openPR_dataGridView.Columns[1].ReadOnly = true;
+                openPR_dataGridView.Columns[1].Visible = false;
+
+                openPR_dataGridView.Columns[2].FillWeight = 50;
+                openPR_dataGridView.Columns[2].HeaderText = "Qty";
+                openPR_dataGridView.Columns[2].ReadOnly = true;
+
+                openPR_dataGridView.Columns[3].FillWeight = 40;
+                openPR_dataGridView.Columns[3].Visible = false;
+
+                openPR_dataGridView.Columns[4].FillWeight = 100;
+                openPR_dataGridView.Columns[4].HeaderText = "Part Number";
+                openPR_dataGridView.Columns[4].ReadOnly = true;
+
+                openPR_dataGridView.Columns[5].FillWeight = 200;
+                openPR_dataGridView.Columns[5].HeaderText = "Description";
+                openPR_dataGridView.Columns[5].ReadOnly = true;
+
+                openPR_dataGridView.Columns[6].FillWeight = 50;
+                openPR_dataGridView.Columns[6].Visible = false;
+
+                openPR_dataGridView.Columns[7].FillWeight = 50;
+                openPR_dataGridView.Columns[7].HeaderText = "DUE";
+                openPR_dataGridView.Columns[7].ReadOnly = true;
+
+                openPR_dataGridView.Columns[8].FillWeight = 50;
+                openPR_dataGridView.Columns[8].HeaderText = "Rec'd";
+                openPR_dataGridView.Columns[8].ReadOnly = false;
+
+                //open_pr_count = openPR_dataGridView.Rows.Count.ToString();
                 //totalRecords_toolStripLabel.Text = open_po_count;
 
                 conn.Close();
@@ -439,6 +512,11 @@ namespace MEL_r811_18
     }
     class PR_Details
     {
+        public int OrderDetailsID
+        {
+            set;
+            get;
+        }
         public int OrderID
         {
             set;

@@ -190,8 +190,8 @@ namespace MEL_r811_18
                 openPO_dataGridView.Columns[8].HeaderText = "Rec'd";
                 openPO_dataGridView.Columns[8].ReadOnly = false;
 
-                //open_pr_count = openPR_dataGridView.Rows.Count.ToString();
-                //totalRecords_toolStripLabel.Text = open_po_count;
+                open_po_count = openPO_dataGridView.Rows.Count.ToString();
+                totalRecords_toolStripLabel.Text = open_po_count;
 
                 conn.Close();
             }

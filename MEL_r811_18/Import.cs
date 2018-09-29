@@ -43,21 +43,21 @@ namespace MEL_r811_18
         {
             removeConstraint_button.PerformClick();
             //MessageBox.Show("Please select the file that contains the Departments you want to import");
-            string fname = "";
-            //OpenFileDialog fdlg = new OpenFileDialog
+            //string fname = "";
+           // OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",
             //    InitialDirectory = @"c:\Documents\",
             //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
             //    FilterIndex = 2,
             //    RestoreDirectory = true
-            //};
+           // };
             //if (fdlg.ShowDialog() == DialogResult.OK)
             //{
             //    fname = fdlg.FileName;
             //}
             this.Cursor = Cursors.WaitCursor;
-            fname = @"C:\Users\ioe41\Documents\MEL\Department.xlsx";
+            fname = @"C:\MEL\Department.xlsx";
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
             Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
@@ -150,7 +150,7 @@ namespace MEL_r811_18
         private void LoadEmployeeFromExcel()
         {
             //MessageBox.Show("Please select the file that contains the Employees you want to import");
-            fname = @"C:\Users\ioe41\Documents\MEL\OrderedBy.xlsx";
+            fname = @"C:\MEL\OrderedBy.xlsx";
             //OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",
@@ -277,7 +277,7 @@ namespace MEL_r811_18
         private void LoadMachinesFromExcel()
         {
             //MessageBox.Show("Please select the file that contains the Machines you want to import");
-            fname = @"C:\Users\ioe41\Documents\MEL\Machines.xlsx";
+            fname = @"C:\MEL\Machines.xlsx";
             //OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",
@@ -309,7 +309,7 @@ namespace MEL_r811_18
                     Make = Convert.ToString(xlWorksheet.Cells[i, 4].Value),
                     Model = Convert.ToString(xlWorksheet.Cells[i, 5].Value),
                     Serial = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
-                    DepartmentID_Machine = Convert.ToInt16(xlWorksheet.Cells[i, 7].Value),
+                    DepartmentID_Machine = Convert.ToInt16(xlWorksheet.Cells[i, 11].Value),
                 };
                 machineList.Add(m);
                 label1.Text = "Loading: " + m.MachineID + " " + m.BTNumber + " "
@@ -422,7 +422,7 @@ namespace MEL_r811_18
         private void LoadPartsFromExcel()
         {
             //MessageBox.Show("Please select the file that contains the Parts you want to import");
-            fname = @"C:\Users\ioe41\Documents\MEL\Parts.xlsx";
+            fname = @"C:\MEL\Parts.xlsx";
             //OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",
@@ -556,7 +556,7 @@ namespace MEL_r811_18
         private void LoadPRFromExcel()
         {
             //MessageBox.Show("Please select the file that contains the Purchase Requisitions you want to import");
-            fname = @"C:\Users\ioe41\Documents\MEL\Purchase_Requisition.xlsx";
+            fname = @"C:\MEL\Purchase_Requisition.xlsx";
             //OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",
@@ -702,7 +702,7 @@ namespace MEL_r811_18
         private void LoadPR_DetaisFromExcel()
         {
             //MessageBox.Show("Please select the file that contains the Order Details you want to import");
-            fname = @"C:\Users\ioe41\Documents\MEL\OrderDetails.xlsx";
+            fname = @"C:\MEL\OrderDetails.xlsx";
             //OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",
@@ -728,14 +728,14 @@ namespace MEL_r811_18
             {
                 PR_Details pd = new PR_Details
                 {
-                    OrderDetailsID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value),
-                    OrderID = Convert.ToInt16(xlWorksheet.Cells[i, 2].Value),
-                    Quantity = Convert.ToInt16(xlWorksheet.Cells[i, 3].Value),
-                    Unit = Convert.ToString(xlWorksheet.Cells[i, 4].Value),
-                    PartID_PRD = Convert.ToInt16(xlWorksheet.Cells[i, 5].Value),
-                    Per = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
-                    DueDate = Convert.ToString(xlWorksheet.Cells[i, 7].Value),
-                    Received = Convert.ToBoolean(xlWorksheet.Cells[i, 8].Value),
+                    OrderDetailsID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value)
+                    //OrderID = Convert.ToInt16(xlWorksheet.Cells[i, 2].Value),
+                    //Quantity = Convert.ToInt16(xlWorksheet.Cells[i, 3].Value),
+                    //Unit = Convert.ToString(xlWorksheet.Cells[i, 4].Value),
+                    //PartID_PRD = Convert.ToInt16(xlWorksheet.Cells[i, 5].Value),
+                    //Per = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
+                    //DueDate = Convert.ToString(xlWorksheet.Cells[i, 7].Value),
+                    //Received = Convert.ToBoolean(xlWorksheet.Cells[i, 8].Value),
                 };
                 pr_detailsList.Add(pd);
 
@@ -793,15 +793,15 @@ namespace MEL_r811_18
             {
                 using (SqlConnection connection = new SqlConnection(conn_string))
                 {
-                    String query = "SET IDENTITY_INSERT PR_Details ON; INSERT INTO PR_Details (OrderDetailsID,OrderID,Quantity,Unit,PartID,Per,DueDate,Received) " +
-                        "VALUES (@OrderDetailsID,@OrderID,@Quantity,@Unit,@PartID,@Per,@DueDate,@Received); SET IDENTITY_INSERT PR_Details OFF";
+                    String query = "INSERT INTO PR_Details (OrderID,Quantity,Unit,PartID,Per,DueDate,Received) " +
+                        "VALUES (@OrderID,@Quantity,@Unit,@PartID,@Per,@DueDate,@Received)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         label1.Text = "Writing: " + pd.OrderDetailsID + " " + pd.OrderID + " " + pd.Quantity + " "
                         + pd.Unit + " " + pd.PartID_PRD + " " + pd.Per + " " + pd.DueDate + " "
                         + pd.Received;
-                        command.Parameters.AddWithValue("@OrderDetailsID", pd.OrderDetailsID);
+                        //command.Parameters.AddWithValue("@OrderDetailsID", pd.OrderDetailsID);
                         command.Parameters.AddWithValue("@OrderID", pd.OrderID);
                         command.Parameters.AddWithValue("@Quantity", pd.Quantity);
                         if (String.IsNullOrEmpty(pd.Unit))
@@ -849,7 +849,7 @@ namespace MEL_r811_18
         private void LoadVendorsFromExcel()
         {
             //MessageBox.Show("Please select the file that contains the Vendors you want to import");
-            fname = @"C:\Users\ioe41\Documents\MEL\Vendors.xlsx";
+            fname = @"C:\MEL\Vendors.xlsx";
             //OpenFileDialog fdlg = new OpenFileDialog
             //{
             //    Title = "Excel File Dialog",

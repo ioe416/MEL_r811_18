@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +78,10 @@
             this.tasksTab = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.toDoTab = new System.Windows.Forms.TabPage();
+            this.mELDataSet = new MEL_r811_18.MELDataSet();
+            this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pRTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PRTableAdapter();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -99,6 +104,9 @@
             this.tabControl4.SuspendLayout();
             this.tasksTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -249,7 +257,7 @@
             // machineToolStripMenuItem1
             // 
             this.machineToolStripMenuItem1.Name = "machineToolStripMenuItem1";
-            this.machineToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.machineToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
             this.machineToolStripMenuItem1.Text = "Import";
             this.machineToolStripMenuItem1.Click += new System.EventHandler(this.MachineToolStripMenuItem1_Click);
             // 
@@ -305,7 +313,7 @@
             // 
             // openPO_dataGridView
             // 
-            this.openPO_dataGridView.AllowUserToAddRows = false;
+            this.openPO_dataGridView.AllowUserToDeleteRows = false;
             this.openPO_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.openPO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
             this.openPO_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -315,6 +323,7 @@
             this.openPO_dataGridView.RowHeadersVisible = false;
             this.openPO_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openPO_dataGridView.TabIndex = 0;
+            this.openPO_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenPO_dataGridView_CellContentClick);
             // 
             // overduePoTab
             // 
@@ -572,6 +581,25 @@
             this.toDoTab.TabIndex = 1;
             this.toDoTab.Text = "To Do";
             // 
+            // mELDataSet
+            // 
+            this.mELDataSet.DataSetName = "MELDataSet";
+            this.mELDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // mELDataSetBindingSource
+            // 
+            this.mELDataSetBindingSource.DataSource = this.mELDataSet;
+            this.mELDataSetBindingSource.Position = 0;
+            // 
+            // pRBindingSource
+            // 
+            this.pRBindingSource.DataMember = "PR";
+            this.pRBindingSource.DataSource = this.mELDataSetBindingSource;
+            // 
+            // pRTableAdapter
+            // 
+            this.pRTableAdapter.ClearBeforeFill = true;
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -583,6 +611,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainScreen";
             this.Text = "MainScreen";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainScreen_load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -610,6 +639,9 @@
             this.tabControl4.ResumeLayout(false);
             this.tasksTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -665,5 +697,9 @@
         private System.Windows.Forms.ToolStripLabel currentRecord_toolStripLabel;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem machineToolStripMenuItem1;
+        private System.Windows.Forms.BindingSource mELDataSetBindingSource;
+        private MELDataSet mELDataSet;
+        private System.Windows.Forms.BindingSource pRBindingSource;
+        private MELDataSetTableAdapters.PRTableAdapter pRTableAdapter;
     }
 }

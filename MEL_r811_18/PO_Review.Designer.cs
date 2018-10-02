@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,14 +41,22 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.deliverTo_textBox = new System.Windows.Forms.TextBox();
-            this.tech_textBox = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.vendor_textBox = new System.Windows.Forms.ComboBox();
+            this.mELDataSet = new MEL_r811_18.MELDataSet();
+            this.vendorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.vendorsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.VendorsTableAdapter();
+            this.tech_textBox = new System.Windows.Forms.ComboBox();
+            this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.employeeTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.EmployeeTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -150,13 +159,6 @@
             this.deliverTo_textBox.TabIndex = 13;
             this.deliverTo_textBox.Text = "Maint";
             // 
-            // tech_textBox
-            // 
-            this.tech_textBox.Location = new System.Drawing.Point(101, 72);
-            this.tech_textBox.Name = "tech_textBox";
-            this.tech_textBox.Size = new System.Drawing.Size(113, 20);
-            this.tech_textBox.TabIndex = 15;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -206,11 +208,52 @@
             // 
             // vendor_textBox
             // 
+            this.vendor_textBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.vendorsBindingSource, "VendorName", true));
+            this.vendor_textBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.vendorsBindingSource, "VendorID", true));
+            this.vendor_textBox.DataSource = this.vendorsBindingSource;
+            this.vendor_textBox.DisplayMember = "VendorName";
             this.vendor_textBox.FormattingEnabled = true;
             this.vendor_textBox.Location = new System.Drawing.Point(291, 73);
             this.vendor_textBox.Name = "vendor_textBox";
             this.vendor_textBox.Size = new System.Drawing.Size(149, 21);
             this.vendor_textBox.TabIndex = 20;
+            this.vendor_textBox.ValueMember = "VendorID";
+            // 
+            // mELDataSet
+            // 
+            this.mELDataSet.DataSetName = "MELDataSet";
+            this.mELDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // vendorsBindingSource
+            // 
+            this.vendorsBindingSource.DataMember = "Vendors";
+            this.vendorsBindingSource.DataSource = this.mELDataSet;
+            // 
+            // vendorsTableAdapter
+            // 
+            this.vendorsTableAdapter.ClearBeforeFill = true;
+            // 
+            // tech_textBox
+            // 
+            this.tech_textBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.employeeBindingSource, "Tech", true));
+            this.tech_textBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.employeeBindingSource, "EmployeeID", true));
+            this.tech_textBox.DataSource = this.employeeBindingSource;
+            this.tech_textBox.DisplayMember = "Tech";
+            this.tech_textBox.FormattingEnabled = true;
+            this.tech_textBox.Location = new System.Drawing.Point(97, 73);
+            this.tech_textBox.Name = "tech_textBox";
+            this.tech_textBox.Size = new System.Drawing.Size(113, 21);
+            this.tech_textBox.TabIndex = 21;
+            this.tech_textBox.ValueMember = "EmployeeID";
+            // 
+            // employeeBindingSource
+            // 
+            this.employeeBindingSource.DataMember = "Employee";
+            this.employeeBindingSource.DataSource = this.mELDataSet;
+            // 
+            // employeeTableAdapter
+            // 
+            this.employeeTableAdapter.ClearBeforeFill = true;
             // 
             // PO_Review
             // 
@@ -219,10 +262,10 @@
             this.BackColor = System.Drawing.Color.DodgerBlue;
             this.ClientSize = new System.Drawing.Size(800, 349);
             this.ControlBox = false;
+            this.Controls.Add(this.tech_textBox);
             this.Controls.Add(this.vendor_textBox);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.tech_textBox);
             this.Controls.Add(this.deliverTo_textBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -242,6 +285,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,11 +307,16 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox deliverTo_textBox;
-        private System.Windows.Forms.TextBox tech_textBox;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ComboBox vendor_textBox;
+        private MELDataSet mELDataSet;
+        private System.Windows.Forms.BindingSource vendorsBindingSource;
+        private MELDataSetTableAdapters.VendorsTableAdapter vendorsTableAdapter;
+        private System.Windows.Forms.ComboBox tech_textBox;
+        private System.Windows.Forms.BindingSource employeeBindingSource;
+        private MELDataSetTableAdapters.EmployeeTableAdapter employeeTableAdapter;
     }
 }

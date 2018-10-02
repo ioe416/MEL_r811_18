@@ -421,20 +421,7 @@ namespace MEL_r811_18
 
         private void LoadPartsFromExcel()
         {
-            //MessageBox.Show("Please select the file that contains the Parts you want to import");
             fname = @"C:\MEL\Parts.xlsx";
-            //OpenFileDialog fdlg = new OpenFileDialog
-            //{
-            //    Title = "Excel File Dialog",
-            //    InitialDirectory = @"c:\Documents\",
-            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-            //    FilterIndex = 2,
-            //    RestoreDirectory = true
-            //};
-            //if (fdlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    fname = fdlg.FileName;
-            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -701,20 +688,7 @@ namespace MEL_r811_18
 
         private void LoadPR_DetaisFromExcel()
         {
-            //MessageBox.Show("Please select the file that contains the Order Details you want to import");
             fname = @"C:\MEL\OrderDetails.xlsx";
-            //OpenFileDialog fdlg = new OpenFileDialog
-            //{
-            //    Title = "Excel File Dialog",
-            //    InitialDirectory = @"c:\Documents\",
-            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-            //    FilterIndex = 2,
-            //    RestoreDirectory = true
-            //};
-            //if (fdlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    fname = fdlg.FileName;
-            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -742,17 +716,6 @@ namespace MEL_r811_18
                 label1.Text = "Loading: " + pd.OrderDetailsID + " " + pd.OrderID + " " + pd.Quantity + " "
                     + pd.Unit + " " + pd.PartID_PRD + " " + pd.Per + " " + pd.DueDate + " "
                     + pd.Received;
-
-                //listView1.View = View.Details;
-                //listView1.HeaderStyle = ColumnHeaderStyle.None;
-
-                //ColumnHeader header = new ColumnHeader();
-                //header.Text = "";
-                //header.Name = "PD";
-                //listView1.Columns.Add(header);
-
-                //listView1.Items.Add(pd.OrderID.ToString());
-                //listView1.EnsureVisible(listView1.Items.Count - 1);
 
             }
 
@@ -801,7 +764,7 @@ namespace MEL_r811_18
                         label1.Text = "Writing: " + pd.OrderDetailsID + " " + pd.OrderID + " " + pd.Quantity + " "
                         + pd.Unit + " " + pd.PartID_PRD + " " + pd.Per + " " + pd.DueDate + " "
                         + pd.Received;
-                        //command.Parameters.AddWithValue("@OrderDetailsID", pd.OrderDetailsID);
+
                         command.Parameters.AddWithValue("@OrderID", pd.OrderID);
                         command.Parameters.AddWithValue("@Quantity", pd.Quantity);
                         if (String.IsNullOrEmpty(pd.Unit))
@@ -848,20 +811,7 @@ namespace MEL_r811_18
 
         private void LoadVendorsFromExcel()
         {
-            //MessageBox.Show("Please select the file that contains the Vendors you want to import");
             fname = @"C:\MEL\Vendors.xlsx";
-            //OpenFileDialog fdlg = new OpenFileDialog
-            //{
-            //    Title = "Excel File Dialog",
-            //    InitialDirectory = @"c:\Documents\",
-            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-            //    FilterIndex = 2,
-            //    RestoreDirectory = true
-            //};
-            //if (fdlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    fname = fdlg.FileName;
-            //}
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
@@ -887,16 +837,6 @@ namespace MEL_r811_18
                 label1.Text = "Loading: " + v.VendorID + " " + v.VendorNumber + " " + v.VendorName + " "
                     + v.Contact + " " + v.VendorEmail + " " + v.VendorPhone;
 
-                //listView1.View = View.Details;
-                //listView1.HeaderStyle = ColumnHeaderStyle.None;
-
-                //ColumnHeader header = new ColumnHeader();
-                //header.Text = "";
-                //header.Name = "VendorName";
-                //listView1.Columns.Add(header);
-
-                //listView1.Items.Add(v.VendorName);
-                //listView1.EnsureVisible(listView1.Items.Count - 1);
             }
 
             //cleanup  

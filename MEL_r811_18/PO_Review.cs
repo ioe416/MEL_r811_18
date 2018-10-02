@@ -16,10 +16,12 @@ namespace MEL_r811_18
         public string details;
         public string order;
         public string vend_query;
+        public string tech_query;
         public string dep_query;
         public string mach_query;
         public string emp_query;
         public int updatedVend;
+        public int updatedTech;
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
 
@@ -32,7 +34,11 @@ namespace MEL_r811_18
 
         public void PO_Review_load(object sender, EventArgs e)
         {
-            Fill_Vendor_Combo();
+            // TODO: This line of code loads data into the 'mELDataSet.Employee' table. You can move, or remove it, as needed.
+            this.employeeTableAdapter.Fill(this.mELDataSet.Employee);
+            // TODO: This line of code loads data into the 'mELDataSet.Vendors' table. You can move, or remove it, as needed.
+            this.vendorsTableAdapter.Fill(this.mELDataSet.Vendors);
+
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
                 conn.Open();
@@ -124,22 +130,6 @@ namespace MEL_r811_18
                     dr.Close();
             }
 
-
-        }
-        private void Fill_Vendor_Combo()
-        {
-            try
-            {
-                vendor_textBox.Items.Clear();
-                vendor_textBox.DataSource = "SELECT VendorName FROM Vendors";
-        }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            //vendor_textBox.DataBind();
-            vendor_textBox.Items.Insert(0, "--Select--");
-            vendor_textBox.Focus();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -157,30 +147,49 @@ namespace MEL_r811_18
 
                 SqlCommand command = new SqlCommand(vend_query, conn);
 
-                SqlDataReader dr = command.ExecuteReader();
+                SqlDataReader dr_vend = command.ExecuteReader();
 
-                while (dr.Read())
+                while (dr_vend.Read())
                 {
-                    updatedVend = (int)dr["VendorID"];
+                    updatedVend = (int)dr_vend["VendorID"];
                 }
 
-                dr.Close();
+                dr_vend.Close();
+            //}
+            //using (SqlConnection conn = new SqlConnection(conn_string))
+            //{
+                //conn.Open();
+
+                tech_query = "SELECT EmployeeID FROM Employee WHERE Tech = '" + tech_textBox.Text + "'";
+
+                SqlCommand command_tech = new SqlCommand(tech_query, conn);
+
+                SqlDataReader dr_tech = command_tech.ExecuteReader();
+
+                while (dr_tech.Read())
+                {
+                    updatedTech = (int)dr_tech["EmployeeID"];
+                }
+
+                dr_tech.Close();
             }
 
             using (SqlConnection connection = new SqlConnection(conn_string))
             using (SqlCommand command = connection.CreateCommand())
             {
-                command.CommandText = "UPDATE PR SET DateIssued = @issued, DeliverTo = @deliver, PONumber = @po, VendorID = @vend WHERE OrderID = " + id;
+                command.CommandText = "UPDATE PR SET DateIssued = @issued, DeliverTo = @deliver, PONumber = @po, VendorID = @vend, EmployeeID = @tech WHERE OrderID = " + id;
 
                 command.Parameters.AddWithValue("@issued", issueDate_dateTimePicker.Text);
                 command.Parameters.AddWithValue("@deliver", deliverTo_textBox.Text);
                 command.Parameters.AddWithValue("@po", poNumber_textBox.Text);
                 command.Parameters.AddWithValue("@vend", updatedVend);
+                command.Parameters.AddWithValue("@tech", updatedTech);
 
                 connection.Open();
 
                 command.ExecuteNonQuery();
             }
+            this.Close();
         }
     }
 }

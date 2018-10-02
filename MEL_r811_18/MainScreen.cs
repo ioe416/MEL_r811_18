@@ -153,8 +153,8 @@ namespace MEL_r811_18
 
                 q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
-                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE PR_Details.Received = 'False'";
+                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID ";// +
+                    //"WHERE PR_Details.Received = 'False'";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 

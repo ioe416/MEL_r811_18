@@ -50,6 +50,8 @@
             this.usageHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.purchaseRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newPurchaseRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openPoTab = new System.Windows.Forms.TabPage();
@@ -116,7 +118,8 @@
             this.machineToolStripMenuItem,
             this.vendorToolStripMenuItem,
             this.partsToolStripMenuItem,
-            this.importToolStripMenuItem});
+            this.importToolStripMenuItem,
+            this.purchaseRequestToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -261,6 +264,21 @@
             this.machineToolStripMenuItem1.Text = "Import";
             this.machineToolStripMenuItem1.Click += new System.EventHandler(this.MachineToolStripMenuItem1_Click);
             // 
+            // purchaseRequestToolStripMenuItem
+            // 
+            this.purchaseRequestToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newPurchaseRequestToolStripMenuItem});
+            this.purchaseRequestToolStripMenuItem.Name = "purchaseRequestToolStripMenuItem";
+            this.purchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.purchaseRequestToolStripMenuItem.Text = "Purchase Request";
+            // 
+            // newPurchaseRequestToolStripMenuItem
+            // 
+            this.newPurchaseRequestToolStripMenuItem.Name = "newPurchaseRequestToolStripMenuItem";
+            this.newPurchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.newPurchaseRequestToolStripMenuItem.Text = "New Purchase Request";
+            this.newPurchaseRequestToolStripMenuItem.Click += new System.EventHandler(this.newPurchaseRequestToolStripMenuItem_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 4;
@@ -313,6 +331,7 @@
             // 
             // openPO_dataGridView
             // 
+            this.openPO_dataGridView.AllowUserToAddRows = false;
             this.openPO_dataGridView.AllowUserToDeleteRows = false;
             this.openPO_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.openPO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
@@ -372,6 +391,7 @@
             this.openPR_dataGridView.RowHeadersVisible = false;
             this.openPR_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openPR_dataGridView.TabIndex = 0;
+            this.openPR_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenPR_dataGridView_CellContentClick);
             // 
             // toolStrip1
             // 
@@ -701,5 +721,7 @@
         private MELDataSet mELDataSet;
         private System.Windows.Forms.BindingSource pRBindingSource;
         private MELDataSetTableAdapters.PRTableAdapter pRTableAdapter;
+        private System.Windows.Forms.ToolStripMenuItem purchaseRequestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newPurchaseRequestToolStripMenuItem;
     }
 }

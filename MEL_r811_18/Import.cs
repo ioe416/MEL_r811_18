@@ -42,20 +42,7 @@ namespace MEL_r811_18
         private void LoadDepartmentFromExcel()
         {
             removeConstraint_button.PerformClick();
-            //MessageBox.Show("Please select the file that contains the Departments you want to import");
-            //string fname = "";
-           // OpenFileDialog fdlg = new OpenFileDialog
-            //{
-            //    Title = "Excel File Dialog",
-            //    InitialDirectory = @"c:\Documents\",
-            //    Filter = "All files (*.*)|*.*|All files (*.*)|*.*",
-            //    FilterIndex = 2,
-            //    RestoreDirectory = true
-           // };
-            //if (fdlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    fname = fdlg.FileName;
-            //}
+
             this.Cursor = Cursors.WaitCursor;
             fname = @"C:\MEL\Department.xlsx";
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
@@ -75,16 +62,6 @@ namespace MEL_r811_18
                 };
                 departmentList.Add(dep);
 
-                //listView1.View = View.Details;
-                //listView1.HeaderStyle = ColumnHeaderStyle.None;
-
-                //ColumnHeader header = new ColumnHeader();
-                //header.Text = "";
-                //header.Name = "Department";
-                //listView1.Columns.Add(header);
-
-                //listView1.Items.Add(dep.DepartmentName);
-                //listView1.EnsureVisible(listView1.Items.Count - 1);
                 label1.Text = "Loading: " + dep.DepartmentID + " " + dep.DepartmentName;
             }
 

@@ -20,6 +20,11 @@ namespace MEL_r811_18
         public string department_q;
         public string machine_q;
         public string employee_q;
+        public string vendor_fill_q;
+        public string department_fill_q;
+        public string machine_fill_q;
+        public string employee_fill_q;
+        public string part_fill_q;
         public string vendor;
         public string orderDate;
         public string dep;
@@ -39,16 +44,12 @@ namespace MEL_r811_18
 
         private void PR_Entry_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'mELDataSet.Parts' table. You can move, or remove it, as needed.
-            this.partsTableAdapter.Fill(this.mELDataSet.Parts);
-            // TODO: This line of code loads data into the 'mELDataSet.Employee' table. You can move, or remove it, as needed.
-            this.employeeTableAdapter.Fill(this.mELDataSet.Employee);
-            // TODO: This line of code loads data into the 'mELDataSet.Vendors' table. You can move, or remove it, as needed.
-            this.vendorsTableAdapter.Fill(this.mELDataSet.Vendors);
-            // TODO: This line of code loads data into the 'mELDataSet.Machines' table. You can move, or remove it, as needed.
-            this.machinesTableAdapter.Fill(this.mELDataSet.Machines);
-            // TODO: This line of code loads data into the 'mELDataSet.Department' table. You can move, or remove it, as needed.
-            this.departmentTableAdapter.Fill(this.mELDataSet.Department);
+            Fill_Vendor_ComboBox();
+            Fill_Department_ComboBox();
+            Fill_Machine_ComboBox();
+            Fill_Employee_ComboBox();
+            Fill_Part_ComboBox();
+
         }
 
         private void Cncl_btn_Click(object sender, EventArgs e)
@@ -92,6 +93,10 @@ namespace MEL_r811_18
             }
             
             
+        }
+        private void dep_combo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Fill_Machine_ComboBox();
         }
 
         private void Save_btn_Click(object sender, EventArgs e)
@@ -206,14 +211,106 @@ namespace MEL_r811_18
 
         }
 
+        private void Fill_Vendor_ComboBox()
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                vendor_fill_q = "SELECT VendorID, VendorName FROM Vendors";
+                conn.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(vendor_fill_q, conn);
+                da.Fill(ds, "FillVendorDropDown");
+
+                vend_combo.DataSource = ds.Tables["FillVendorDropDown"].DefaultView;
+                vend_combo.DisplayMember = "VendorName";
+                vend_combo.ValueMember = "VendorID";
+            }
+                
+        }
+        private void Fill_Department_ComboBox()
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                department_fill_q = "SELECT DepartmentID, DepartmentName FROM Department";
+                conn.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(department_fill_q, conn);
+                da.Fill(ds, "FillDepartmentDropDown");
+
+                dep_combo.DataSource = ds.Tables["FillDepartmentDropDown"].DefaultView;
+                dep_combo.DisplayMember = "DepartmentName";
+                dep_combo.ValueMember = "DepartmentID";
+            }
+
+        }
+        private void Fill_Machine_ComboBox()
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '" + Convert.ToInt16(dep_combo.SelectedValue.ToString()) + "'";
+                conn.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn);
+                da.Fill(ds, "FillMachineDropDown");
+
+                mach_combo.DataSource = ds.Tables["FillMachineDropDown"].DefaultView;
+                mach_combo.DisplayMember = "BTNumber";
+                mach_combo.ValueMember = "MachineID";
+            }
+
+        }
+        private void Fill_Employee_ComboBox()
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                employee_fill_q = "SELECT EmployeeID, Tech FROM Employee";
+                conn.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(employee_fill_q, conn);
+                da.Fill(ds, "FillEmployeeDropDown");
+
+                employee_combo.DataSource = ds.Tables["FillEmployeeDropDown"].DefaultView;
+                employee_combo.DisplayMember = "Tech";
+                employee_combo.ValueMember = "EmployeeID";
+            }
+
+        }
+        private void Fill_Part_ComboBox()
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                part_fill_q = "SELECT PartID, PartNumber FROM Parts";
+                conn.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(part_fill_q, conn);
+                da.Fill(ds, "FillPartDropDown");
+
+                part_combo.DataSource = ds.Tables["FillPartDropDown"].DefaultView;
+                part_combo.DisplayMember = "PartNumber";
+                part_combo.ValueMember = "PartID";
+            }
+
+        }
+
         private void AddToOrder_btn_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Add(new String[]
-                {qty_txb.Text, unit_combo.Text,  part_combo.Text, per_combo.Text, DBNull.Value.ToString(), "False"});
+                {qty_txb.Text,
+                    unit_combo.Text,
+                    part_combo.Text,
+                    desc_txb.Text,
+                    price_txb.Text,
+                    per_combo.Text,
+                    DBNull.Value.ToString(),
+                    "False",
+                    total_txb.Text,
+                });
 
             dataGridView1.Sort(part, ListSortDirection.Ascending);
             qty_txb.Clear();
 
         }
+
+        
     }
 }

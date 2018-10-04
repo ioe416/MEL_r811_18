@@ -29,20 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             this.dateIssued_lbl = new System.Windows.Forms.Label();
             this.orderedBy_lbl = new System.Windows.Forms.Label();
             this.dep_lbl = new System.Windows.Forms.Label();
             this.mach_lbl = new System.Windows.Forms.Label();
             this.dateIsued_dtp = new System.Windows.Forms.DateTimePicker();
             this.employee_combo = new System.Windows.Forms.ComboBox();
-            this.employeeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mELDataSet = new MEL_r811_18.MELDataSet();
             this.dep_combo = new System.Windows.Forms.ComboBox();
-            this.departmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mach_combo = new System.Windows.Forms.ComboBox();
-            this.machinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.vend_combo = new System.Windows.Forms.ComboBox();
-            this.vendorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.deliverTo_txb = new System.Windows.Forms.TextBox();
             this.vend_lbl = new System.Windows.Forms.Label();
             this.deliverTo_lbl = new System.Windows.Forms.Label();
@@ -64,27 +62,19 @@
             this.total_lbl = new System.Windows.Forms.Label();
             this.per_lbl = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.save_btn = new System.Windows.Forms.Button();
+            this.cncl_btn = new System.Windows.Forms.Button();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.part = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.per = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.received = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.save_btn = new System.Windows.Forms.Button();
-            this.cncl_btn = new System.Windows.Forms.Button();
-            this.departmentTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.DepartmentTableAdapter();
-            this.machinesTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.MachinesTableAdapter();
-            this.vendorsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.VendorsTableAdapter();
-            this.employeeTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.EmployeeTableAdapter();
-            this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.partsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PartsTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.departmentBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dateIssued_lbl
@@ -134,21 +124,12 @@
             // 
             // employee_combo
             // 
-            this.employee_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.employeeBindingSource, "Tech", true));
-            this.employee_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.employeeBindingSource, "EmployeeID", true));
-            this.employee_combo.DataSource = this.employeeBindingSource;
-            this.employee_combo.DisplayMember = "Tech";
             this.employee_combo.FormattingEnabled = true;
             this.employee_combo.Location = new System.Drawing.Point(27, 81);
             this.employee_combo.Name = "employee_combo";
             this.employee_combo.Size = new System.Drawing.Size(127, 21);
             this.employee_combo.TabIndex = 5;
             this.employee_combo.ValueMember = "EmployeeID";
-            // 
-            // employeeBindingSource
-            // 
-            this.employeeBindingSource.DataMember = "Employee";
-            this.employeeBindingSource.DataSource = this.mELDataSet;
             // 
             // mELDataSet
             // 
@@ -157,28 +138,16 @@
             // 
             // dep_combo
             // 
-            this.dep_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.departmentBindingSource, "DepartmentName", true));
-            this.dep_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.departmentBindingSource, "DepartmentID", true));
-            this.dep_combo.DataSource = this.departmentBindingSource;
-            this.dep_combo.DisplayMember = "DepartmentName";
             this.dep_combo.FormattingEnabled = true;
             this.dep_combo.Location = new System.Drawing.Point(212, 35);
             this.dep_combo.Name = "dep_combo";
             this.dep_combo.Size = new System.Drawing.Size(121, 21);
             this.dep_combo.TabIndex = 6;
             this.dep_combo.ValueMember = "DepartmentID";
-            // 
-            // departmentBindingSource
-            // 
-            this.departmentBindingSource.DataMember = "Department";
-            this.departmentBindingSource.DataSource = this.mELDataSet;
+            this.dep_combo.SelectedIndexChanged += new System.EventHandler(this.dep_combo_SelectedIndexChanged);
             // 
             // mach_combo
             // 
-            this.mach_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.machinesBindingSource, "BTNumber", true));
-            this.mach_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.machinesBindingSource, "MachineID", true));
-            this.mach_combo.DataSource = this.machinesBindingSource;
-            this.mach_combo.DisplayMember = "BTNumber";
             this.mach_combo.FormattingEnabled = true;
             this.mach_combo.Location = new System.Drawing.Point(395, 34);
             this.mach_combo.Name = "mach_combo";
@@ -186,28 +155,14 @@
             this.mach_combo.TabIndex = 7;
             this.mach_combo.ValueMember = "MachineID";
             // 
-            // machinesBindingSource
-            // 
-            this.machinesBindingSource.DataMember = "Machines";
-            this.machinesBindingSource.DataSource = this.mELDataSet;
-            // 
             // vend_combo
             // 
-            this.vend_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.vendorsBindingSource, "VendorName", true));
-            this.vend_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.vendorsBindingSource, "VendorID", true));
-            this.vend_combo.DataSource = this.vendorsBindingSource;
-            this.vend_combo.DisplayMember = "VendorName";
             this.vend_combo.FormattingEnabled = true;
             this.vend_combo.Location = new System.Drawing.Point(212, 84);
             this.vend_combo.Name = "vend_combo";
             this.vend_combo.Size = new System.Drawing.Size(121, 21);
             this.vend_combo.TabIndex = 8;
             this.vend_combo.ValueMember = "VendorID";
-            // 
-            // vendorsBindingSource
-            // 
-            this.vendorsBindingSource.DataMember = "Vendors";
-            this.vendorsBindingSource.DataSource = this.mELDataSet;
             // 
             // deliverTo_txb
             // 
@@ -261,15 +216,12 @@
             // 
             // part_combo
             // 
-            this.part_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.partsBindingSource, "PartNumber", true));
-            this.part_combo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.partsBindingSource, "PartID", true));
-            this.part_combo.DataSource = this.partsBindingSource;
-            this.part_combo.DisplayMember = "PartNumber";
             this.part_combo.FormattingEnabled = true;
             this.part_combo.Location = new System.Drawing.Point(154, 153);
             this.part_combo.Name = "part_combo";
             this.part_combo.Size = new System.Drawing.Size(96, 21);
             this.part_combo.TabIndex = 14;
+            this.part_combo.Text = " -Select Part-";
             this.part_combo.ValueMember = "PartID";
             this.part_combo.SelectedIndexChanged += new System.EventHandler(this.Part_combo_SelectedIndexChanged);
             // 
@@ -406,51 +358,18 @@
             this.qty,
             this.unit,
             this.part,
+            this.description,
+            this.unitPrice,
             this.per,
             this.dueDate,
-            this.received});
+            this.received,
+            this.total});
             this.dataGridView1.Location = new System.Drawing.Point(15, 195);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(779, 217);
             this.dataGridView1.TabIndex = 29;
-            // 
-            // qty
-            // 
-            this.qty.HeaderText = "Quantity";
-            this.qty.Name = "qty";
-            this.qty.ReadOnly = true;
-            // 
-            // unit
-            // 
-            this.unit.HeaderText = "Unit";
-            this.unit.Name = "unit";
-            this.unit.ReadOnly = true;
-            // 
-            // part
-            // 
-            this.part.HeaderText = "Part/Cat. No.";
-            this.part.Name = "part";
-            this.part.ReadOnly = true;
-            // 
-            // per
-            // 
-            this.per.HeaderText = "Per";
-            this.per.Name = "per";
-            this.per.ReadOnly = true;
-            // 
-            // dueDate
-            // 
-            this.dueDate.HeaderText = "Due Date";
-            this.dueDate.Name = "dueDate";
-            this.dueDate.ReadOnly = true;
-            // 
-            // received
-            // 
-            this.received.HeaderText = "Received";
-            this.received.Name = "received";
-            this.received.ReadOnly = true;
             // 
             // save_btn
             // 
@@ -472,30 +391,76 @@
             this.cncl_btn.UseVisualStyleBackColor = true;
             this.cncl_btn.Click += new System.EventHandler(this.Cncl_btn_Click);
             // 
-            // departmentTableAdapter
+            // qty
             // 
-            this.departmentTableAdapter.ClearBeforeFill = true;
+            this.qty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.qty.FillWeight = 30F;
+            this.qty.HeaderText = "Quantity";
+            this.qty.Name = "qty";
+            this.qty.ReadOnly = true;
             // 
-            // machinesTableAdapter
+            // unit
             // 
-            this.machinesTableAdapter.ClearBeforeFill = true;
+            this.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.unit.FillWeight = 30F;
+            this.unit.HeaderText = "Unit";
+            this.unit.Name = "unit";
+            this.unit.ReadOnly = true;
             // 
-            // vendorsTableAdapter
+            // part
             // 
-            this.vendorsTableAdapter.ClearBeforeFill = true;
+            this.part.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.part.HeaderText = "Part/Cat. No.";
+            this.part.Name = "part";
+            this.part.ReadOnly = true;
             // 
-            // employeeTableAdapter
+            // description
             // 
-            this.employeeTableAdapter.ClearBeforeFill = true;
+            this.description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.description.FillWeight = 200F;
+            this.description.HeaderText = "Description";
+            this.description.Name = "description";
+            this.description.ReadOnly = true;
             // 
-            // partsBindingSource
+            // unitPrice
             // 
-            this.partsBindingSource.DataMember = "Parts";
-            this.partsBindingSource.DataSource = this.mELDataSet;
+            this.unitPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.unitPrice.FillWeight = 75F;
+            this.unitPrice.HeaderText = "Unit Price";
+            this.unitPrice.Name = "unitPrice";
+            this.unitPrice.ReadOnly = true;
             // 
-            // partsTableAdapter
+            // per
             // 
-            this.partsTableAdapter.ClearBeforeFill = true;
+            this.per.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.per.FillWeight = 50F;
+            this.per.HeaderText = "Per";
+            this.per.Name = "per";
+            this.per.ReadOnly = true;
+            // 
+            // dueDate
+            // 
+            this.dueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dueDate.FillWeight = 75F;
+            this.dueDate.HeaderText = "Due Date";
+            this.dueDate.Name = "dueDate";
+            this.dueDate.ReadOnly = true;
+            // 
+            // received
+            // 
+            this.received.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.received.FillWeight = 30F;
+            this.received.HeaderText = "Received";
+            this.received.Name = "received";
+            this.received.ReadOnly = true;
+            // 
+            // total
+            // 
+            this.total.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.total.FillWeight = 75F;
+            this.total.HeaderText = "Line Total";
+            this.total.Name = "total";
+            this.total.ReadOnly = true;
             // 
             // PR_Entry
             // 
@@ -538,13 +503,8 @@
             this.Name = "PR_Entry";
             this.Text = "PR_Entry";
             this.Load += new System.EventHandler(this.PR_Entry_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.departmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -585,21 +545,14 @@
         private System.Windows.Forms.Button save_btn;
         private System.Windows.Forms.Button cncl_btn;
         private MELDataSet mELDataSet;
-        private System.Windows.Forms.BindingSource departmentBindingSource;
-        private MELDataSetTableAdapters.DepartmentTableAdapter departmentTableAdapter;
-        private System.Windows.Forms.BindingSource machinesBindingSource;
-        private MELDataSetTableAdapters.MachinesTableAdapter machinesTableAdapter;
-        private System.Windows.Forms.BindingSource vendorsBindingSource;
-        private MELDataSetTableAdapters.VendorsTableAdapter vendorsTableAdapter;
-        private System.Windows.Forms.BindingSource employeeBindingSource;
-        private MELDataSetTableAdapters.EmployeeTableAdapter employeeTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn unit;
         private System.Windows.Forms.DataGridViewTextBoxColumn part;
+        private System.Windows.Forms.DataGridViewTextBoxColumn description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn per;
         private System.Windows.Forms.DataGridViewTextBoxColumn dueDate;
         private System.Windows.Forms.DataGridViewCheckBoxColumn received;
-        private System.Windows.Forms.BindingSource partsBindingSource;
-        private MELDataSetTableAdapters.PartsTableAdapter partsTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total;
     }
 }

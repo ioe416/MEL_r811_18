@@ -61,11 +61,12 @@
             this.ordTot_lbl = new System.Windows.Forms.Label();
             this.total_lbl = new System.Windows.Forms.Label();
             this.per_lbl = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.newOrderDetails_dataGridView = new System.Windows.Forms.DataGridView();
             this.save_btn = new System.Windows.Forms.Button();
             this.cncl_btn = new System.Windows.Forms.Button();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.partid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.part = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,7 +75,7 @@
             this.received = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newOrderDetails_dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // dateIssued_lbl
@@ -351,12 +352,13 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.newOrderDetails_dataGridView.AllowUserToAddRows = false;
+            this.newOrderDetails_dataGridView.AllowUserToDeleteRows = false;
+            this.newOrderDetails_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.newOrderDetails_dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.qty,
             this.unit,
+            this.partid,
             this.part,
             this.description,
             this.unitPrice,
@@ -364,12 +366,12 @@
             this.dueDate,
             this.received,
             this.total});
-            this.dataGridView1.Location = new System.Drawing.Point(15, 195);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(779, 217);
-            this.dataGridView1.TabIndex = 29;
+            this.newOrderDetails_dataGridView.Location = new System.Drawing.Point(15, 195);
+            this.newOrderDetails_dataGridView.Name = "dataGridView1";
+            this.newOrderDetails_dataGridView.ReadOnly = true;
+            this.newOrderDetails_dataGridView.RowHeadersVisible = false;
+            this.newOrderDetails_dataGridView.Size = new System.Drawing.Size(779, 217);
+            this.newOrderDetails_dataGridView.TabIndex = 29;
             // 
             // save_btn
             // 
@@ -395,7 +397,7 @@
             // 
             this.qty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.qty.FillWeight = 30F;
-            this.qty.HeaderText = "Quantity";
+            this.qty.HeaderText = "Qty";
             this.qty.Name = "qty";
             this.qty.ReadOnly = true;
             // 
@@ -406,6 +408,14 @@
             this.unit.HeaderText = "Unit";
             this.unit.Name = "unit";
             this.unit.ReadOnly = true;
+            // 
+            // partid
+            // 
+            this.partid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.partid.FillWeight = 30F;
+            this.partid.HeaderText = "Part ID";
+            this.partid.Name = "partid";
+            this.partid.ReadOnly = true;
             // 
             // part
             // 
@@ -449,8 +459,8 @@
             // received
             // 
             this.received.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.received.FillWeight = 30F;
-            this.received.HeaderText = "Received";
+            this.received.FillWeight = 40F;
+            this.received.HeaderText = "Rec\'v";
             this.received.Name = "received";
             this.received.ReadOnly = true;
             // 
@@ -470,7 +480,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.cncl_btn);
             this.Controls.Add(this.save_btn);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.newOrderDetails_dataGridView);
             this.Controls.Add(this.per_lbl);
             this.Controls.Add(this.total_lbl);
             this.Controls.Add(this.ordTot_lbl);
@@ -504,7 +514,7 @@
             this.Text = "PR_Entry";
             this.Load += new System.EventHandler(this.PR_Entry_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newOrderDetails_dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -541,12 +551,13 @@
         private System.Windows.Forms.Label ordTot_lbl;
         private System.Windows.Forms.Label total_lbl;
         private System.Windows.Forms.Label per_lbl;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView newOrderDetails_dataGridView;
         private System.Windows.Forms.Button save_btn;
         private System.Windows.Forms.Button cncl_btn;
         private MELDataSet mELDataSet;
         private System.Windows.Forms.DataGridViewTextBoxColumn qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn unit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn partid;
         private System.Windows.Forms.DataGridViewTextBoxColumn part;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
         private System.Windows.Forms.DataGridViewTextBoxColumn unitPrice;

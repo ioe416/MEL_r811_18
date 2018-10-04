@@ -294,9 +294,10 @@ namespace MEL_r811_18
 
         private void AddToOrder_btn_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Add(new String[]
+            newOrderDetails_dataGridView.Rows.Add(new String[]
                 {qty_txb.Text,
                     unit_combo.Text,
+                    part_combo.SelectedValue.ToString(),
                     part_combo.Text,
                     desc_txb.Text,
                     price_txb.Text,
@@ -306,7 +307,7 @@ namespace MEL_r811_18
                     total_txb.Text,
                 });
 
-            dataGridView1.Sort(part, ListSortDirection.Ascending);
+            newOrderDetails_dataGridView.Sort(part, ListSortDirection.Ascending);
             qty_txb.Clear();
 
         }

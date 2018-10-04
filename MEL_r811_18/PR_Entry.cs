@@ -39,8 +39,16 @@ namespace MEL_r811_18
 
         private void PR_Entry_Load(object sender, EventArgs e)
         {
-
-
+            // TODO: This line of code loads data into the 'mELDataSet.Parts' table. You can move, or remove it, as needed.
+            this.partsTableAdapter.Fill(this.mELDataSet.Parts);
+            // TODO: This line of code loads data into the 'mELDataSet.Employee' table. You can move, or remove it, as needed.
+            this.employeeTableAdapter.Fill(this.mELDataSet.Employee);
+            // TODO: This line of code loads data into the 'mELDataSet.Vendors' table. You can move, or remove it, as needed.
+            this.vendorsTableAdapter.Fill(this.mELDataSet.Vendors);
+            // TODO: This line of code loads data into the 'mELDataSet.Machines' table. You can move, or remove it, as needed.
+            this.machinesTableAdapter.Fill(this.mELDataSet.Machines);
+            // TODO: This line of code loads data into the 'mELDataSet.Department' table. You can move, or remove it, as needed.
+            this.departmentTableAdapter.Fill(this.mELDataSet.Department);
         }
 
         private void Cncl_btn_Click(object sender, EventArgs e)
@@ -88,35 +96,9 @@ namespace MEL_r811_18
 
         private void Save_btn_Click(object sender, EventArgs e)
         {
-            string vendor = vend_combo.Text;
-            string orderDate = dateIsued_dtp.Text;
-            string dep = dep_combo.Text;
-            string mach = mach_combo.Text;
-            string emp = employee_combo.Text;
-            string deliver = deliverTo_txb.Text;
-
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            {
-                q = "INSERT INTO PR (VendorID, DateIssued, DepartmentID, MachineID, EmployeeID, DeliverTo) " +
-                    "VALUES (@VendorID, @DateIssued, @DepartmentID, @MachineID, @EmployeeID, @DeliverTo)";
-
-                using (SqlCommand command = new SqlCommand(q, conn))
-                {
-                    command.Parameters.AddWithValue("@VendorID", Get_VendorID(vendor));
-                    command.Parameters.AddWithValue("@DateIssued", dateIsued_dtp.Text);
-                    command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(dep));
-                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(mach));
-                    command.Parameters.AddWithValue("@EmployeeID", Get_EmployeeID(emp));
-                    command.Parameters.AddWithValue("@DeliverTo", deliverTo_txb.Text);
-
-                    conn.Open();
-                    int result = command.ExecuteNonQuery();
-
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                }
-            }
+            Save_PR();
+            Save_PRDetails();
+            this.Close();
         }
 
         private int Get_VendorID(string vendor)
@@ -186,6 +168,52 @@ namespace MEL_r811_18
                 myReader.Close();
             }
             return employeeId;
+        }
+        private void Save_PR()
+        {
+            string vendor = vend_combo.Text;
+            string orderDate = dateIsued_dtp.Text;
+            string dep = dep_combo.Text;
+            string mach = mach_combo.Text;
+            string emp = employee_combo.Text;
+            string deliver = deliverTo_txb.Text;
+
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                q = "INSERT INTO PR (VendorID, DateIssued, DepartmentID, MachineID, EmployeeID, DeliverTo) " +
+                    "VALUES (@VendorID, @DateIssued, @DepartmentID, @MachineID, @EmployeeID, @DeliverTo)";
+
+                using (SqlCommand command = new SqlCommand(q, conn))
+                {
+                    command.Parameters.AddWithValue("@VendorID", Get_VendorID(vendor));
+                    command.Parameters.AddWithValue("@DateIssued", dateIsued_dtp.Text);
+                    command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(dep));
+                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(mach));
+                    command.Parameters.AddWithValue("@EmployeeID", Get_EmployeeID(emp));
+                    command.Parameters.AddWithValue("@DeliverTo", deliverTo_txb.Text);
+
+                    conn.Open();
+                    int result = command.ExecuteNonQuery();
+
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                }
+            }
+        }
+        private void Save_PRDetails()
+        {
+
+        }
+
+        private void AddToOrder_btn_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Add(new String[]
+                {qty_txb.Text, unit_combo.Text,  part_combo.Text, per_combo.Text, DBNull.Value.ToString(), "False"});
+
+            dataGridView1.Sort(part, ListSortDirection.Ascending);
+            qty_txb.Clear();
+
         }
     }
 }

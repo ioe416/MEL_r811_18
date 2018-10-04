@@ -49,7 +49,6 @@
             this.qty_txb = new System.Windows.Forms.TextBox();
             this.unit_combo = new System.Windows.Forms.ComboBox();
             this.part_combo = new System.Windows.Forms.ComboBox();
-            this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.desc_txb = new System.Windows.Forms.TextBox();
             this.price_txb = new System.Windows.Forms.TextBox();
             this.per_combo = new System.Windows.Forms.ComboBox();
@@ -68,23 +67,24 @@
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.part = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.per = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.received = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.save_btn = new System.Windows.Forms.Button();
             this.cncl_btn = new System.Windows.Forms.Button();
-            this.partsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PartsTableAdapter();
             this.departmentTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.DepartmentTableAdapter();
             this.machinesTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.MachinesTableAdapter();
             this.vendorsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.VendorsTableAdapter();
             this.employeeTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.EmployeeTableAdapter();
+            this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.partsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PartsTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.employeeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.departmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dateIssued_lbl
@@ -273,11 +273,6 @@
             this.part_combo.ValueMember = "PartID";
             this.part_combo.SelectedIndexChanged += new System.EventHandler(this.Part_combo_SelectedIndexChanged);
             // 
-            // partsBindingSource
-            // 
-            this.partsBindingSource.DataMember = "Parts";
-            this.partsBindingSource.DataSource = this.mELDataSet;
-            // 
             // desc_txb
             // 
             this.desc_txb.Location = new System.Drawing.Point(254, 153);
@@ -328,6 +323,7 @@
             this.addToOrder_btn.TabIndex = 20;
             this.addToOrder_btn.Text = "ADD";
             this.addToOrder_btn.UseVisualStyleBackColor = true;
+            this.addToOrder_btn.Click += new System.EventHandler(this.AddToOrder_btn_Click);
             // 
             // qty_lbl
             // 
@@ -410,9 +406,9 @@
             this.qty,
             this.unit,
             this.part,
-            this.price,
             this.per,
-            this.total});
+            this.dueDate,
+            this.received});
             this.dataGridView1.Location = new System.Drawing.Point(15, 195);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -438,23 +434,23 @@
             this.part.Name = "part";
             this.part.ReadOnly = true;
             // 
-            // price
-            // 
-            this.price.HeaderText = "Price";
-            this.price.Name = "price";
-            this.price.ReadOnly = true;
-            // 
             // per
             // 
             this.per.HeaderText = "Per";
             this.per.Name = "per";
             this.per.ReadOnly = true;
             // 
-            // total
+            // dueDate
             // 
-            this.total.HeaderText = "TOTAL";
-            this.total.Name = "total";
-            this.total.ReadOnly = true;
+            this.dueDate.HeaderText = "Due Date";
+            this.dueDate.Name = "dueDate";
+            this.dueDate.ReadOnly = true;
+            // 
+            // received
+            // 
+            this.received.HeaderText = "Received";
+            this.received.Name = "received";
+            this.received.ReadOnly = true;
             // 
             // save_btn
             // 
@@ -476,10 +472,6 @@
             this.cncl_btn.UseVisualStyleBackColor = true;
             this.cncl_btn.Click += new System.EventHandler(this.Cncl_btn_Click);
             // 
-            // partsTableAdapter
-            // 
-            this.partsTableAdapter.ClearBeforeFill = true;
-            // 
             // departmentTableAdapter
             // 
             this.departmentTableAdapter.ClearBeforeFill = true;
@@ -495,6 +487,15 @@
             // employeeTableAdapter
             // 
             this.employeeTableAdapter.ClearBeforeFill = true;
+            // 
+            // partsBindingSource
+            // 
+            this.partsBindingSource.DataMember = "Parts";
+            this.partsBindingSource.DataSource = this.mELDataSet;
+            // 
+            // partsTableAdapter
+            // 
+            this.partsTableAdapter.ClearBeforeFill = true;
             // 
             // PR_Entry
             // 
@@ -542,8 +543,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.departmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -581,17 +582,9 @@
         private System.Windows.Forms.Label total_lbl;
         private System.Windows.Forms.Label per_lbl;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qty;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn part;
-        private System.Windows.Forms.DataGridViewTextBoxColumn price;
-        private System.Windows.Forms.DataGridViewTextBoxColumn per;
-        private System.Windows.Forms.DataGridViewTextBoxColumn total;
         private System.Windows.Forms.Button save_btn;
         private System.Windows.Forms.Button cncl_btn;
         private MELDataSet mELDataSet;
-        private System.Windows.Forms.BindingSource partsBindingSource;
-        private MELDataSetTableAdapters.PartsTableAdapter partsTableAdapter;
         private System.Windows.Forms.BindingSource departmentBindingSource;
         private MELDataSetTableAdapters.DepartmentTableAdapter departmentTableAdapter;
         private System.Windows.Forms.BindingSource machinesBindingSource;
@@ -600,5 +593,13 @@
         private MELDataSetTableAdapters.VendorsTableAdapter vendorsTableAdapter;
         private System.Windows.Forms.BindingSource employeeBindingSource;
         private MELDataSetTableAdapters.EmployeeTableAdapter employeeTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qty;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn part;
+        private System.Windows.Forms.DataGridViewTextBoxColumn per;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dueDate;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn received;
+        private System.Windows.Forms.BindingSource partsBindingSource;
+        private MELDataSetTableAdapters.PartsTableAdapter partsTableAdapter;
     }
 }

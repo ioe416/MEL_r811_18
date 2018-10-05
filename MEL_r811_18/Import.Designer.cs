@@ -28,26 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
             this.addContraint_button = new System.Windows.Forms.Button();
             this.removeConstraint_button = new System.Windows.Forms.Button();
             this.import_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // listView1
-            // 
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(0, 12);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(122, 190);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
             // addContraint_button
             // 
-            this.addContraint_button.Location = new System.Drawing.Point(168, 47);
+            this.addContraint_button.Location = new System.Drawing.Point(12, 37);
             this.addContraint_button.Name = "addContraint_button";
             this.addContraint_button.Size = new System.Drawing.Size(75, 23);
             this.addContraint_button.TabIndex = 3;
@@ -57,7 +46,7 @@
             // 
             // removeConstraint_button
             // 
-            this.removeConstraint_button.Location = new System.Drawing.Point(168, 18);
+            this.removeConstraint_button.Location = new System.Drawing.Point(12, 8);
             this.removeConstraint_button.Name = "removeConstraint_button";
             this.removeConstraint_button.Size = new System.Drawing.Size(75, 23);
             this.removeConstraint_button.TabIndex = 14;
@@ -67,7 +56,7 @@
             // 
             // import_button
             // 
-            this.import_button.Location = new System.Drawing.Point(168, 88);
+            this.import_button.Location = new System.Drawing.Point(12, 78);
             this.import_button.Name = "import_button";
             this.import_button.Size = new System.Drawing.Size(75, 23);
             this.import_button.TabIndex = 15;
@@ -77,34 +66,30 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(168, 143);
+            this.label1.Location = new System.Drawing.Point(128, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(531, 23);
             this.label1.TabIndex = 16;
             this.label1.Text = "label1";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Import
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 216);
+            this.ClientSize = new System.Drawing.Size(671, 121);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.import_button);
             this.Controls.Add(this.removeConstraint_button);
             this.Controls.Add(this.addContraint_button);
-            this.Controls.Add(this.listView1);
             this.Name = "Import";
             this.Text = "Import";
             this.Load += new System.EventHandler(this.ImportScreen_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button addContraint_button;
         private System.Windows.Forms.Button removeConstraint_button;
         private System.Windows.Forms.Button import_button;

@@ -277,7 +277,7 @@
             this.newPurchaseRequestToolStripMenuItem.Name = "newPurchaseRequestToolStripMenuItem";
             this.newPurchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.newPurchaseRequestToolStripMenuItem.Text = "New Purchase Request";
-            this.newPurchaseRequestToolStripMenuItem.Click += new System.EventHandler(this.newPurchaseRequestToolStripMenuItem_Click);
+            this.newPurchaseRequestToolStripMenuItem.Click += new System.EventHandler(this.NewPurchaseRequestToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 

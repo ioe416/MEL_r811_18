@@ -143,7 +143,7 @@
             this.dep_combo.Size = new System.Drawing.Size(121, 21);
             this.dep_combo.TabIndex = 6;
             this.dep_combo.ValueMember = "DepartmentID";
-            this.dep_combo.SelectedIndexChanged += new System.EventHandler(this.dep_combo_SelectedIndexChanged);
+            this.dep_combo.SelectedIndexChanged += new System.EventHandler(this.Dep_combo_SelectedIndexChanged);
             // 
             // mach_combo
             // 

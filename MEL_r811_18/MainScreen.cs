@@ -71,31 +71,35 @@ namespace MEL_r811_18
         public MainScreen()
         {
             InitializeComponent();
-            openPO_dataGridView.CellContentClick += OpenPO_dataGridView_CellContentClick;
         }
 
         private void OpenPO_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 9) openPO_dataGridView.EndEdit();
+            int index = Convert.ToInt16(openPO_dataGridView.Rows[e.RowIndex].Cells[0].Value); // get the Row Index
+            PR_Review po = new PR_Review(Convert.ToInt16(openPO_dataGridView.Rows[e.RowIndex].Cells[0].Value));
+            po.FormClosed += new FormClosedEventHandler(PO_FormClosed);
+            po.Show();
 
-            id = Convert.ToInt16(openPO_dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString());
-            
-            q = "UPDATE PR_Details SET Received = @rec " +
-                        "WHERE OrderID = '" + id + "'";
+            //if (e.ColumnIndex == 9) openPO_dataGridView.EndEdit();
 
-            SqlConnection conn = new SqlConnection(conn_string);
-            SqlCommand cmd = new SqlCommand(q, conn);
-            {
-                cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
-                conn.Open();
+            //id = Convert.ToInt16(openPO_dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-                cmd.Parameters["@rec"].Value = openPO_dataGridView.Rows[e.RowIndex].Cells[9].Value;
+            //q = "UPDATE PR_Details SET Received = @rec " +
+            //            "WHERE OrderID = '" + id + "'";
 
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
+            //SqlConnection conn = new SqlConnection(conn_string);
+            //SqlCommand cmd = new SqlCommand(q, conn);
+            //{
+            //    cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
+            //    conn.Open();
 
-            OpenPO_Fill();
+            //    cmd.Parameters["@rec"].Value = openPO_dataGridView.Rows[e.RowIndex].Cells[9].Value;
+
+            //    cmd.ExecuteNonQuery();
+            //    conn.Close();
+            //}
+
+            //OpenPO_Fill();
         }
 
         private void NewMachineToolStripMenuItem_Click(object sender, EventArgs e)
@@ -190,7 +194,7 @@ namespace MEL_r811_18
                 q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE PR_Details.DueDate >= '" + today + "' AND PR_Details.Received = 'False' AND PR.PONumber IS NOT NULL";
+                    "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'False') AND (PR.PONumber IS NOT NULL)";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
@@ -258,7 +262,7 @@ namespace MEL_r811_18
                 q = "SELECT Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE PR_Details.DueDate < '" + today + "' AND PR_Details.Received = 'False'";
+                    "WHERE (PR_Details.DueDate < '" + today + "') AND (PR_Details.Received = 'False')";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
@@ -321,7 +325,7 @@ namespace MEL_r811_18
                 q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE PR.PONumber IS NULL AND PR_Details.Received = 'False'";
+                    "WHERE (PR.PONumber IS NULL) AND (PR_Details.Received = 'False')";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
@@ -398,7 +402,7 @@ namespace MEL_r811_18
 
         }
 
-        private void newPurchaseRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewPurchaseRequestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PR_Entry po = new PR_Entry(this);
             po.FormClosed += new FormClosedEventHandler(PR_EntryClosed);

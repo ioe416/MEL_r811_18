@@ -286,7 +286,7 @@ namespace MEL_r811_18
                     Make = Convert.ToString(xlWorksheet.Cells[i, 4].Value),
                     Model = Convert.ToString(xlWorksheet.Cells[i, 5].Value),
                     Serial = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
-                    DepartmentID_Machine = Convert.ToInt16(xlWorksheet.Cells[i, 11].Value),
+                    DepartmentID_Machine = Convert.ToInt16(xlWorksheet.Cells[i, 7].Value),
                 };
                 machineList.Add(m);
                 label1.Text = "Loading: " + m.MachineID + " " + m.BTNumber + " "
@@ -679,14 +679,14 @@ namespace MEL_r811_18
             {
                 PR_Details pd = new PR_Details
                 {
-                    OrderDetailsID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value),
-                    OrderID = Convert.ToInt16(xlWorksheet.Cells[i, 2].Value),
-                    Quantity = Convert.ToInt16(xlWorksheet.Cells[i, 3].Value),
-                    Unit = Convert.ToString(xlWorksheet.Cells[i, 4].Value),
-                    PartID_PRD = Convert.ToInt16(xlWorksheet.Cells[i, 5].Value),
-                    Per = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
-                    DueDate = Convert.ToString(xlWorksheet.Cells[i, 7].Value),
-                    Received = Convert.ToBoolean(xlWorksheet.Cells[i, 8].Value),
+                    //OrderDetailsID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value),
+                    OrderID = Convert.ToInt16(xlWorksheet.Cells[i, 1].Value),
+                    Quantity = Convert.ToInt16(xlWorksheet.Cells[i, 2].Value),
+                    Unit = Convert.ToString(xlWorksheet.Cells[i, 3].Value),
+                    PartID_PRD = Convert.ToInt16(xlWorksheet.Cells[i, 4].Value),
+                    Per = Convert.ToString(xlWorksheet.Cells[i, 5].Value),
+                    DueDate = Convert.ToString(xlWorksheet.Cells[i, 6].Value),
+                    Received = Convert.ToBoolean(xlWorksheet.Cells[i, 7].Value),
                 };
                 pr_detailsList.Add(pd);
 

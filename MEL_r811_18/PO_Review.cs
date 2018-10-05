@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -140,7 +141,7 @@ namespace MEL_r811_18
                     vendor_textBox.Text = (string)dr["VendorName"];
                     poNumber_textBox.Text = (dr["PONumber"] == DBNull.Value) ? string.Empty : (string)dr["PONumber"];                 
                     deliverTo_textBox.Text = (string)dr["DeliverTO"];
-                    issueDate_dateTimePicker.Text = (string)dr["DateIssued"];
+                    issueDate_dateTimePicker.Text = (dr["DateIssued"] == DBNull.Value) ? string.Empty : Convert.ToString(dr["DateIssued"]);
 
                 }
 
@@ -245,13 +246,13 @@ namespace MEL_r811_18
             SqlConnection conn = new SqlConnection(conn_string);
             SqlCommand cmd = new SqlCommand(q, conn);
             {
-                cmd.Parameters.Add(new SqlParameter("@due", SqlDbType.VarChar));
+                cmd.Parameters.Add(new SqlParameter("@due", SqlDbType.Date));
                 cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
                 conn.Open();
 
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    cmd.Parameters["@due"].Value = row.Cells[7].Value;
+                    cmd.Parameters["@due"].Value = dateTimePicker1.Value;
                     cmd.Parameters["@rec"].Value = row.Cells[8].Value;
 
                     cmd.ExecuteNonQuery();
@@ -281,10 +282,30 @@ namespace MEL_r811_18
             }
            
         }
-                
 
-            
-       
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            CaptureScreen();
+            printDocument1.Print();
+            printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage_1);
+        }
+        Bitmap memoryImage;
+        private void CaptureScreen()
+        {
+            Graphics myGraphics = this.CreateGraphics();
+            Size s = this.Size;
+            memoryImage = new Bitmap(s.Width, s.Height, myGraphics);
+            Graphics memoryGraphics = Graphics.FromImage(memoryImage);
+            memoryGraphics.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, s);
+        }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+
+        }
+        private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(memoryImage, 0, 0);
+        }
 
     }
     class PO_Details

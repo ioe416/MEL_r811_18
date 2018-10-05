@@ -95,7 +95,7 @@ namespace MEL_r811_18
             
             
         }
-        private void dep_combo_SelectedIndexChanged(object sender, EventArgs e)
+        private void Dep_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
             Fill_Machine_ComboBox();
         }
@@ -288,7 +288,10 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '" + Convert.ToInt16(dep_combo.SelectedValue.ToString()) + "'";
+                MessageBox.Show(dep_combo.SelectedValue.ToString());
+
+                //machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '" + (dep_combo.SelectedValue.ToString()) + "'";
+                machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = 4401";
                 conn.Open();
                 DataSet ds = new DataSet();
                 SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn);

@@ -1061,7 +1061,7 @@ namespace MEL_r811_18
         private void import_button_Click(object sender, EventArgs e)
         {
             LoadDepartmentFromExcel();
-            //LoadPRFromExcel();
+            //LoadPR_DetaisFromExcel();
         }
 
         private void DateHelp()

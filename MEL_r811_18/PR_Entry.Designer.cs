@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.components = new System.ComponentModel.Container();
-            this.components = new System.ComponentModel.Container();
             this.dateIssued_lbl = new System.Windows.Forms.Label();
             this.orderedBy_lbl = new System.Windows.Forms.Label();
             this.dep_lbl = new System.Windows.Forms.Label();

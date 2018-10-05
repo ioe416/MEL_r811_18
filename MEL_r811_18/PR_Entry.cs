@@ -207,12 +207,12 @@ namespace MEL_r811_18
         }
         private void Save_PRDetails()
         {
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            using (SqlCommand cmd = new SqlCommand(q, conn))
-            {
-                q = "INSERT INTO PR_Details (OrderID, Quantity, Unit, PartID, UnitPrice, Per, DueDate, Received) OUTPUT INSERTED.OrderDetailsID" +
-                    "VALUES (@OrderID, @Quantity, @Unit, @PartID, @UnitPrice, @Per, @DueDate, @Received)";
+            q = "INSERT INTO PR_Details (OrderID, Quantity, Unit, PartID, UnitPrice, Per, DueDate, Received) OUTPUT INSERTED.OrderDetailsID VALUES " +
+                "(@OrderID, @Quantity, @Unit, @PartID, @UnitPrice, @Per, @DueDate, @Received)";
 
+            SqlConnection conn = new SqlConnection(conn_string);
+            SqlCommand cmd = new SqlCommand(q, conn);
+            {
                 cmd.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@Quantity", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@Unit", SqlDbType.VarChar));
@@ -226,48 +226,30 @@ namespace MEL_r811_18
 
                 foreach (DataGridViewRow row in newOrderDetails_dataGridView.Rows)
                 {
-                    using (SqlCommand command = new SqlCommand(q, conn))
-                    {
-                        cmd.Parameters["@OrderID"].Value = orderID;
-                        cmd.Parameters["@Quantity"].Value = row.Cells[0].Value;
-                        cmd.Parameters["@Unit"].Value = row.Cells[1].Value;
-                        cmd.Parameters["@PartID"].Value = row.Cells[2].Value;
-                        cmd.Parameters["@UnitPrice"].Value = row.Cells[5].Value;
-                        cmd.Parameters["@Per"].Value = row.Cells[6].Value;
-                        cmd.Parameters["@DueDate"].Value = row.Cells[7].Value;
-                        cmd.Parameters["@Received"].Value = row.Cells[8].Value;
+                    cmd.Parameters["@OrderID"].Value = orderID;
+                    cmd.Parameters["@Quantity"].Value = row.Cells[0].Value;
+                    cmd.Parameters["@Unit"].Value = row.Cells[1].Value;
+                    cmd.Parameters["@PartID"].Value = row.Cells[2].Value;
+                    cmd.Parameters["@UnitPrice"].Value = row.Cells[5].Value;
+                    cmd.Parameters["@Per"].Value = row.Cells[6].Value;
+                    cmd.Parameters["@DueDate"].Value = row.Cells[7].Value;
+                    cmd.Parameters["@Received"].Value = row.Cells[8].Value;
 
-                        MessageBox.Show("Order ID: " + row.Cells[0].Value +
-                            " Quantity: " + row.Cells[0].Value + 
-                            " Unit: " + row.Cells[1].Value +
-                            " PartID: " + row.Cells[2].Value +
-                            " UnitPrice: " + row.Cells[5].Value +
-                            " Per: " + row.Cells[6].Value +
-                            " DueDate: " + row.Cells[7].Value +
-                            " Received: " + row.Cells[8].Value);
+                    cmd.ExecuteNonQuery();
 
-                        cmd.ExecuteNonQuery();
-                        command.Parameters.AddWithValue("@OrderID", Get_VendorID(vendor));
-                        command.Parameters.AddWithValue("@Quantity", dateIsued_dtp.Text);
-                        command.Parameters.AddWithValue("@Unit", Get_DepartmentID(dep));
-                        command.Parameters.AddWithValue("@PartID", Get_MachineID(mach));
-                        command.Parameters.AddWithValue("@UnitPrice", Get_EmployeeID(emp));
-                        command.Parameters.AddWithValue("@Per", deliverTo_txb.Text);
-                        command.Parameters.AddWithValue("@DueDate", Get_EmployeeID(emp));
-                        command.Parameters.AddWithValue("@Received", deliverTo_txb.Text);
-
-                        conn.Open();
-                        int result = command.ExecuteNonQuery();
-                        int orderDetailsID = (int)command.ExecuteScalar();
-                        MessageBox.Show("Order ID: " + orderID + " Order Detail ID: " + orderDetailsID.ToString());
-                        // Check Error
-                        //if (result < 0)
-                        //    Console.WriteLine("Error inserting data into Database!");
-                    }
+                    MessageBox.Show("Order ID: " + orderID +
+                        " Quantity: " + row.Cells[0].Value +
+                        " Unit: " + row.Cells[1].Value +
+                        " PartID: " + row.Cells[2].Value +
+                        " UnitPrice: " + row.Cells[5].Value +
+                        " Per: " + row.Cells[6].Value +
+                        " DueDate: " + row.Cells[7].Value +
+                        " Received: " + row.Cells[8].Value);
                 }
-
+                conn.Close();
             }
-            this.Close();
+
+            
         }
 
         private void Fill_Vendor_ComboBox()

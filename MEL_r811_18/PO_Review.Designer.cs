@@ -41,8 +41,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.deliverTo_textBox = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.cancel_btn = new System.Windows.Forms.ToolStripButton();
+            this.delete_btn = new System.Windows.Forms.ToolStripButton();
+            this.update_btn = new System.Windows.Forms.ToolStripButton();
+            this.print_btn = new System.Windows.Forms.ToolStripButton();
             this.vendor_textBox = new System.Windows.Forms.ComboBox();
             this.vendorsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mELDataSet = new MEL_r811_18.MELDataSet();
@@ -64,9 +66,7 @@
             this.pR_DetailsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PR_DetailsTableAdapter();
             this.tableAdapterManager = new MEL_r811_18.MELDataSetTableAdapters.TableAdapterManager();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.orderID_txb = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
@@ -80,7 +80,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 31);
+            this.label1.Location = new System.Drawing.Point(13, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 0;
@@ -89,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(225, 31);
+            this.label2.Location = new System.Drawing.Point(181, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 1;
@@ -98,7 +98,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(414, 31);
+            this.label3.Location = new System.Drawing.Point(360, 31);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 2;
@@ -107,7 +107,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(589, 31);
+            this.label4.Location = new System.Drawing.Point(525, 31);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 3;
@@ -116,14 +116,14 @@
             // issueDate_dateTimePicker
             // 
             this.issueDate_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.issueDate_dateTimePicker.Location = new System.Drawing.Point(115, 27);
+            this.issueDate_dateTimePicker.Location = new System.Drawing.Point(88, 27);
             this.issueDate_dateTimePicker.Name = "issueDate_dateTimePicker";
             this.issueDate_dateTimePicker.Size = new System.Drawing.Size(87, 20);
             this.issueDate_dateTimePicker.TabIndex = 5;
             // 
             // poNumber_textBox
             // 
-            this.poNumber_textBox.Location = new System.Drawing.Point(655, 27);
+            this.poNumber_textBox.Location = new System.Drawing.Point(591, 27);
             this.poNumber_textBox.Name = "poNumber_textBox";
             this.poNumber_textBox.Size = new System.Drawing.Size(100, 20);
             this.poNumber_textBox.TabIndex = 7;
@@ -166,35 +166,58 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
+            this.cancel_btn,
+            this.delete_btn,
+            this.update_btn,
+            this.print_btn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(811, 25);
             this.toolStrip1.TabIndex = 19;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // cancel_btn
             // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton1.Text = "Cancel";
-            this.toolStripButton1.Click += new System.EventHandler(this.CancelButton_Click);
+            this.cancel_btn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.cancel_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.cancel_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cancel_btn.Name = "cancel_btn";
+            this.cancel_btn.Size = new System.Drawing.Size(47, 22);
+            this.cancel_btn.Text = "Cancel";
+            this.cancel_btn.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // toolStripButton2
+            // delete_btn
             // 
-            this.toolStripButton2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripButton2.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton2.Text = "Update";
-            this.toolStripButton2.Click += new System.EventHandler(this.UpdateButton_Click);
+            this.delete_btn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.delete_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.delete_btn.Image = ((System.Drawing.Image)(resources.GetObject("delete_btn.Image")));
+            this.delete_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.delete_btn.Name = "delete_btn";
+            this.delete_btn.Size = new System.Drawing.Size(44, 22);
+            this.delete_btn.Text = "Delete";
+            this.delete_btn.Click += new System.EventHandler(this.Delete_btn_Click);
+            // 
+            // update_btn
+            // 
+            this.update_btn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.update_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.update_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.update_btn.Name = "update_btn";
+            this.update_btn.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.update_btn.Size = new System.Drawing.Size(49, 22);
+            this.update_btn.Text = "Update";
+            this.update_btn.Click += new System.EventHandler(this.UpdateButton_Click);
+            // 
+            // print_btn
+            // 
+            this.print_btn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.print_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.print_btn.Image = ((System.Drawing.Image)(resources.GetObject("print_btn.Image")));
+            this.print_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.print_btn.Name = "print_btn";
+            this.print_btn.Size = new System.Drawing.Size(36, 22);
+            this.print_btn.Text = "Print";
+            this.print_btn.Click += new System.EventHandler(this.ToolStripButton3_Click);
             // 
             // vendor_textBox
             // 
@@ -252,7 +275,7 @@
             this.department_textBox.DataSource = this.departmentBindingSource;
             this.department_textBox.DisplayMember = "DepartmentName";
             this.department_textBox.FormattingEnabled = true;
-            this.department_textBox.Location = new System.Drawing.Point(296, 28);
+            this.department_textBox.Location = new System.Drawing.Point(252, 28);
             this.department_textBox.Name = "department_textBox";
             this.department_textBox.Size = new System.Drawing.Size(100, 21);
             this.department_textBox.TabIndex = 22;
@@ -270,7 +293,7 @@
             this.machine_textBox.DataSource = this.machinesBindingSource;
             this.machine_textBox.DisplayMember = "BTNumber";
             this.machine_textBox.FormattingEnabled = true;
-            this.machine_textBox.Location = new System.Drawing.Point(471, 27);
+            this.machine_textBox.Location = new System.Drawing.Point(417, 27);
             this.machine_textBox.Name = "machine_textBox";
             this.machine_textBox.Size = new System.Drawing.Size(100, 21);
             this.machine_textBox.TabIndex = 23;
@@ -291,6 +314,7 @@
             // 
             // dateTimePicker1
             // 
+            this.dateTimePicker1.CustomFormat = "dd/mm/yyyy";
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(668, 72);
             this.dateTimePicker1.Name = "dateTimePicker1";
@@ -355,36 +379,24 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(748, 222);
             this.dataGridView1.TabIndex = 28;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
-            // printPreviewDialog1
+            // orderID_txb
             // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.Visible = false;
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(36, 22);
-            this.toolStripButton3.Text = "Print";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.orderID_txb.Enabled = false;
+            this.orderID_txb.Location = new System.Drawing.Point(730, 27);
+            this.orderID_txb.Name = "orderID_txb";
+            this.orderID_txb.Size = new System.Drawing.Size(69, 20);
+            this.orderID_txb.TabIndex = 29;
             // 
             // PR_Review
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
-            this.ClientSize = new System.Drawing.Size(811, 429);
+            this.ClientSize = new System.Drawing.Size(811, 351);
             this.ControlBox = false;
+            this.Controls.Add(this.orderID_txb);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.checkBox1);
@@ -436,8 +448,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox deliverTo_textBox;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton cancel_btn;
+        private System.Windows.Forms.ToolStripButton update_btn;
         private System.Windows.Forms.ComboBox vendor_textBox;
         private MELDataSet mELDataSet;
         private System.Windows.Forms.BindingSource vendorsBindingSource;
@@ -459,8 +471,8 @@
         private MELDataSetTableAdapters.PR_DetailsTableAdapter pR_DetailsTableAdapter;
         private MELDataSetTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.ToolStripButton print_btn;
+        private System.Windows.Forms.ToolStripButton delete_btn;
+        private System.Windows.Forms.TextBox orderID_txb;
     }
 }

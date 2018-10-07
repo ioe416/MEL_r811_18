@@ -63,11 +63,9 @@ namespace MEL_r811_18
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
-            MachineUpdate mu = new MachineUpdate(this);
-            mu.FormClosed += new FormClosedEventHandler(MachineUpdate_FormClosed);
-            mu.Show();
+
         }
 
         private void MachineUpdate_FormClosed(object sender, EventArgs e)

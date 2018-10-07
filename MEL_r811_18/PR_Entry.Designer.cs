@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dateIssued_lbl = new System.Windows.Forms.Label();
             this.orderedBy_lbl = new System.Windows.Forms.Label();
             this.dep_lbl = new System.Windows.Forms.Label();
@@ -60,8 +59,6 @@
             this.total_lbl = new System.Windows.Forms.Label();
             this.per_lbl = new System.Windows.Forms.Label();
             this.newOrderDetails_dataGridView = new System.Windows.Forms.DataGridView();
-            this.save_btn = new System.Windows.Forms.Button();
-            this.cncl_btn = new System.Windows.Forms.Button();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.partid = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,6 +69,8 @@
             this.dueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.received = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.save_btn = new System.Windows.Forms.Button();
+            this.cncl_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newOrderDetails_dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -123,6 +122,8 @@
             // 
             // employee_combo
             // 
+            this.employee_combo.DisplayMember = "EmployeeID";
+            this.employee_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.employee_combo.FormattingEnabled = true;
             this.employee_combo.Location = new System.Drawing.Point(27, 81);
             this.employee_combo.Name = "employee_combo";
@@ -137,6 +138,8 @@
             // 
             // dep_combo
             // 
+            this.dep_combo.DisplayMember = "DepartmentID";
+            this.dep_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dep_combo.FormattingEnabled = true;
             this.dep_combo.Location = new System.Drawing.Point(212, 35);
             this.dep_combo.Name = "dep_combo";
@@ -147,6 +150,7 @@
             // 
             // mach_combo
             // 
+            this.mach_combo.DisplayMember = "MachineID";
             this.mach_combo.FormattingEnabled = true;
             this.mach_combo.Location = new System.Drawing.Point(395, 34);
             this.mach_combo.Name = "mach_combo";
@@ -156,6 +160,10 @@
             // 
             // vend_combo
             // 
+            this.vend_combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.vend_combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.vend_combo.DisplayMember = "VendorID";
+            this.vend_combo.DropDownWidth = 300;
             this.vend_combo.FormattingEnabled = true;
             this.vend_combo.Location = new System.Drawing.Point(212, 84);
             this.vend_combo.Name = "vend_combo";
@@ -215,12 +223,12 @@
             // 
             // part_combo
             // 
+            this.part_combo.DisplayMember = "PartID";
             this.part_combo.FormattingEnabled = true;
             this.part_combo.Location = new System.Drawing.Point(154, 153);
             this.part_combo.Name = "part_combo";
             this.part_combo.Size = new System.Drawing.Size(96, 21);
             this.part_combo.TabIndex = 14;
-            this.part_combo.Text = " -Select Part-";
             this.part_combo.ValueMember = "PartID";
             this.part_combo.SelectedIndexChanged += new System.EventHandler(this.Part_combo_SelectedIndexChanged);
             // 
@@ -348,7 +356,7 @@
             this.per_lbl.TabIndex = 28;
             this.per_lbl.Text = "Per";
             // 
-            // dataGridView1
+            // newOrderDetails_dataGridView
             // 
             this.newOrderDetails_dataGridView.AllowUserToAddRows = false;
             this.newOrderDetails_dataGridView.AllowUserToDeleteRows = false;
@@ -365,31 +373,11 @@
             this.received,
             this.total});
             this.newOrderDetails_dataGridView.Location = new System.Drawing.Point(15, 195);
-            this.newOrderDetails_dataGridView.Name = "dataGridView1";
+            this.newOrderDetails_dataGridView.Name = "newOrderDetails_dataGridView";
             this.newOrderDetails_dataGridView.ReadOnly = true;
             this.newOrderDetails_dataGridView.RowHeadersVisible = false;
             this.newOrderDetails_dataGridView.Size = new System.Drawing.Size(779, 217);
             this.newOrderDetails_dataGridView.TabIndex = 29;
-            // 
-            // save_btn
-            // 
-            this.save_btn.Location = new System.Drawing.Point(705, 12);
-            this.save_btn.Name = "save_btn";
-            this.save_btn.Size = new System.Drawing.Size(83, 23);
-            this.save_btn.TabIndex = 30;
-            this.save_btn.Text = "Save Order";
-            this.save_btn.UseVisualStyleBackColor = true;
-            this.save_btn.Click += new System.EventHandler(this.Save_btn_Click);
-            // 
-            // cncl_btn
-            // 
-            this.cncl_btn.Location = new System.Drawing.Point(705, 41);
-            this.cncl_btn.Name = "cncl_btn";
-            this.cncl_btn.Size = new System.Drawing.Size(83, 23);
-            this.cncl_btn.TabIndex = 31;
-            this.cncl_btn.Text = "Cancel Order";
-            this.cncl_btn.UseVisualStyleBackColor = true;
-            this.cncl_btn.Click += new System.EventHandler(this.Cncl_btn_Click);
             // 
             // qty
             // 
@@ -470,6 +458,26 @@
             this.total.Name = "total";
             this.total.ReadOnly = true;
             // 
+            // save_btn
+            // 
+            this.save_btn.Location = new System.Drawing.Point(705, 12);
+            this.save_btn.Name = "save_btn";
+            this.save_btn.Size = new System.Drawing.Size(83, 23);
+            this.save_btn.TabIndex = 30;
+            this.save_btn.Text = "Save Order";
+            this.save_btn.UseVisualStyleBackColor = true;
+            this.save_btn.Click += new System.EventHandler(this.Save_btn_Click);
+            // 
+            // cncl_btn
+            // 
+            this.cncl_btn.Location = new System.Drawing.Point(705, 41);
+            this.cncl_btn.Name = "cncl_btn";
+            this.cncl_btn.Size = new System.Drawing.Size(83, 23);
+            this.cncl_btn.TabIndex = 31;
+            this.cncl_btn.Text = "Cancel Order";
+            this.cncl_btn.UseVisualStyleBackColor = true;
+            this.cncl_btn.Click += new System.EventHandler(this.Cncl_btn_Click);
+            // 
             // PR_Entry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -509,7 +517,7 @@
             this.Controls.Add(this.orderedBy_lbl);
             this.Controls.Add(this.dateIssued_lbl);
             this.Name = "PR_Entry";
-            this.Text = "PR_Entry";
+            this.Text = "Purchase Request";
             this.Load += new System.EventHandler(this.PR_Entry_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newOrderDetails_dataGridView)).EndInit();

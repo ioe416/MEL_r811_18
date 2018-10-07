@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+//using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MEL_r811_18
@@ -23,11 +23,14 @@ namespace MEL_r811_18
         public string dep_query;
         public string mach_query;
         public string emp_query;
+        public string delete_order_q;
+        public string delete_order_details_q;
         public int updatedVend;
         public int updatedTech;
         public int updatedDep;
         public int? updatedMach;
         public string updated_dueDate;
+        public string e;
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
         public bool a;
@@ -38,10 +41,10 @@ namespace MEL_r811_18
         public PR_Review(int index)
         {
             InitializeComponent();
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
             id = index;
         }
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 8) dataGridView1.EndEdit();
         }
@@ -142,7 +145,7 @@ namespace MEL_r811_18
                     poNumber_textBox.Text = (dr["PONumber"] == DBNull.Value) ? string.Empty : (string)dr["PONumber"];                 
                     deliverTo_textBox.Text = (string)dr["DeliverTO"];
                     issueDate_dateTimePicker.Text = (dr["DateIssued"] == DBNull.Value) ? string.Empty : Convert.ToString(dr["DateIssued"]);
-
+                    orderID_txb.Text = (string)dr["OrderID"].ToString();
                 }
 
                     dr.Close();
@@ -252,7 +255,14 @@ namespace MEL_r811_18
 
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    cmd.Parameters["@due"].Value = dateTimePicker1.Value;
+                    if (checkBox1.Checked == true)
+                    {
+                        cmd.Parameters["@due"].Value = dateTimePicker1.Value;
+                    }
+                    else
+                    {
+                        cmd.Parameters["@due"].Value = DBNull.Value;
+                    }
                     cmd.Parameters["@rec"].Value = row.Cells[8].Value;
 
                     cmd.ExecuteNonQuery();
@@ -283,11 +293,11 @@ namespace MEL_r811_18
            
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void ToolStripButton3_Click(object sender, EventArgs e)
         {
             CaptureScreen();
             printDocument1.Print();
-            printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage_1);
+            printDocument1.PrintPage += new PrintPageEventHandler(PrintDocument1_PrintPage);
         }
         Bitmap memoryImage;
         private void CaptureScreen()
@@ -298,15 +308,42 @@ namespace MEL_r811_18
             Graphics memoryGraphics = Graphics.FromImage(memoryImage);
             memoryGraphics.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, s);
         }
-        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        private void PrintDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
 
         }
-        private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
+
+        private void Delete_btn_Click(object sender, EventArgs e)
         {
-            e.Graphics.DrawImage(memoryImage, 0, 0);
+            try
+            {
+                using (var conn = new SqlConnection(conn_string))
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        cmd.CommandText = "DELETE FROM PR_Details WHERE OrderID = @orderID";
+                        cmd.Parameters.AddWithValue("@orderID", Convert.ToInt16(orderID_txb.Text));
+                        cmd.ExecuteNonQuery();
+                    }
+                    cmd.CommandText = "DELETE FROM PR WHERE OrderID = @orderID";
+                    cmd.Parameters.AddWithValue("@orderID", Convert.ToInt16(orderID_txb.Text));
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+
+            }
+            this.Close();
+           
         }
 
+        private void printPreviewDialog1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
     class PO_Details
     {

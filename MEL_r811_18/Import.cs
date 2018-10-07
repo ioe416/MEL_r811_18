@@ -1058,7 +1058,7 @@ namespace MEL_r811_18
             conn.Close();
         }
 
-        private void import_button_Click(object sender, EventArgs e)
+        private void Import_button_Click(object sender, EventArgs e)
         {
             LoadDepartmentFromExcel();
             //LoadPR_DetaisFromExcel();

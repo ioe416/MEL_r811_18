@@ -63,6 +63,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditPart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditPart.Designer.cs">
+      <DependentUpon>EditPart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditVendor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditVendor.Designer.cs">
+      <DependentUpon>EditVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Import.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +104,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MELDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="NewPart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewPart.Designer.cs">
+      <DependentUpon>NewPart.cs</DependentUpon>
     </Compile>
     <Compile Include="PO_Review.cs">
       <SubType>Form</SubType>
@@ -124,6 +143,9 @@
     <EmbeddedResource Include="MainScreen.resx">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewPart.resx">
+      <DependentUpon>NewPart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PO_Review.resx">
       <DependentUpon>PO_Review.cs</DependentUpon>
     </EmbeddedResource>
@@ -139,6 +161,7 @@
     <EmbeddedResource Include="PR_Entry.resx">
       <DependentUpon>PR_Entry.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="VendorSetup.resx">
       <DependentUpon>VendorSetup.cs</DependentUpon>
     </EmbeddedResource>

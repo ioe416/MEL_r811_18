@@ -51,7 +51,6 @@
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.purchaseRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newPurchaseRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openPoTab = new System.Windows.Forms.TabPage();
@@ -148,6 +147,7 @@
             this.editMachineToolStripMenuItem.Name = "editMachineToolStripMenuItem";
             this.editMachineToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.editMachineToolStripMenuItem.Text = "Edit Machine";
+            this.editMachineToolStripMenuItem.Click += new System.EventHandler(this.EditMachineToolStripMenuItem_Click);
             // 
             // machineHistoryToolStripMenuItem
             // 
@@ -183,21 +183,23 @@
             // newVendorToolStripMenuItem
             // 
             this.newVendorToolStripMenuItem.Name = "newVendorToolStripMenuItem";
-            this.newVendorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newVendorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newVendorToolStripMenuItem.Text = "New Vendor";
+            this.newVendorToolStripMenuItem.Click += new System.EventHandler(this.NewVendorToolStripMenuItem_Click);
             // 
             // editVendorToolStripMenuItem
             // 
             this.editVendorToolStripMenuItem.Name = "editVendorToolStripMenuItem";
-            this.editVendorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editVendorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editVendorToolStripMenuItem.Text = "Edit Vendor";
+            this.editVendorToolStripMenuItem.Click += new System.EventHandler(this.EditVendorToolStripMenuItem_Click);
             // 
             // vendorHistoryToolStripMenuItem
             // 
             this.vendorHistoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.purchaseRequestsToolStripMenuItem});
             this.vendorHistoryToolStripMenuItem.Name = "vendorHistoryToolStripMenuItem";
-            this.vendorHistoryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.vendorHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.vendorHistoryToolStripMenuItem.Text = "Vendor History";
             // 
             // purchaseRequestsToolStripMenuItem
@@ -221,12 +223,14 @@
             this.newPartToolStripMenuItem.Name = "newPartToolStripMenuItem";
             this.newPartToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.newPartToolStripMenuItem.Text = "New Part";
+            this.newPartToolStripMenuItem.Click += new System.EventHandler(this.NewPartToolStripMenuItem_Click);
             // 
             // editPartToolStripMenuItem
             // 
             this.editPartToolStripMenuItem.Name = "editPartToolStripMenuItem";
             this.editPartToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.editPartToolStripMenuItem.Text = "Edit Part";
+            this.editPartToolStripMenuItem.Click += new System.EventHandler(this.EditPartToolStripMenuItem_Click);
             // 
             // partHistoryToolStripMenuItem
             // 
@@ -266,18 +270,10 @@
             // 
             // purchaseRequestToolStripMenuItem
             // 
-            this.purchaseRequestToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newPurchaseRequestToolStripMenuItem});
             this.purchaseRequestToolStripMenuItem.Name = "purchaseRequestToolStripMenuItem";
             this.purchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
             this.purchaseRequestToolStripMenuItem.Text = "Purchase Request";
-            // 
-            // newPurchaseRequestToolStripMenuItem
-            // 
-            this.newPurchaseRequestToolStripMenuItem.Name = "newPurchaseRequestToolStripMenuItem";
-            this.newPurchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.newPurchaseRequestToolStripMenuItem.Text = "New Purchase Request";
-            this.newPurchaseRequestToolStripMenuItem.Click += new System.EventHandler(this.NewPurchaseRequestToolStripMenuItem_Click);
+            this.purchaseRequestToolStripMenuItem.Click += new System.EventHandler(this.NewPurchaseRequestToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -722,6 +718,5 @@
         private System.Windows.Forms.BindingSource pRBindingSource;
         private MELDataSetTableAdapters.PRTableAdapter pRTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem purchaseRequestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newPurchaseRequestToolStripMenuItem;
     }
 }

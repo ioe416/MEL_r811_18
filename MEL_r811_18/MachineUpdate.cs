@@ -14,7 +14,7 @@ namespace MEL_r811_18
 {
     public partial class MachineUpdate : Form
     {
-        MachineSetup ms;
+        MainScreen ms;
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=c:\users\joe\source\repos\MEL_r811_18\MEL_r811_18\MEL.mdf;Integrated Security=True";
         public string q = "";
 
@@ -23,9 +23,9 @@ namespace MEL_r811_18
         public string error_msg = "";
         public string btNumber = "";
 
-        SqlDataReader reader = null;
+        //SqlDataReader reader = null;
 
-        public MachineUpdate(MachineSetup ms)
+        public MachineUpdate(MainScreen ms)
         {
             InitializeComponent();
             Machine_ComboBox_Fill();

@@ -1,19 +1,11 @@
 ﻿using System;
-//using System.Collections.Generic;
-//using System.Collections.Generic;
-//using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-//using System.Runtime.InteropServices;
 using System.Text;
-//using System.Drawing;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-//using Microsoft.Office.Interop.Excel;
+
 
 namespace MEL_r811_18
 {
@@ -65,7 +57,6 @@ namespace MEL_r811_18
         public string dueDate;
         public bool received;
         public int id;
-        DataGridViewRow row;
         public bool updatedValue;
 
         public MainScreen()
@@ -80,26 +71,6 @@ namespace MEL_r811_18
             po.FormClosed += new FormClosedEventHandler(PO_FormClosed);
             po.Show();
 
-            //if (e.ColumnIndex == 9) openPO_dataGridView.EndEdit();
-
-            //id = Convert.ToInt16(openPO_dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString());
-
-            //q = "UPDATE PR_Details SET Received = @rec " +
-            //            "WHERE OrderID = '" + id + "'";
-
-            //SqlConnection conn = new SqlConnection(conn_string);
-            //SqlCommand cmd = new SqlCommand(q, conn);
-            //{
-            //    cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
-            //    conn.Open();
-
-            //    cmd.Parameters["@rec"].Value = openPO_dataGridView.Rows[e.RowIndex].Cells[9].Value;
-
-            //    cmd.ExecuteNonQuery();
-            //    conn.Close();
-            //}
-
-            //OpenPO_Fill();
         }
 
         private void NewMachineToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,6 +79,7 @@ namespace MEL_r811_18
             mss.FormClosed += new FormClosedEventHandler(MachineSetup_FormClosed);
             mss.Show();
         }
+
         private void MachineSetup_FormClosed(object sender, EventArgs e)
         {
             this.Show();
@@ -130,9 +102,21 @@ namespace MEL_r811_18
             OverduePO_Fill();
             OpenPR_Fill();
         }
+        private void EditMachineClosed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+        private void VendorSetupClosed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+        private void EditVendorClosed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
         private void MainScreen_load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'mELDataSet.PR' table. You can move, or remove it, as needed.
             this.pRTableAdapter.Fill(this.mELDataSet.PR);
             if (!Directory.Exists(path + "\\MEL"))
                 Directory.CreateDirectory(path + "\\MEL");
@@ -254,6 +238,7 @@ namespace MEL_r811_18
         }
         private void OverduePO_Fill()
         {
+            MessageBox.Show(today);
             try
             {
                 conn = new SqlConnection(conn_string);
@@ -262,7 +247,8 @@ namespace MEL_r811_18
                 q = "SELECT Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE (PR_Details.DueDate < '" + today + "') AND (PR_Details.Received = 'False')";
+                    //"WHERE (PR_Details.DueDate < '" + today + "') AND (PR_Details.Received = 'False')";
+                    "WHERE (PR_Details.Received = 'False') AND (PR_Details.DueDate < '" + today + "')";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
@@ -303,9 +289,6 @@ namespace MEL_r811_18
                 overduePO_dataGridView.Columns[8].FillWeight = 50;
                 overduePO_dataGridView.Columns[8].HeaderText = "Rec'd";
                 overduePO_dataGridView.Columns[8].ReadOnly = false;
-
-                //open_pr_count = openPR_dataGridView.Rows.Count.ToString();
-                //totalRecords_toolStripLabel.Text = open_po_count;
 
                 conn.Close();
             }
@@ -373,9 +356,6 @@ namespace MEL_r811_18
                 openPR_dataGridView.Columns[9].HeaderText = "Rec'd";
                 openPR_dataGridView.Columns[9].ReadOnly = false;
 
-                //open_pr_count = openPR_dataGridView.Rows.Count.ToString();
-                //totalRecords_toolStripLabel.Text = open_po_count;
-
                 conn.Close();
             }
             catch
@@ -392,6 +372,42 @@ namespace MEL_r811_18
             im.Show();
             Hide();
         }
+        private void EditMachineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MachineUpdate mu = new MachineUpdate(this);
+            mu.FormClosed += new FormClosedEventHandler(EditMachineClosed);
+            mu.Show();
+        }
+        private void NewPurchaseRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PR_Entry po = new PR_Entry(this);
+            po.FormClosed += new FormClosedEventHandler(PR_EntryClosed);
+            po.Show();
+        }
+        private void NewVendorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VendorSetup vs = new VendorSetup(this);
+            vs.FormClosed += new FormClosedEventHandler(VendorSetupClosed);
+            vs.Show();
+        }
+        private void EditVendorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditVendor ev = new EditVendor(this);
+            ev.FormClosed += new FormClosedEventHandler(VendorSetupClosed);
+            ev.Show();
+        }
+        private void NewPartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewPart np = new NewPart(this);
+            np.FormClosed += new FormClosedEventHandler(VendorSetupClosed);
+            np.Show();
+        }
+        private void EditPartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditPart ep = new EditPart(this);
+            ep.FormClosed += new FormClosedEventHandler(VendorSetupClosed);
+            ep.Show();
+        }
 
         public void OpenPR_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -401,14 +417,6 @@ namespace MEL_r811_18
             po.Show();
 
         }
-
-        private void NewPurchaseRequestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PR_Entry po = new PR_Entry(this);
-            po.FormClosed += new FormClosedEventHandler(PR_EntryClosed);
-            po.Show();
-        }
-
     }
 
 

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Drawing;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MEL_r811_18
@@ -20,6 +20,7 @@ namespace MEL_r811_18
         public string department_q;
         public string machine_q;
         public string employee_q;
+        public string part_q;
         public string vendor_fill_q;
         public string department_fill_q;
         public string machine_fill_q;
@@ -31,12 +32,15 @@ namespace MEL_r811_18
         public string mach;
         public string emp;
         public string deliver;
+        public string machToAdd;
 
         public int vendorId;
         public int departmentId;
         public int machineId;
         public int employeeId;
         public int orderID;
+        public int partID;
+        MainScreen ms;
 
         public PR_Entry(MainScreen ms)
         {
@@ -62,36 +66,47 @@ namespace MEL_r811_18
 
         private void Part_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            if (part_combo.SelectedIndex == 1)
             {
-                using (SqlConnection conn = new SqlConnection(conn_string))
+                NewPart np = new NewPart(ms);
+                np.FormClosed += new FormClosedEventHandler(PartSetupClosed);
+                np.Show();
+            }
+            else
+            {
+                try
                 {
-                    q = "SELECT PartID, PartDescription, UnitPrice " +
-                        "FROM Parts " +
-                        "WHERE PartNumber = '" + part_combo.Text + "'";
+                    using (SqlConnection conn = new SqlConnection(conn_string))
+                    {
+                        q = "SELECT PartID, PartDescription, UnitPrice " +
+                            "FROM Parts " +
+                            "WHERE PartNumber = '" + part_combo.Text + "'";
 
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = conn;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = q;
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = q;
 
-                    DataTable td = new DataTable();
-                    SqlDataAdapter da = new SqlDataAdapter(q, conn);
-                    conn.Open();
-                    da.Fill(td);
-                    conn.Close();
-                    desc_txb.Text = td.Rows[0].ItemArray[1].ToString();
-                    price_txb.Text = td.Rows[0].ItemArray[2].ToString();
+                        DataTable td = new DataTable();
+                        SqlDataAdapter da = new SqlDataAdapter(q, conn);
+                        conn.Open();
+                        da.Fill(td);
+                        conn.Close();
+                        desc_txb.Text = td.Rows[0].ItemArray[1].ToString();
+                        price_txb.Text = td.Rows[0].ItemArray[2].ToString();
+                    }
+                    int qty = Convert.ToInt16(qty_txb.Text);
+                    decimal price = Convert.ToDecimal(price_txb.Text);
+                    decimal total = qty * price;
+                    total_txb.Text = total.ToString();
                 }
-                int qty = Convert.ToInt16(qty_txb.Text);
-                decimal price = Convert.ToDecimal(price_txb.Text);
-                decimal total = qty * price;
-                total_txb.Text = total.ToString();
-            }
-            catch
-            {
+                catch
+                {
 
+                }
             }
+
+            
             
             
         }
@@ -173,12 +188,47 @@ namespace MEL_r811_18
             }
             return employeeId;
         }
+        private int Get_PartID(string part)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conn_string))
+                {
+                    part_q = "SELECT PartID FROM Parts WHERE PartNumber = '" + part + "'";
+                    conn.Open();
+
+                    SqlCommand command = new SqlCommand(part_q, conn);
+                    SqlDataReader myReader = command.ExecuteReader();
+                    while (myReader.Read())
+                    {
+                        partID = Convert.ToInt16(myReader["PartID"].ToString());
+                    }
+                    myReader.Close();
+                }
+                return partID;
+            }
+            catch (SqlException e) when (e.Number == 2601)
+            {
+                return 0;
+            }
+            
+        }
+
         private void Save_PR()
         {
             string vendor = vend_combo.Text;
             string orderDate = dateIsued_dtp.Text;
             string dep = dep_combo.Text;
-            string mach = mach_combo.Text;
+            if (mach_combo.Text == "-Select Machine-")
+            {
+                machToAdd = "No Machine";
+            }
+            else
+            {
+                machToAdd = mach_combo.Text;
+            }
+            MessageBox.Show(mach_combo.Text);
+            MessageBox.Show(machToAdd);
             string emp = employee_combo.Text;
             string deliver = deliverTo_txb.Text;
 
@@ -192,7 +242,7 @@ namespace MEL_r811_18
                     command.Parameters.AddWithValue("@VendorID", Get_VendorID(vendor));
                     command.Parameters.AddWithValue("@DateIssued", dateIsued_dtp.Text);
                     command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(dep));
-                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(mach));
+                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
                     command.Parameters.AddWithValue("@EmployeeID", Get_EmployeeID(emp));
                     command.Parameters.AddWithValue("@DeliverTo", deliverTo_txb.Text);
 
@@ -237,109 +287,179 @@ namespace MEL_r811_18
 
                     cmd.ExecuteNonQuery();
 
-                    MessageBox.Show("Order ID: " + orderID +
-                        " Quantity: " + row.Cells[0].Value +
-                        " Unit: " + row.Cells[1].Value +
-                        " PartID: " + row.Cells[2].Value +
-                        " UnitPrice: " + row.Cells[5].Value +
-                        " Per: " + row.Cells[6].Value +
-                        " DueDate: " + row.Cells[7].Value +
-                        " Received: " + row.Cells[8].Value);
                 }
                 conn.Close();
             }
-
+            this.Close();
             
         }
 
         private void Fill_Vendor_ComboBox()
         {
+            vendor_fill_q = "SELECT VendorID, VendorName FROM Vendors";
+            DataTable table = new DataTable("VendorData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                vendor_fill_q = "SELECT VendorID, VendorName FROM Vendors";
-                conn.Open();
-                DataSet ds = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(vendor_fill_q, conn);
-                da.Fill(ds, "FillVendorDropDown");
+                using (SqlDataAdapter da = new SqlDataAdapter(vendor_fill_q, conn))
+                {
+                    da.Fill(table);
 
-                vend_combo.DataSource = ds.Tables["FillVendorDropDown"].DefaultView;
-                vend_combo.DisplayMember = "VendorName";
-                vend_combo.ValueMember = "VendorID";
+                    DataRow row = table.NewRow();
+                    row["VendorName"] = "-Select Vendor-";
+                    table.Rows.InsertAt(row, 0);
+
+                    vend_combo.DataSource = table;
+                    vend_combo.DisplayMember = "VendorName";
+                    vend_combo.ValueMember = "VendorID";
+                }
+
             }
                 
         }
         private void Fill_Department_ComboBox()
         {
+            department_fill_q = "SELECT DepartmentID, DepartmentName FROM Department";
+            DataTable table = new DataTable("DepartmentData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                department_fill_q = "SELECT DepartmentID, DepartmentName FROM Department";
-                conn.Open();
-                DataSet ds = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(department_fill_q, conn);
-                da.Fill(ds, "FillDepartmentDropDown");
+                using (SqlDataAdapter da = new SqlDataAdapter(department_fill_q, conn))
+                {
+                    da.Fill(table);
 
-                dep_combo.DataSource = ds.Tables["FillDepartmentDropDown"].DefaultView;
-                dep_combo.DisplayMember = "DepartmentName";
-                dep_combo.ValueMember = "DepartmentID";
+                    DataRow row = table.NewRow();
+                    row["DepartmentName"] = "-Select Department-";
+                    table.Rows.InsertAt(row, 0);
+
+                    dep_combo.DataSource = table;
+                    dep_combo.DisplayMember = "DepartmentName";
+                    dep_combo.ValueMember = "DepartmentID";
+                }
+
             }
+            Fill_Machine_ComboBox();
 
         }
         private void Fill_Machine_ComboBox()
         {
+            machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '"
+                    + (dep_combo.SelectedValue.ToString()) + "'";
+            DataTable table = new DataTable("MAchineData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                MessageBox.Show(dep_combo.SelectedValue.ToString());
+                using (SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn))
+                {
+                    da.Fill(table);
 
-                //machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '" + (dep_combo.SelectedValue.ToString()) + "'";
-                machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = 4401";
-                conn.Open();
-                DataSet ds = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn);
-                da.Fill(ds, "FillMachineDropDown");
+                    DataRow row = table.NewRow();
+                    row["BTNumber"] = "-Select Machine-";
+                    table.Rows.InsertAt(row, 0);
 
-                mach_combo.DataSource = ds.Tables["FillMachineDropDown"].DefaultView;
-                mach_combo.DisplayMember = "BTNumber";
-                mach_combo.ValueMember = "MachineID";
+                    mach_combo.DataSource = table;
+                    mach_combo.DisplayMember = "BTNumber";
+                    mach_combo.ValueMember = "MachineID";
+                }
+
             }
 
         }
         private void Fill_Employee_ComboBox()
         {
+            employee_fill_q = "SELECT EmployeeID, Tech FROM Employee";
+            DataTable table = new DataTable("EmployeeData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                employee_fill_q = "SELECT EmployeeID, Tech FROM Employee";
-                conn.Open();
-                DataSet ds = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(employee_fill_q, conn);
-                da.Fill(ds, "FillEmployeeDropDown");
+                using (SqlDataAdapter da = new SqlDataAdapter(employee_fill_q, conn))
+                {
+                    da.Fill(table);
 
-                employee_combo.DataSource = ds.Tables["FillEmployeeDropDown"].DefaultView;
-                employee_combo.DisplayMember = "Tech";
-                employee_combo.ValueMember = "EmployeeID";
+                    DataRow row = table.NewRow();
+                    row["Tech"] = "-Select Technician-";
+                    table.Rows.InsertAt(row, 0);
+
+                    employee_combo.DataSource = table;
+                    employee_combo.DisplayMember = "Tech";
+                    employee_combo.ValueMember = "EmployeeID";
+                }
+                
             }
 
         }
         private void Fill_Part_ComboBox()
         {
+            part_fill_q = "SELECT PartID, PartNumber FROM Parts";
+            DataTable table = new DataTable("myData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                part_fill_q = "SELECT PartID, PartNumber FROM Parts";
-                conn.Open();
-                DataSet ds = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(part_fill_q, conn);
-                da.Fill(ds, "FillPartDropDown");
+                using (SqlDataAdapter da = new SqlDataAdapter(part_fill_q, conn))
+                {
+                    
+                    da.Fill(table);
+                    
 
-                part_combo.DataSource = ds.Tables["FillPartDropDown"].DefaultView;
-                part_combo.DisplayMember = "PartNumber";
-                part_combo.ValueMember = "PartID";
+                    DataRow row0 = table.NewRow();
+                    DataRow row1 = table.NewRow();
+                    row0["PartNumber"] = "-Select Part-";
+                    row1["PartNumber"] = "-Add Part-";
+                    table.Rows.InsertAt(row0, 0);
+                    table.Rows.InsertAt(row1, 1);
+                    table.DefaultView.Sort = "PartNumber asc";
+
+                    part_combo.DataSource = table;
+                    part_combo.DisplayMember = "PartNumber";
+                    part_combo.ValueMember = "PartID";
+                }
+  
             }
 
         }
 
         private void AddToOrder_btn_Click(object sender, EventArgs e)
         {
-            newOrderDetails_dataGridView.Rows.Add(new String[]
-                {qty_txb.Text,
+            Get_PartID(part_combo.Text);
+
+            switch (partID)
+            {
+                case 0:
+                    if (MessageBox.Show("Part does not exist! \nDo you want to Add " + part_combo.Text +
+                    " to the Parts table?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        string partnumber = part_combo.Text;
+                        string partdescription = desc_txb.Text;
+                        decimal unitprice = Convert.ToDecimal(price_txb.Text);
+
+                        NewPart np = new NewPart(ms);
+
+                        using (SqlConnection conn = new SqlConnection(conn_string))
+                        {
+                            q = "SELECT PartID, PartDescription, UnitPrice " +
+                                "FROM Parts " +
+                                "WHERE PartID = '" + np.Save_Part_With_Return(partnumber, partdescription, unitprice) + "'";
+
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = conn;
+                            cmd.CommandType = CommandType.Text;
+                            cmd.CommandText = q;
+
+                            DataTable td = new DataTable();
+                            SqlDataAdapter da = new SqlDataAdapter(q, conn);
+                            conn.Open();
+                            da.Fill(td);
+                            conn.Close();
+                            desc_txb.Text = td.Rows[0].ItemArray[1].ToString();
+                            price_txb.Text = td.Rows[0].ItemArray[2].ToString();
+                        }
+                        int qty = Convert.ToInt16(qty_txb.Text);
+                        decimal price = Convert.ToDecimal(price_txb.Text);
+                        decimal total = qty * price;
+                        total_txb.Text = total.ToString();
+
+                        Fill_Part_ComboBox();
+                    }
+                    break;
+
+                default:
+                    newOrderDetails_dataGridView.Rows.Add(new String[]
+                    {qty_txb.Text,
                     unit_combo.Text,
                     part_combo.SelectedValue.ToString(),
                     part_combo.Text,
@@ -349,13 +469,25 @@ namespace MEL_r811_18
                     DBNull.Value.ToString(),
                     "False",
                     total_txb.Text,
-                });
+                    });
 
-            newOrderDetails_dataGridView.Sort(part, ListSortDirection.Ascending);
-            qty_txb.Clear();
+                    newOrderDetails_dataGridView.Sort(part, ListSortDirection.Ascending);
+                    qty_txb.Clear();
+                    unit_combo.SelectedIndex = 0;
+                    part_combo.SelectedIndex = 0;
+                    desc_txb.Clear();
+                    price_txb.Clear();
+                    per_combo.SelectedIndex = 0;
+                    total_txb.Clear();
+                    partID = 0;
+                    break;
 
+            }
         }
 
-        
+        private void PartSetupClosed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
     }
 }

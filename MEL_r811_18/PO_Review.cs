@@ -121,9 +121,6 @@ namespace MEL_r811_18
                 dataGridView1.Columns[8].ReadOnly = false;
                 dataGridView1.Columns[8].Visible = true;
 
-
-
-
                 order = "SELECT PR.OrderID, Vendors.VendorName, PR.DateIssued, Department.DepartmentName, Machines.BTNumber, Employee.Tech, PR.DeliverTo, PR.PONumber " +
                     "FROM Vendors INNER JOIN PR ON Vendors.VendorID = PR.VendorID " +
                     "INNER JOIN Department ON Department.DepartmentID = PR.DepartmentID " +
@@ -295,9 +292,9 @@ namespace MEL_r811_18
 
         private void ToolStripButton3_Click(object sender, EventArgs e)
         {
-            CaptureScreen();
-            printDocument1.Print();
-            printDocument1.PrintPage += new PrintPageEventHandler(PrintDocument1_PrintPage);
+            //CaptureScreen();
+            //printDocument1.Print();
+            //printDocument1.PrintPage += new PrintPageEventHandler(PrintDocument1_PrintPage);
         }
         Bitmap memoryImage;
         private void CaptureScreen()

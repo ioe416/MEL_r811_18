@@ -238,7 +238,6 @@ namespace MEL_r811_18
         }
         private void OverduePO_Fill()
         {
-            MessageBox.Show(today);
             try
             {
                 conn = new SqlConnection(conn_string);

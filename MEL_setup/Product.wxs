@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Product
+    Id="EHY3o-XNNEqw6LSVaSWWLQ" 
+    Name="MEL_setup" 
+    Language="1033" 
+    Version="1.0.0.0" 
+    Manufacturer="M4V3R1CK Digital" 
+    UpgradeCode="921f817c-80a9-46ff-a9e9-183f7f3d4f31">
+    
+ <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="MEL_setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="MEL_setup" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="ProductComponent"> 
+        <File Source ="$(var.MEL_r811_18.TargetPath)" />
+        
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			</Component> -->
+		</ComponentGroup>
+	</Fragment>
+</Wix>

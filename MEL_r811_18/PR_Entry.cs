@@ -227,8 +227,6 @@ namespace MEL_r811_18
             {
                 machToAdd = mach_combo.Text;
             }
-            MessageBox.Show(mach_combo.Text);
-            MessageBox.Show(machToAdd);
             string emp = employee_combo.Text;
             string deliver = deliverTo_txb.Text;
 

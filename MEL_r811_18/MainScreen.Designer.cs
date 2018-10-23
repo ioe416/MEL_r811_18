@@ -83,6 +83,7 @@
             this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PRTableAdapter();
+            this.workRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -118,7 +119,8 @@
             this.vendorToolStripMenuItem,
             this.partsToolStripMenuItem,
             this.importToolStripMenuItem,
-            this.purchaseRequestToolStripMenuItem});
+            this.purchaseRequestToolStripMenuItem,
+            this.workRequestToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -183,14 +185,14 @@
             // newVendorToolStripMenuItem
             // 
             this.newVendorToolStripMenuItem.Name = "newVendorToolStripMenuItem";
-            this.newVendorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newVendorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newVendorToolStripMenuItem.Text = "New Vendor";
             this.newVendorToolStripMenuItem.Click += new System.EventHandler(this.NewVendorToolStripMenuItem_Click);
             // 
             // editVendorToolStripMenuItem
             // 
             this.editVendorToolStripMenuItem.Name = "editVendorToolStripMenuItem";
-            this.editVendorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editVendorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editVendorToolStripMenuItem.Text = "Edit Vendor";
             this.editVendorToolStripMenuItem.Click += new System.EventHandler(this.EditVendorToolStripMenuItem_Click);
             // 
@@ -199,7 +201,7 @@
             this.vendorHistoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.purchaseRequestsToolStripMenuItem});
             this.vendorHistoryToolStripMenuItem.Name = "vendorHistoryToolStripMenuItem";
-            this.vendorHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vendorHistoryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.vendorHistoryToolStripMenuItem.Text = "Vendor History";
             // 
             // purchaseRequestsToolStripMenuItem
@@ -363,6 +365,7 @@
             this.overduePO_dataGridView.RowHeadersVisible = false;
             this.overduePO_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.overduePO_dataGridView.TabIndex = 0;
+            this.overduePO_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OverDuePO_dataGridView_CellContentClick);
             // 
             // openPrTab
             // 
@@ -616,6 +619,13 @@
             // 
             this.pRTableAdapter.ClearBeforeFill = true;
             // 
+            // workRequestToolStripMenuItem
+            // 
+            this.workRequestToolStripMenuItem.Name = "workRequestToolStripMenuItem";
+            this.workRequestToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.workRequestToolStripMenuItem.Text = "Work Request";
+            this.workRequestToolStripMenuItem.Click += new System.EventHandler(this.WorkRequestToolStripMenuItem_Click);
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -718,5 +728,6 @@
         private System.Windows.Forms.BindingSource pRBindingSource;
         private MELDataSetTableAdapters.PRTableAdapter pRTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem purchaseRequestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem workRequestToolStripMenuItem;
     }
 }

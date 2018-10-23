@@ -72,7 +72,14 @@ namespace MEL_r811_18
             po.Show();
 
         }
+        private void OverDuePO_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = Convert.ToInt16(overduePO_dataGridView.Rows[e.RowIndex].Cells[0].Value); // get the Row Index
+            PR_Review po = new PR_Review(Convert.ToInt16(overduePO_dataGridView.Rows[e.RowIndex].Cells[0].Value));
+            po.FormClosed += new FormClosedEventHandler(PO_FormClosed);
+            po.Show();
 
+        }
         private void NewMachineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MachineSetup mss = new MachineSetup(this);
@@ -111,6 +118,10 @@ namespace MEL_r811_18
             this.Show();
         }
         private void EditVendorClosed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+        private void WorkRequestEntryClosed(object sender, EventArgs e)
         {
             this.Show();
         }
@@ -243,7 +254,7 @@ namespace MEL_r811_18
                 conn = new SqlConnection(conn_string);
                 conn.Open();
 
-                q = "SELECT Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
                     //"WHERE (PR_Details.DueDate < '" + today + "') AND (PR_Details.Received = 'False')";
@@ -255,39 +266,44 @@ namespace MEL_r811_18
                 dataAdapter.Fill(dt);
                 overduePO_dataGridView.DataSource = dt;
 
-                overduePO_dataGridView.Columns[0].FillWeight = 80;
-                overduePO_dataGridView.Columns[0].HeaderText = "Vendor";
+                overduePO_dataGridView.Columns[0].FillWeight = 30;
+                overduePO_dataGridView.Columns[0].HeaderText = "ID";
                 overduePO_dataGridView.Columns[0].ReadOnly = true;
+                overduePO_dataGridView.Columns[0].Visible = false;
 
-                overduePO_dataGridView.Columns[1].FillWeight = 50;
-                overduePO_dataGridView.Columns[1].HeaderText = "PO Number";
+                overduePO_dataGridView.Columns[1].FillWeight = 80;
+                overduePO_dataGridView.Columns[1].HeaderText = "Vendor";
                 overduePO_dataGridView.Columns[1].ReadOnly = true;
 
                 overduePO_dataGridView.Columns[2].FillWeight = 50;
-                overduePO_dataGridView.Columns[2].HeaderText = "Qty";
+                overduePO_dataGridView.Columns[2].HeaderText = "PO Number";
                 overduePO_dataGridView.Columns[2].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[3].FillWeight = 40;
-                overduePO_dataGridView.Columns[3].Visible = false;
+                overduePO_dataGridView.Columns[3].FillWeight = 50;
+                overduePO_dataGridView.Columns[3].HeaderText = "Qty";
+                overduePO_dataGridView.Columns[3].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[4].FillWeight = 100;
-                overduePO_dataGridView.Columns[4].HeaderText = "Part Number";
-                overduePO_dataGridView.Columns[4].ReadOnly = true;
+                overduePO_dataGridView.Columns[4].FillWeight = 40;
+                overduePO_dataGridView.Columns[4].Visible = false;
 
-                overduePO_dataGridView.Columns[5].FillWeight = 200;
-                overduePO_dataGridView.Columns[5].HeaderText = "Description";
+                overduePO_dataGridView.Columns[5].FillWeight = 100;
+                overduePO_dataGridView.Columns[5].HeaderText = "Part Number";
                 overduePO_dataGridView.Columns[5].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[6].FillWeight = 50;
-                overduePO_dataGridView.Columns[6].Visible = false;
+                overduePO_dataGridView.Columns[6].FillWeight = 200;
+                overduePO_dataGridView.Columns[6].HeaderText = "Description";
+                overduePO_dataGridView.Columns[6].ReadOnly = true;
 
                 overduePO_dataGridView.Columns[7].FillWeight = 50;
-                overduePO_dataGridView.Columns[7].HeaderText = "DUE";
-                overduePO_dataGridView.Columns[7].ReadOnly = true;
+                overduePO_dataGridView.Columns[7].Visible = false;
 
                 overduePO_dataGridView.Columns[8].FillWeight = 50;
-                overduePO_dataGridView.Columns[8].HeaderText = "Rec'd";
-                overduePO_dataGridView.Columns[8].ReadOnly = false;
+                overduePO_dataGridView.Columns[8].HeaderText = "DUE";
+                overduePO_dataGridView.Columns[8].ReadOnly = true;
+
+                overduePO_dataGridView.Columns[9].FillWeight = 50;
+                overduePO_dataGridView.Columns[9].HeaderText = "Rec'd";
+                overduePO_dataGridView.Columns[9].ReadOnly = false;
 
                 conn.Close();
             }
@@ -407,6 +423,13 @@ namespace MEL_r811_18
             ep.FormClosed += new FormClosedEventHandler(VendorSetupClosed);
             ep.Show();
         }
+        private void WorkRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WorkRequestEntry wre = new WorkRequestEntry(this);
+            wre.FormClosed += new FormClosedEventHandler(WorkRequestEntryClosed);
+            wre.Show();
+            Hide();
+        }
 
         public void OpenPR_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -416,6 +439,8 @@ namespace MEL_r811_18
             po.Show();
 
         }
+
+        
     }
 
 

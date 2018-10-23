@@ -8,8 +8,8 @@ using System.Data.SqlClient;
 //using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
-using System.Data.SqlClient;
+//using System.Data;
+//using System.Data.SqlClient;
 using CrystalDecisions.CrystalReports.Engine;
 
 namespace MEL_r811_18
@@ -58,60 +58,9 @@ namespace MEL_r811_18
             Fill_Employee_ComboBox();
             Fill_Part_ComboBox();
 
-            //CustomerReport crystalReport = new CustomerReport();
-            //Customers dsCustomers = GetData();
-            //crystalReport.SetDataSource(dsCustomers);
-            //this.crystalReportViewer1.ReportSource = crystalReport;
-            //this.crystalReportViewer1.RefreshReport();
-
         }
-        //private Customers GetData()
+ 
 
-        //{
-        //    using (SqlConnection conn = new SqlConnection(conn_string))
-
-        //    {
-
-        //        using (SqlCommand cmd = new SqlCommand("SELECT TOP 20 * FROM Customers"))
-
-        //        {
-
-        //            using (SqlDataAdapter sda = new SqlDataAdapter())
-
-        //            {
-
-        //                cmd.Connection = conn;
-
-        //                sda.SelectCommand = cmd;
-
-        //                using (Customers dsCustomers = new Customers())
-
-        //                {
-
-        //                    sda.Fill(dsCustomers, "DataTable1");
-
-        //                    return dsCustomers;
-
-        //                }
-
-        //            }
-
-        //        }
-
-        //    }
-        //}
-        private void Fill_DataSet_For_Report()
-        {
-            SqlConnection conn = new SqlConnection(conn_string);
-            SqlDataAdapter da = new SqlDataAdapter("SELECT VendorName FROM Vendors", conn);
-            DataSet ds = new DataSet();
-            da.Fill(ds, "VendorName");
-            da = new SqlDataAdapter("SELECT DateIssued FROM PR", conn);
-            da.Fill(ds, "DateIssued");
-
-            PurchaseRequisition.DataSource = ds.Tables["VendorName"];
-            PurchaseRequisition.DataBind();
-        }
         private void Cncl_btn_Click(object sender, EventArgs e)
         {
             desc_txb.Clear();
@@ -396,7 +345,7 @@ namespace MEL_r811_18
         {
             machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '"
                     + (dep_combo.SelectedValue.ToString()) + "'";
-            DataTable table = new DataTable("MAchineData");
+            DataTable table = new DataTable("MachineData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
                 using (SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn))

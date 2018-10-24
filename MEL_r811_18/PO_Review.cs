@@ -51,16 +51,16 @@ namespace MEL_r811_18
 
         public void PO_Review_load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'mELDataSet.PR_Details' table. You can move, or remove it, as needed.
-            this.pR_DetailsTableAdapter.Fill(this.mELDataSet.PR_Details);
-            // TODO: This line of code loads data into the 'mELDataSet.Machines' table. You can move, or remove it, as needed.
-            this.machinesTableAdapter.Fill(this.mELDataSet.Machines);
-            // TODO: This line of code loads data into the 'mELDataSet.Department' table. You can move, or remove it, as needed.
-            this.departmentTableAdapter.Fill(this.mELDataSet.Department);
-            // TODO: This line of code loads data into the 'mELDataSet.Employee' table. You can move, or remove it, as needed.
-            this.employeeTableAdapter.Fill(this.mELDataSet.Employee);
-            // TODO: This line of code loads data into the 'mELDataSet.Vendors' table. You can move, or remove it, as needed.
-            this.vendorsTableAdapter.Fill(this.mELDataSet.Vendors);
+            //// TODO: This line of code loads data into the 'mELDataSet.PR_Details' table. You can move, or remove it, as needed.
+            //this.pR_DetailsTableAdapter.Fill(this.mELDataSet.PR_Details);
+            //// TODO: This line of code loads data into the 'mELDataSet.Machines' table. You can move, or remove it, as needed.
+            //this.machinesTableAdapter.Fill(this.mELDataSet.Machines);
+            //// TODO: This line of code loads data into the 'mELDataSet.Department' table. You can move, or remove it, as needed.
+            //this.departmentTableAdapter.Fill(this.mELDataSet.Department);
+            //// TODO: This line of code loads data into the 'mELDataSet.Employee' table. You can move, or remove it, as needed.
+            //this.employeeTableAdapter.Fill(this.mELDataSet.Employee);
+            //// TODO: This line of code loads data into the 'mELDataSet.Vendors' table. You can move, or remove it, as needed.
+            //this.vendorsTableAdapter.Fill(this.mELDataSet.Vendors);
 
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
@@ -337,7 +337,7 @@ namespace MEL_r811_18
            
         }
 
-        private void printPreviewDialog1_Load(object sender, EventArgs e)
+        private void PrintPreviewDialog1_Load(object sender, EventArgs e)
         {
 
         }

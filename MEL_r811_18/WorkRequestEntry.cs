@@ -30,6 +30,10 @@ namespace MEL_r811_18
         public int machineId;
         public int typeId;
         public int priorityId;
+        public int requestID;
+        public int partID;
+
+        public bool converted;
 
         public WorkRequestEntry(MainScreen ms)
         {
@@ -212,7 +216,7 @@ namespace MEL_r811_18
             return priorityId;
         }
 
-        private void Save_Request()
+        private void Save_Request(object Sender, EventArgs e)
         {
             string type = requestType_comboBox.Text;
             string priority = requestPriority_comboBox.Text;
@@ -225,30 +229,48 @@ namespace MEL_r811_18
             {
                 machToAdd = machine_comboBox.Text;
             }
-
+            if (requestConverted_radioButton.Checked == true)
+            {
+                converted = true;
+            }
+            else
+            {
+                converted = false;
+            }
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                q = "INSERT INTO PR (VendorID, DateIssued, DepartmentID, MachineID, EmployeeID, DeliverTo) OUTPUT INSERTED.OrderID " +
-                    "VALUES (@VendorID, @DateIssued, @DepartmentID, @MachineID, @EmployeeID, @DeliverTo)";
+                q = "INSERT INTO WorkRequest (MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
+                    "VALUES (@MachineID, @RequestDate, @TypeID, @PriorityID, @WorkPerformed, @RequestConverted)";
 
-                //TODO: 
-                //using (SqlCommand command = new SqlCommand(q, conn))
-                //{
-                //    command.Parameters.AddWithValue("@VendorID", Get_VendorID(type));
-                //    command.Parameters.AddWithValue("@DateIssued", dateIsued_dtp.Text);
-                //    command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(department));
-                //    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
-                //    command.Parameters.AddWithValue("@EmployeeID", Get_EmployeeID(emp));
-                //    command.Parameters.AddWithValue("@DeliverTo", deliverTo_txb.Text);
+                using (SqlCommand command = new SqlCommand(q, conn))
+                {
+                    command.Parameters.AddWithValue("@TypeID", Get_TypeID(type));
+                    command.Parameters.AddWithValue("@RequestDate", requestDate_datePicker.Text);                    
+                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
+                    command.Parameters.AddWithValue("@PriorityID", Get_PriorityID(priority));
+                    command.Parameters.AddWithValue("@WorkPerformed", workRequested_textBox.Text);
+                    command.Parameters.AddWithValue("@RequestConverted", converted);
 
-                //    conn.Open();
-                //    orderID = (int)command.ExecuteScalar();
+                    conn.Open();
+                    requestID = (int)command.ExecuteScalar();
 
-                //    Save_PRDetails();
-
-                //}
+                }
             }
+            this.Close();
 
+        }
+
+        private void RequestConverted_radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (requestConverted_radioButton.Checked == true)
+            {
+                requestConverted_radioButton.Text = "Work Order";
+            }
+            else
+            {
+                requestConverted_radioButton.Text = "Work Request";
+            }
+            
         }
     }
 }

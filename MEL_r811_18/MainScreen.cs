@@ -178,7 +178,9 @@ namespace MEL_r811_18
             OpenPO_Fill();
             OverduePO_Fill();
             OpenPR_Fill();
+            OpenWR_Fill();
         }
+
         private void OpenPO_Fill()
         {
             try
@@ -370,6 +372,86 @@ namespace MEL_r811_18
                 openPR_dataGridView.Columns[9].FillWeight = 50;
                 openPR_dataGridView.Columns[9].HeaderText = "Rec'd";
                 openPR_dataGridView.Columns[9].ReadOnly = false;
+
+                conn.Close();
+            }
+            catch
+            {
+
+            }
+
+        }
+        private void OpenWR_Fill()
+        {
+            try
+            {
+                conn = new SqlConnection(conn_string);
+                conn.Open();
+
+                //q = "SELECT WorkRequest.RequestID, Machines.BTNumber, WorkRequest.RequestDate, Type.Type,  Priority.Priority, WorkRequest.WorkRequested" +
+                //    "FROM Type INNER JOIN WorkRequest ON Type.TypeID = WorkRequest.RequestType " +
+                //    "INNER JOIN Machines ON Machines.MachineID = WorkRequest.MachineID " +
+                //    "INNER JOIN Priority ON WorkRequest.RequestPriority =Priority.PriorityID " +
+                //    "WHERE (WorkRequest.RequestConverted = 'False'";
+
+                q = "SELECT WorkRequest.RequestID, Machines.BTNumber, WorkRequest.RequestDate, Type.Type " +
+                    "FROM Machines INNER JOIN WorkRequest ON Machines.MachineID = WorkRequest.MachineID " +
+                    "INNER JOIN Type ON Type.Type = WorkRequest.RequestType " +
+                    "WHERE WorkRequest.RequestConverted = 'False'";
+
+                //q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                //    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                //    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                //    "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'False') AND (PR.PONumber IS NOT NULL)";
+
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                openWO_dataGridView.DataSource = dt;
+
+                openWO_dataGridView.Columns[0].FillWeight = 30;
+                openWO_dataGridView.Columns[0].HeaderText = "ID";
+                openWO_dataGridView.Columns[0].ReadOnly = true;
+                openWO_dataGridView.Columns[0].Visible = false;
+
+                openWO_dataGridView.Columns[1].FillWeight = 80;
+                openWO_dataGridView.Columns[1].HeaderText = "Machine";
+                openWO_dataGridView.Columns[1].ReadOnly = true;
+
+                openWO_dataGridView.Columns[2].FillWeight = 50;
+                openWO_dataGridView.Columns[2].HeaderText = "Request Date";
+                openWO_dataGridView.Columns[2].ReadOnly = true;
+
+                openWO_dataGridView.Columns[3].FillWeight = 50;
+                openWO_dataGridView.Columns[3].HeaderText = "Type";
+                openWO_dataGridView.Columns[3].ReadOnly = true;
+
+                //openPO_dataGridView.Columns[4].FillWeight = 40;
+                //openPO_dataGridView.Columns[4].Visible = false;
+
+                openWO_dataGridView.Columns[4].FillWeight = 100;
+                openWO_dataGridView.Columns[4].HeaderText = "Priority";
+                openWO_dataGridView.Columns[4].ReadOnly = true;
+
+                openWO_dataGridView.Columns[5].FillWeight = 200;
+                openWO_dataGridView.Columns[5].HeaderText = "Work Requested";
+                openWO_dataGridView.Columns[5].ReadOnly = true;
+
+                //openPO_dataGridView.Columns[7].FillWeight = 50;
+                //openPO_dataGridView.Columns[7].Visible = false;
+
+                //openPO_dataGridView.Columns[8].FillWeight = 50;
+                //openPO_dataGridView.Columns[8].HeaderText = "DUE";
+                //openPO_dataGridView.Columns[8].ReadOnly = true;
+
+                //openPO_dataGridView.Columns[9].FillWeight = 50;
+                //openPO_dataGridView.Columns[9].HeaderText = "Rec'd";
+                //openPO_dataGridView.Columns[9].ReadOnly = false;
+
+                //open_po_count = openPO_dataGridView.Rows.Count.ToString();
+                //totalRecords_toolStripLabel.Text = open_po_count;
 
                 conn.Close();
             }

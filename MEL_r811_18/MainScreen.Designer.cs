@@ -51,6 +51,7 @@
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.purchaseRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openPoTab = new System.Windows.Forms.TabPage();
@@ -74,7 +75,7 @@
             this.dataGridView7 = new System.Windows.Forms.DataGridView();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.openWoTab = new System.Windows.Forms.TabPage();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.openWO_dataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tasksTab = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
@@ -83,7 +84,8 @@
             this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PRTableAdapter();
-            this.workRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openWrTab = new System.Windows.Forms.TabPage();
+            this.openWR_dataGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -102,13 +104,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
             this.tabControl3.SuspendLayout();
             this.openWoTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).BeginInit();
             this.tabControl4.SuspendLayout();
             this.tasksTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).BeginInit();
+            this.openWrTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -276,6 +280,13 @@
             this.purchaseRequestToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
             this.purchaseRequestToolStripMenuItem.Text = "Purchase Request";
             this.purchaseRequestToolStripMenuItem.Click += new System.EventHandler(this.NewPurchaseRequestToolStripMenuItem_Click);
+            // 
+            // workRequestToolStripMenuItem
+            // 
+            this.workRequestToolStripMenuItem.Name = "workRequestToolStripMenuItem";
+            this.workRequestToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.workRequestToolStripMenuItem.Text = "Work Request";
+            this.workRequestToolStripMenuItem.Click += new System.EventHandler(this.WorkRequestToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -528,6 +539,7 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.tabControl3, 3);
             this.tabControl3.Controls.Add(this.openWoTab);
+            this.tabControl3.Controls.Add(this.openWrTab);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl3.Location = new System.Drawing.Point(203, 215);
             this.tabControl3.Name = "tabControl3";
@@ -537,7 +549,7 @@
             // 
             // openWoTab
             // 
-            this.openWoTab.Controls.Add(this.dataGridView3);
+            this.openWoTab.Controls.Add(this.openWO_dataGridView);
             this.openWoTab.Location = new System.Drawing.Point(4, 22);
             this.openWoTab.Name = "openWoTab";
             this.openWoTab.Padding = new System.Windows.Forms.Padding(3);
@@ -546,15 +558,15 @@
             this.openWoTab.Text = "Open Work Orders";
             this.openWoTab.UseVisualStyleBackColor = true;
             // 
-            // dataGridView3
+            // openWO_dataGridView
             // 
-            this.dataGridView3.BackgroundColor = System.Drawing.Color.DodgerBlue;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(580, 132);
-            this.dataGridView3.TabIndex = 0;
+            this.openWO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
+            this.openWO_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.openWO_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openWO_dataGridView.Location = new System.Drawing.Point(3, 3);
+            this.openWO_dataGridView.Name = "openWO_dataGridView";
+            this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
+            this.openWO_dataGridView.TabIndex = 0;
             // 
             // tabControl4
             // 
@@ -619,12 +631,26 @@
             // 
             this.pRTableAdapter.ClearBeforeFill = true;
             // 
-            // workRequestToolStripMenuItem
+            // openWrTab
             // 
-            this.workRequestToolStripMenuItem.Name = "workRequestToolStripMenuItem";
-            this.workRequestToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
-            this.workRequestToolStripMenuItem.Text = "Work Request";
-            this.workRequestToolStripMenuItem.Click += new System.EventHandler(this.WorkRequestToolStripMenuItem_Click);
+            this.openWrTab.Controls.Add(this.openWR_dataGridView);
+            this.openWrTab.Location = new System.Drawing.Point(4, 22);
+            this.openWrTab.Name = "openWrTab";
+            this.openWrTab.Padding = new System.Windows.Forms.Padding(3);
+            this.openWrTab.Size = new System.Drawing.Size(586, 138);
+            this.openWrTab.TabIndex = 1;
+            this.openWrTab.Text = "Work Requests";
+            this.openWrTab.UseVisualStyleBackColor = true;
+            // 
+            // openWR_dataGridView
+            // 
+            this.openWR_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
+            this.openWR_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.openWR_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openWR_dataGridView.Location = new System.Drawing.Point(3, 3);
+            this.openWR_dataGridView.Name = "openWR_dataGridView";
+            this.openWR_dataGridView.Size = new System.Drawing.Size(580, 132);
+            this.openWR_dataGridView.TabIndex = 0;
             // 
             // MainScreen
             // 
@@ -661,13 +687,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
             this.tabControl3.ResumeLayout(false);
             this.openWoTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).EndInit();
             this.tabControl4.ResumeLayout(false);
             this.tasksTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).EndInit();
+            this.openWrTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -711,7 +739,7 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabControl tabControl3;
         private System.Windows.Forms.TabPage openWoTab;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView openWO_dataGridView;
         private System.Windows.Forms.TabControl tabControl4;
         private System.Windows.Forms.TabPage tasksTab;
         private System.Windows.Forms.DataGridView dataGridView4;
@@ -729,5 +757,7 @@
         private MELDataSetTableAdapters.PRTableAdapter pRTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem purchaseRequestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem workRequestToolStripMenuItem;
+        private System.Windows.Forms.TabPage openWrTab;
+        private System.Windows.Forms.DataGridView openWR_dataGridView;
     }
 }

@@ -980,7 +980,17 @@ namespace MEL_r811_18
             add_FK_PR_Details_Parts.ExecuteNonQuery();
             SqlCommand add_FK_Table_PR = new SqlCommand(query_add_FK_Table_PR, conn);
             add_FK_Table_PR.ExecuteNonQuery();
- 
+
+            //WorkRequest Contraint strings
+            string query_add_FK_WorkRequest_Department = "IF OBJECT_ID('dbo.[FK_WorkRequest_Department]') IS NULL ALTER TABLE dbo.WorkRequest ADD CONSTRAINT [FK_WorkRequest_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([DepartmentID])";
+            string query_add_FK_WorkRequest_Machines = "IF OBJECT_ID('dbo.[FK_WorkRequest_Machines]') IS NULL ALTER TABLE dbo.WorkRequest ADD CONSTRAINT [FK_WorkRequest_Machines] FOREIGN KEY ([MachineID]) REFERENCES [dbo].[Machines] ([MachineID])";
+
+            //Add WorkRequest Constraints
+            SqlCommand add_FK_WorkRequest_Department = new SqlCommand(query_add_FK_WorkRequest_Department, conn);
+            add_FK_WorkRequest_Department.ExecuteNonQuery();
+            SqlCommand add_FK_WorkRequest_Machines = new SqlCommand(query_add_FK_WorkRequest_Machines, conn);
+            add_FK_WorkRequest_Machines.ExecuteNonQuery();
+
             conn.Close();
         }
         private void RemoveContraints(object sender, EventArgs e)
@@ -1007,7 +1017,7 @@ namespace MEL_r811_18
             string query_remove_FK_PR_Machine = "IF OBJECT_ID('dbo.[FK_PR_Machines]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Machines]";
             string query_remove_FK_PR_Department = "IF OBJECT_ID('dbo.[FK_PR_Department]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Department]";
             string query_remove_FK_PR_Vendor = "IF OBJECT_ID('dbo.[FK_PR_Vendor]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Vendor]";
-
+ 
             //Remove PR Constraints          
             SqlCommand remove_PK_PR = new SqlCommand(query_remove_PK_PR, conn);
             remove_PK_PR.ExecuteNonQuery();
@@ -1019,6 +1029,16 @@ namespace MEL_r811_18
             remove_FK_PR_Department.ExecuteNonQuery();
             SqlCommand remove_FK_PR_Vendor = new SqlCommand(query_remove_FK_PR_Vendor, conn);
             remove_FK_PR_Vendor.ExecuteNonQuery();
+            
+            //WorkRequest Contraint strings
+            string query_remove_FK_WorkRequest_Department = "IF OBJECT_ID('dbo.[FK_WorkRequest_Department]') IS NOT NULL ALTER TABLE dbo.WorkRequest DROP CONSTRAINT [FK_WorkRequest_Department]";
+            string query_remove_FK_WorkRequest_Machines = "IF OBJECT_ID('dbo.[FK_WorkRequest_Machines]') IS NOT NULL ALTER TABLE dbo.WorkRequest DROP CONSTRAINT [FK_WorkRequest_Machines]";
+
+            //Remove WorkRequest Constraints
+            SqlCommand remove_FK_WorkRequest_Department = new SqlCommand(query_remove_FK_WorkRequest_Department, conn);
+            remove_FK_WorkRequest_Department.ExecuteNonQuery();
+            SqlCommand remove_FK_WorkRequest_Machines = new SqlCommand(query_remove_FK_WorkRequest_Machines, conn);
+            remove_FK_WorkRequest_Machines.ExecuteNonQuery();
 
             //Department Contraint Strings
             string query_remove_PK_Department = "IF OBJECT_ID('dbo.[PK_Department]') IS NOT NULL ALTER TABLE dbo.Department DROP CONSTRAINT [PK_Department]";

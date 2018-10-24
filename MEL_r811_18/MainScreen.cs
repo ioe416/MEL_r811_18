@@ -80,6 +80,14 @@ namespace MEL_r811_18
             po.Show();
 
         }
+        private void OpenWR_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = Convert.ToInt16(openWR_dataGridView.Rows[e.RowIndex].Cells[0].Value); // get the Row Index
+            WorkRequestEntry wre = new WorkRequestEntry(Convert.ToInt16(openWR_dataGridView.Rows[e.RowIndex].Cells[0].Value));
+            wre.FormClosed += new FormClosedEventHandler(PO_FormClosed);
+            wre.Show();
+        }
+
         private void NewMachineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MachineSetup mss = new MachineSetup(this);
@@ -124,56 +132,57 @@ namespace MEL_r811_18
         private void WorkRequestEntryClosed(object sender, EventArgs e)
         {
             this.Show();
+            OpenWR_Fill();
         }
 
         private void MainScreen_load(object sender, EventArgs e)
         {
-            this.pRTableAdapter.Fill(this.mELDataSet.PR);
-            if (!Directory.Exists(path + "\\MEL"))
-                Directory.CreateDirectory(path + "\\MEL");
+            //this.pRTableAdapter.Fill(this.mELDataSet.PR);
+            //if (!Directory.Exists(path + "\\MEL"))
+            //    Directory.CreateDirectory(path + "\\MEL");
 
-            if (!File.Exists(path + "\\MEL\\machine.xml"))
-            {
-                XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\machine.xml", Encoding.UTF8);
-                xw.WriteStartElement("Machines");
-                xw.WriteEndElement();
-                xw.Close();
-            }
-            if (!File.Exists(path + "\\MEL\\vendor.xml"))
-            {
-                XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\vendor.xml", Encoding.UTF8);
-                xw.WriteStartElement("Vendors");
-                xw.WriteEndElement();
-                xw.Close();
-            }
-            if (!File.Exists(path + "\\MEL\\part.xml"))
-            {
-                XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\part.xml", Encoding.UTF8);
-                xw.WriteStartElement("Parts");
-                xw.WriteEndElement();
-                xw.Close();
-            }
-            if (!File.Exists(path + "\\MEL\\employee.xml"))
-            {
-                XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\employee.xml", Encoding.UTF8);
-                xw.WriteStartElement("Employees");
-                xw.WriteEndElement();
-                xw.Close();
-            }
-            if (!File.Exists(path + "\\MEL\\pr.xml"))
-            {
-                XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\pr.xml", Encoding.UTF8);
-                xw.WriteStartElement("PurchaseRequisitions");
-                xw.WriteEndElement();
-                xw.Close();
-            }
-            if (!File.Exists(path + "\\MEL\\pr_details.xml"))
-            {
-                XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\pr_details.xml", Encoding.UTF8);
-                xw.WriteStartElement("OrderDetails");
-                xw.WriteEndElement();
-                xw.Close();
-            }
+            //if (!File.Exists(path + "\\MEL\\machine.xml"))
+            //{
+            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\machine.xml", Encoding.UTF8);
+            //    xw.WriteStartElement("Machines");
+            //    xw.WriteEndElement();
+            //    xw.Close();
+            //}
+            //if (!File.Exists(path + "\\MEL\\vendor.xml"))
+            //{
+            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\vendor.xml", Encoding.UTF8);
+            //    xw.WriteStartElement("Vendors");
+            //    xw.WriteEndElement();
+            //    xw.Close();
+            //}
+            //if (!File.Exists(path + "\\MEL\\part.xml"))
+            //{
+            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\part.xml", Encoding.UTF8);
+            //    xw.WriteStartElement("Parts");
+            //    xw.WriteEndElement();
+            //    xw.Close();
+            //}
+            //if (!File.Exists(path + "\\MEL\\employee.xml"))
+            //{
+            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\employee.xml", Encoding.UTF8);
+            //    xw.WriteStartElement("Employees");
+            //    xw.WriteEndElement();
+            //    xw.Close();
+            //}
+            //if (!File.Exists(path + "\\MEL\\pr.xml"))
+            //{
+            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\pr.xml", Encoding.UTF8);
+            //    xw.WriteStartElement("PurchaseRequisitions");
+            //    xw.WriteEndElement();
+            //    xw.Close();
+            //}
+            //if (!File.Exists(path + "\\MEL\\pr_details.xml"))
+            //{
+            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\pr_details.xml", Encoding.UTF8);
+            //    xw.WriteStartElement("OrderDetails");
+            //    xw.WriteEndElement();
+            //    xw.Close();
+            //}
 
             OpenPO_Fill();
             OverduePO_Fill();
@@ -259,7 +268,6 @@ namespace MEL_r811_18
                 q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    //"WHERE (PR_Details.DueDate < '" + today + "') AND (PR_Details.Received = 'False')";
                     "WHERE (PR_Details.Received = 'False') AND (PR_Details.DueDate < '" + today + "')";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
@@ -388,70 +396,41 @@ namespace MEL_r811_18
                 conn = new SqlConnection(conn_string);
                 conn.Open();
 
-                //q = "SELECT WorkRequest.RequestID, Machines.BTNumber, WorkRequest.RequestDate, Type.Type,  Priority.Priority, WorkRequest.WorkRequested" +
-                //    "FROM Type INNER JOIN WorkRequest ON Type.TypeID = WorkRequest.RequestType " +
-                //    "INNER JOIN Machines ON Machines.MachineID = WorkRequest.MachineID " +
-                //    "INNER JOIN Priority ON WorkRequest.RequestPriority =Priority.PriorityID " +
-                //    "WHERE (WorkRequest.RequestConverted = 'False'";
-
-                q = "SELECT WorkRequest.RequestID, Machines.BTNumber, WorkRequest.RequestDate, Type.Type " +
-                    "FROM Machines INNER JOIN WorkRequest ON Machines.MachineID = WorkRequest.MachineID " +
-                    "INNER JOIN Type ON Type.Type = WorkRequest.RequestType " +
-                    "WHERE WorkRequest.RequestConverted = 'False'";
-
-                //q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
-                //    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
-                //    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                //    "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'False') AND (PR.PONumber IS NOT NULL)";
-
+                q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], [Type].[Type] ,[Priority].[Priority], [WorkRequest].[WorkRequested] " +
+                    "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
+                    "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
+                    "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority]";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
                 DataTable dt = new DataTable();
                 dataAdapter.Fill(dt);
-                openWO_dataGridView.DataSource = dt;
+                openWR_dataGridView.DataSource = dt;
 
-                openWO_dataGridView.Columns[0].FillWeight = 30;
-                openWO_dataGridView.Columns[0].HeaderText = "ID";
-                openWO_dataGridView.Columns[0].ReadOnly = true;
-                openWO_dataGridView.Columns[0].Visible = false;
+                openWR_dataGridView.Columns[0].FillWeight = 30;
+                openWR_dataGridView.Columns[0].HeaderText = "ID";
+                openWR_dataGridView.Columns[0].ReadOnly = true;
+                openWR_dataGridView.Columns[0].Visible = true;
 
-                openWO_dataGridView.Columns[1].FillWeight = 80;
-                openWO_dataGridView.Columns[1].HeaderText = "Machine";
-                openWO_dataGridView.Columns[1].ReadOnly = true;
+                openWR_dataGridView.Columns[1].FillWeight = 120;
+                openWR_dataGridView.Columns[1].HeaderText = "Machine";
+                openWR_dataGridView.Columns[1].ReadOnly = true;
 
-                openWO_dataGridView.Columns[2].FillWeight = 50;
-                openWO_dataGridView.Columns[2].HeaderText = "Request Date";
-                openWO_dataGridView.Columns[2].ReadOnly = true;
+                openWR_dataGridView.Columns[2].FillWeight = 100;
+                openWR_dataGridView.Columns[2].HeaderText = "Request Date";
+                openWR_dataGridView.Columns[2].ReadOnly = true;
 
-                openWO_dataGridView.Columns[3].FillWeight = 50;
-                openWO_dataGridView.Columns[3].HeaderText = "Type";
-                openWO_dataGridView.Columns[3].ReadOnly = true;
+                openWR_dataGridView.Columns[3].FillWeight = 150;
+                openWR_dataGridView.Columns[3].HeaderText = "Type";
+                openWR_dataGridView.Columns[3].ReadOnly = true;
 
-                //openPO_dataGridView.Columns[4].FillWeight = 40;
-                //openPO_dataGridView.Columns[4].Visible = false;
+                openWR_dataGridView.Columns[4].FillWeight = 250;
+                openWR_dataGridView.Columns[4].HeaderText = "Priority";
+                openWR_dataGridView.Columns[4].ReadOnly = true;
 
-                openWO_dataGridView.Columns[4].FillWeight = 100;
-                openWO_dataGridView.Columns[4].HeaderText = "Priority";
-                openWO_dataGridView.Columns[4].ReadOnly = true;
-
-                openWO_dataGridView.Columns[5].FillWeight = 200;
-                openWO_dataGridView.Columns[5].HeaderText = "Work Requested";
-                openWO_dataGridView.Columns[5].ReadOnly = true;
-
-                //openPO_dataGridView.Columns[7].FillWeight = 50;
-                //openPO_dataGridView.Columns[7].Visible = false;
-
-                //openPO_dataGridView.Columns[8].FillWeight = 50;
-                //openPO_dataGridView.Columns[8].HeaderText = "DUE";
-                //openPO_dataGridView.Columns[8].ReadOnly = true;
-
-                //openPO_dataGridView.Columns[9].FillWeight = 50;
-                //openPO_dataGridView.Columns[9].HeaderText = "Rec'd";
-                //openPO_dataGridView.Columns[9].ReadOnly = false;
-
-                //open_po_count = openPO_dataGridView.Rows.Count.ToString();
-                //totalRecords_toolStripLabel.Text = open_po_count;
+                openWR_dataGridView.Columns[5].FillWeight = 800;
+                openWR_dataGridView.Columns[5].HeaderText = "Work Requested";
+                openWR_dataGridView.Columns[5].ReadOnly = true;
 
                 conn.Close();
             }
@@ -507,7 +486,7 @@ namespace MEL_r811_18
         }
         private void WorkRequestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WorkRequestEntry wre = new WorkRequestEntry(this);
+            WorkRequestEntry wre = new WorkRequestEntry(0);
             wre.FormClosed += new FormClosedEventHandler(WorkRequestEntryClosed);
             wre.Show();
             Hide();
@@ -522,7 +501,7 @@ namespace MEL_r811_18
 
         }
 
-        
+       
     }
 
 

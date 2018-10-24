@@ -76,6 +76,8 @@
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.openWoTab = new System.Windows.Forms.TabPage();
             this.openWO_dataGridView = new System.Windows.Forms.DataGridView();
+            this.openWrTab = new System.Windows.Forms.TabPage();
+            this.openWR_dataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tasksTab = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
@@ -84,8 +86,6 @@
             this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PRTableAdapter();
-            this.openWrTab = new System.Windows.Forms.TabPage();
-            this.openWR_dataGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -105,14 +105,14 @@
             this.tabControl3.SuspendLayout();
             this.openWoTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).BeginInit();
+            this.openWrTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).BeginInit();
             this.tabControl4.SuspendLayout();
             this.tasksTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).BeginInit();
-            this.openWrTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -568,6 +568,35 @@
             this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openWO_dataGridView.TabIndex = 0;
             // 
+            // openWrTab
+            // 
+            this.openWrTab.Controls.Add(this.openWR_dataGridView);
+            this.openWrTab.Location = new System.Drawing.Point(4, 22);
+            this.openWrTab.Name = "openWrTab";
+            this.openWrTab.Padding = new System.Windows.Forms.Padding(3);
+            this.openWrTab.Size = new System.Drawing.Size(586, 138);
+            this.openWrTab.TabIndex = 1;
+            this.openWrTab.Text = "Work Requests";
+            this.openWrTab.UseVisualStyleBackColor = true;
+            // 
+            // openWR_dataGridView
+            // 
+            this.openWR_dataGridView.AllowUserToAddRows = false;
+            this.openWR_dataGridView.AllowUserToDeleteRows = false;
+            this.openWR_dataGridView.AllowUserToResizeColumns = false;
+            this.openWR_dataGridView.AllowUserToResizeRows = false;
+            this.openWR_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.openWR_dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.openWR_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
+            this.openWR_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.openWR_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openWR_dataGridView.Location = new System.Drawing.Point(3, 3);
+            this.openWR_dataGridView.Name = "openWR_dataGridView";
+            this.openWR_dataGridView.RowHeadersVisible = false;
+            this.openWR_dataGridView.Size = new System.Drawing.Size(580, 132);
+            this.openWR_dataGridView.TabIndex = 0;
+            this.openWR_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenWR_dataGridView_CellContentClick);
+            // 
             // tabControl4
             // 
             this.tabControl4.Controls.Add(this.tasksTab);
@@ -631,27 +660,6 @@
             // 
             this.pRTableAdapter.ClearBeforeFill = true;
             // 
-            // openWrTab
-            // 
-            this.openWrTab.Controls.Add(this.openWR_dataGridView);
-            this.openWrTab.Location = new System.Drawing.Point(4, 22);
-            this.openWrTab.Name = "openWrTab";
-            this.openWrTab.Padding = new System.Windows.Forms.Padding(3);
-            this.openWrTab.Size = new System.Drawing.Size(586, 138);
-            this.openWrTab.TabIndex = 1;
-            this.openWrTab.Text = "Work Requests";
-            this.openWrTab.UseVisualStyleBackColor = true;
-            // 
-            // openWR_dataGridView
-            // 
-            this.openWR_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
-            this.openWR_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.openWR_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openWR_dataGridView.Location = new System.Drawing.Point(3, 3);
-            this.openWR_dataGridView.Name = "openWR_dataGridView";
-            this.openWR_dataGridView.Size = new System.Drawing.Size(580, 132);
-            this.openWR_dataGridView.TabIndex = 0;
-            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -688,14 +696,14 @@
             this.tabControl3.ResumeLayout(false);
             this.openWoTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).EndInit();
+            this.openWrTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).EndInit();
             this.tabControl4.ResumeLayout(false);
             this.tasksTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).EndInit();
-            this.openWrTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

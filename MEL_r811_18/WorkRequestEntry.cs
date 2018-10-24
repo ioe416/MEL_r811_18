@@ -16,6 +16,7 @@ namespace MEL_r811_18
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
         public string q;
+        public string q2;
         public string type_q;
         public string priority_q;
         public string department_q;
@@ -32,27 +33,72 @@ namespace MEL_r811_18
         public int priorityId;
         public int requestID;
         public int partID;
+        public int index;
+        public int id;
 
         public bool converted;
 
-        public WorkRequestEntry(MainScreen ms)
+        public WorkRequestEntry(int index)
         {
             InitializeComponent();
+            id = index;
         }
         public void WorkRequestEntry_Load(object sender, EventArgs e)
         {
-            //// TODO: This line of code loads data into the 'mELDataSet1.Priority' table. You can move, or remove it, as needed.
-            //this.priorityTableAdapter.Fill(this.mELDataSet1.Priority);
-            //// TODO: This line of code loads data into the 'mELDataSet1.Type' table. You can move, or remove it, as needed.
-            //this.typeTableAdapter.Fill(this.mELDataSet1.Type);
-            //// TODO: This line of code loads data into the 'mELDataSet.Machines' table. You can move, or remove it, as needed.
-            //this.machinesTableAdapter.Fill(this.mELDataSet.Machines);
-            //// TODO: This line of code loads data into the 'mELDataSet.Department' table. You can move, or remove it, as needed.
-            //this.departmentTableAdapter.Fill(this.mELDataSet.Department);
-            Fill_RequestType_ComboBox();
-            Fill_Priority_ComboBox();
-            Fill_Department_ComboBox();
-            Fill_Machine_ComboBox();
+            if (id == 0)
+            {
+                Fill_RequestType_ComboBox();
+                Fill_Priority_ComboBox();
+                Fill_Department_ComboBox();
+                Fill_Machine_ComboBox();
+            }
+            else if (id != 0)
+            {
+                using (SqlConnection conn = new SqlConnection(conn_string))
+                {
+                    conn.Open();
+
+                    q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], " +
+                        "[Type].[Type] ,[Priority].[Priority], [WorkRequest].[WorkRequested], [Department].[DepartmentName] " +
+                        "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
+                        "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
+                        "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority] " +
+                        "INNER JOIN[Department] ON [Department].[DepartmentID] = [WorkRequest].[DepartmentID] " +
+                        "WHERE[WorkRequest].[RequestID] = '" + id + "'";
+
+                    //q2 = "SELECT [Machines].[MachineID], [Department].[DepartmentName] " +
+                    //    "FROM [Department] INNER JOIN [Machines] ON [Machines].[DepartmentID] = [Department].[DepartmentID]" +
+                    //    "WHERE [MAchines].[BTNumber] = '" + machine_comboBox.Text + "'";
+
+                    SqlCommand command = new SqlCommand(q, conn);
+
+                    SqlDataReader dr = command.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        requestDate_datePicker.Text = (string)dr["RequestDate"];
+                        machine_comboBox.Text = (string)dr["BTNumber"];
+                        requestType_comboBox.Text = (string)dr["Type"];
+                        requestPriority_comboBox.Text = (string)dr["Priority"];
+                        workRequested_textBox.Text = (string)dr["WorkRequested"];
+                        department_comboBox.Text = (string)dr["DepartmentName"];
+                    }
+
+                    //dr.Close();
+
+                    //SqlCommand command2 = new SqlCommand(q2, conn);
+
+                    //SqlDataReader dr2 = command.ExecuteReader();
+
+                    //while (dr2.Read())
+                    //{
+                    //    department_comboBox.Text = (string)dr2["DepartmentName"];
+                    //}
+                    //dr2.Close();
+                }
+
+            }
+
         }
 
         private void Department_combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -218,46 +264,54 @@ namespace MEL_r811_18
 
         private void Save_Request(object Sender, EventArgs e)
         {
-            string type = requestType_comboBox.Text;
-            string priority = requestPriority_comboBox.Text;
-            string department = department_comboBox.Text;
-            if (machine_comboBox.Text == "-Select Machine-")
+            if (id == 0)
             {
-                machToAdd = "No Machine";
-            }
-            else
-            {
-                machToAdd = machine_comboBox.Text;
-            }
-            if (requestConverted_radioButton.Checked == true)
-            {
-                converted = true;
-            }
-            else
-            {
-                converted = false;
-            }
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            {
-                q = "INSERT INTO WorkRequest (MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
-                    "VALUES (@MachineID, @RequestDate, @TypeID, @PriorityID, @WorkPerformed, @RequestConverted)";
-
-                using (SqlCommand command = new SqlCommand(q, conn))
+                string type = requestType_comboBox.Text;
+                string priority = requestPriority_comboBox.Text;
+                string department = department_comboBox.Text;
+                if (machine_comboBox.Text == "-Select Machine-")
                 {
-                    command.Parameters.AddWithValue("@TypeID", Get_TypeID(type));
-                    command.Parameters.AddWithValue("@RequestDate", requestDate_datePicker.Text);                    
-                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
-                    command.Parameters.AddWithValue("@PriorityID", Get_PriorityID(priority));
-                    command.Parameters.AddWithValue("@WorkPerformed", workRequested_textBox.Text);
-                    command.Parameters.AddWithValue("@RequestConverted", converted);
-
-                    conn.Open();
-                    requestID = (int)command.ExecuteScalar();
-
+                    machToAdd = "No Machine";
                 }
-            }
-            this.Close();
+                else
+                {
+                    machToAdd = machine_comboBox.Text;
+                }
+                if (requestConverted_radioButton.Checked == true)
+                {
+                    converted = true;
+                }
+                else
+                {
+                    converted = false;
+                }
+                using (SqlConnection conn = new SqlConnection(conn_string))
+                {
+                    q = "INSERT INTO WorkRequest (DepartmentID, MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
+                        "VALUES (@DepartmentID, @MachineID, @RequestDate, @TypeID, @PriorityID, @WorkPerformed, @RequestConverted)";
 
+                    using (SqlCommand command = new SqlCommand(q, conn))
+                    {
+                        command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(department));
+                        command.Parameters.AddWithValue("@TypeID", Get_TypeID(type));
+                        command.Parameters.AddWithValue("@RequestDate", requestDate_datePicker.Text);
+                        command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
+                        command.Parameters.AddWithValue("@PriorityID", Get_PriorityID(priority));
+                        command.Parameters.AddWithValue("@WorkPerformed", workRequested_textBox.Text);
+                        command.Parameters.AddWithValue("@RequestConverted", converted);
+
+                        conn.Open();
+                        requestID = (int)command.ExecuteScalar();
+
+                    }
+                }
+                this.Close();
+            }
+            else if (id != 0)
+            {
+                
+
+            }
         }
 
         private void RequestConverted_radioButton_CheckedChanged(object sender, EventArgs e)

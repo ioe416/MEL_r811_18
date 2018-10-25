@@ -15,7 +15,9 @@ namespace MEL_r811_18
     {
         public MainScreen ms;
 
-        public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=c:\users\joe\source\repos\MEL_r811_18\MEL_r811_18\MEL.mdf;Integrated Security=True";
+        public int vendorID;
+
+        public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         public string q;
         public string error_msg = "";
 
@@ -54,6 +56,29 @@ namespace MEL_r811_18
             {
                 error_msg = ex.Message;
                 MessageBox.Show(error_msg);
+            }
+        }
+        public int Save_Vendor_With_Return(string vendorname)
+        {
+            string vendorName = vendorname;
+
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                q = "INSERT INTO Vendors (VendorNumber, VendorName, Contact, VendorEmail, VendorPhone) OUTPUT INSERTED.VendorID " +
+                    "VALUES (@VendorNumber, @VendorName, @Contact, @VendorEmail, @VendorPhone)";
+
+                using (SqlCommand command = new SqlCommand(q, conn))
+                {
+                    command.Parameters.AddWithValue("@VendorNumber", venNum_textBox.Text);
+                    command.Parameters.AddWithValue("@VendorName", vendorName);
+                    command.Parameters.AddWithValue("@Contact", contact_textBox.Text);
+                    command.Parameters.AddWithValue("@VendorEmail", email_textBox.Text);
+                    command.Parameters.AddWithValue("@VendorPhone", phone_textBox.Text);
+
+                    conn.Open();
+                    vendorID = (int)command.ExecuteScalar();
+                    return vendorID;
+                }
             }
         }
     }

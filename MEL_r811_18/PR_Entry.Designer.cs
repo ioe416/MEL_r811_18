@@ -170,6 +170,7 @@
             this.vend_combo.Size = new System.Drawing.Size(121, 21);
             this.vend_combo.TabIndex = 8;
             this.vend_combo.ValueMember = "VendorID";
+            this.vend_combo.Leave += new System.EventHandler(this.Vend_combo_SelectedIndexChanged);
             // 
             // deliverTo_txb
             // 

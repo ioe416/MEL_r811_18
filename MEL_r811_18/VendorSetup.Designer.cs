@@ -45,18 +45,19 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.currentRecord_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.of_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.totalRecords_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.next_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.last_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.new_toolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.totalRecords_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // vendorNumber_label
             // 
             this.vendorNumber_label.AutoSize = true;
-            this.vendorNumber_label.Location = new System.Drawing.Point(21, 18);
+            this.vendorNumber_label.Location = new System.Drawing.Point(21, 34);
             this.vendorNumber_label.Name = "vendorNumber_label";
             this.vendorNumber_label.Size = new System.Drawing.Size(81, 13);
             this.vendorNumber_label.TabIndex = 2;
@@ -65,7 +66,7 @@
             // vendorName_label
             // 
             this.vendorName_label.AutoSize = true;
-            this.vendorName_label.Location = new System.Drawing.Point(207, 18);
+            this.vendorName_label.Location = new System.Drawing.Point(207, 34);
             this.vendorName_label.Name = "vendorName_label";
             this.vendorName_label.Size = new System.Drawing.Size(82, 13);
             this.vendorName_label.TabIndex = 3;
@@ -74,7 +75,7 @@
             // contactName_label
             // 
             this.contactName_label.AutoSize = true;
-            this.contactName_label.Location = new System.Drawing.Point(563, 18);
+            this.contactName_label.Location = new System.Drawing.Point(563, 34);
             this.contactName_label.Name = "contactName_label";
             this.contactName_label.Size = new System.Drawing.Size(44, 13);
             this.contactName_label.TabIndex = 4;
@@ -83,7 +84,7 @@
             // email_label
             // 
             this.email_label.AutoSize = true;
-            this.email_label.Location = new System.Drawing.Point(21, 68);
+            this.email_label.Location = new System.Drawing.Point(21, 84);
             this.email_label.Name = "email_label";
             this.email_label.Size = new System.Drawing.Size(36, 13);
             this.email_label.TabIndex = 5;
@@ -92,7 +93,7 @@
             // phone_label
             // 
             this.phone_label.AutoSize = true;
-            this.phone_label.Location = new System.Drawing.Point(414, 68);
+            this.phone_label.Location = new System.Drawing.Point(414, 84);
             this.phone_label.Name = "phone_label";
             this.phone_label.Size = new System.Drawing.Size(38, 13);
             this.phone_label.TabIndex = 6;
@@ -100,35 +101,35 @@
             // 
             // venNum_textBox
             // 
-            this.venNum_textBox.Location = new System.Drawing.Point(45, 34);
+            this.venNum_textBox.Location = new System.Drawing.Point(45, 50);
             this.venNum_textBox.Name = "venNum_textBox";
             this.venNum_textBox.Size = new System.Drawing.Size(146, 20);
             this.venNum_textBox.TabIndex = 7;
             // 
             // venName_textBox
             // 
-            this.venName_textBox.Location = new System.Drawing.Point(237, 34);
+            this.venName_textBox.Location = new System.Drawing.Point(237, 50);
             this.venName_textBox.Name = "venName_textBox";
             this.venName_textBox.Size = new System.Drawing.Size(291, 20);
             this.venName_textBox.TabIndex = 8;
             // 
             // contact_textBox
             // 
-            this.contact_textBox.Location = new System.Drawing.Point(580, 34);
+            this.contact_textBox.Location = new System.Drawing.Point(580, 50);
             this.contact_textBox.Name = "contact_textBox";
             this.contact_textBox.Size = new System.Drawing.Size(208, 20);
             this.contact_textBox.TabIndex = 9;
             // 
             // email_textBox
             // 
-            this.email_textBox.Location = new System.Drawing.Point(45, 84);
+            this.email_textBox.Location = new System.Drawing.Point(45, 100);
             this.email_textBox.Name = "email_textBox";
             this.email_textBox.Size = new System.Drawing.Size(341, 20);
             this.email_textBox.TabIndex = 10;
             // 
             // phone_textBox
             // 
-            this.phone_textBox.Location = new System.Drawing.Point(428, 84);
+            this.phone_textBox.Location = new System.Drawing.Point(428, 100);
             this.phone_textBox.Name = "phone_textBox";
             this.phone_textBox.Size = new System.Drawing.Size(179, 20);
             this.phone_textBox.TabIndex = 11;
@@ -188,6 +189,12 @@
             this.of_toolStripLabel.Size = new System.Drawing.Size(22, 22);
             this.of_toolStripLabel.Text = "OF";
             // 
+            // totalRecords_toolStripLabel
+            // 
+            this.totalRecords_toolStripLabel.Name = "totalRecords_toolStripLabel";
+            this.totalRecords_toolStripLabel.Size = new System.Drawing.Size(86, 22);
+            this.totalRecords_toolStripLabel.Text = "toolStripLabel3";
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -220,17 +227,21 @@
             this.new_toolStripButton.Size = new System.Drawing.Size(23, 22);
             this.new_toolStripButton.Text = "toolStripButton5";
             // 
-            // totalRecords_toolStripLabel
+            // label1
             // 
-            this.totalRecords_toolStripLabel.Name = "totalRecords_toolStripLabel";
-            this.totalRecords_toolStripLabel.Size = new System.Drawing.Size(86, 22);
-            this.totalRecords_toolStripLabel.Text = "toolStripLabel3";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(42, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "label1";
             // 
             // VendorSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 158);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.phone_textBox);
             this.Controls.Add(this.email_textBox);
@@ -274,5 +285,6 @@
         private System.Windows.Forms.ToolStripButton next_toolStripButton;
         private System.Windows.Forms.ToolStripButton last_toolStripButton;
         private System.Windows.Forms.ToolStripButton new_toolStripButton;
+        public System.Windows.Forms.Label label1;
     }
 }

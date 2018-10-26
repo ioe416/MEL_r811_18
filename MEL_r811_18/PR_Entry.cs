@@ -284,7 +284,7 @@ namespace MEL_r811_18
                     cmd.Parameters["@PartID"].Value = row.Cells[2].Value;
                     cmd.Parameters["@UnitPrice"].Value = row.Cells[5].Value;
                     cmd.Parameters["@Per"].Value = row.Cells[6].Value;
-                    cmd.Parameters["@DueDate"].Value = row.Cells[7].Value;
+                    cmd.Parameters["@DueDate"].Value = DBNull.Value;
                     cmd.Parameters["@Received"].Value = row.Cells[8].Value;
 
                     cmd.ExecuteNonQuery();
@@ -500,40 +500,17 @@ namespace MEL_r811_18
             {
                 case 0:
                     VendorSetup popup = new VendorSetup(ms);
-                    popup.label1.Text = "Vendor does not exist! \nDo you want to Add " + vend_combo.Text +
+                    popup.label1.Text = "Vendor does not exist! Do you want to Add " + vend_combo.Text +
                     " to the Vendor table?";
+                    popup.venName_textBox.Text = vend_combo.Text;
+                    popup.venNum_textBox.Text = "";
+                    popup.contact_textBox.Text = "";
+                    popup.phone_textBox.Text = "";
+                    popup.email_textBox.Text = "";
                     popup.ShowDialog();
 
-                    //if (MessageBox.Show("Vendor does not exist! \nDo you want to Add " + vend_combo.Text +
-                    //" to the Vendor table?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    //{
-                    //    string vendorName = vend_combo.Text;
-                    //    //string partdescription = desc_txb.Text;
-                    //    //decimal unitprice = Convert.ToDecimal(price_txb.Text);
 
-                    //    VendorSetup vs = new VendorSetup(ms);
 
-                    //    using (SqlConnection conn = new SqlConnection(conn_string))
-                    //    {
-                    //        q = "SELECT VendorID, VendorName " +
-                    //            "FROM Vendors " +
-                    //            "WHERE VendorID = '" + vs.Save_Vendor_With_Return(vendorName) + "'";
-
-                    //        SqlCommand cmd = new SqlCommand();
-                    //        cmd.Connection = conn;
-                    //        cmd.CommandType = CommandType.Text;
-                    //        cmd.CommandText = q;
-
-                    //        DataTable td = new DataTable();
-                    //        SqlDataAdapter da = new SqlDataAdapter(q, conn);
-                    //        conn.Open();
-                    //        da.Fill(td);
-                    //        conn.Close();
-                    //        vend_combo.Text = td.Rows[0].ItemArray[1].ToString();
-                    //    }
-
-                        //Fill_Vendor_ComboBox();
-                    //}
                     break;
 
                 default:

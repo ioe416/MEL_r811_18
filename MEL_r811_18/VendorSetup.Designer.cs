@@ -40,17 +40,18 @@
             this.email_textBox = new System.Windows.Forms.TextBox();
             this.phone_textBox = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.first_toolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.prev_toolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.firstRecord_button = new System.Windows.Forms.ToolStripButton();
+            this.prevRecord_button = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.currentRecord_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.of_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.totalRecords_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.next_toolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.last_toolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.new_toolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.nextRecord_button = new System.Windows.Forms.ToolStripButton();
+            this.lastRecord_button = new System.Windows.Forms.ToolStripButton();
+            this.saveRecord_button = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,39 +139,42 @@
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.first_toolStripButton,
-            this.prev_toolStripButton,
+            this.firstRecord_button,
+            this.prevRecord_button,
             this.toolStripSeparator1,
             this.currentRecord_toolStripLabel,
             this.of_toolStripLabel,
             this.totalRecords_toolStripLabel,
             this.toolStripSeparator2,
-            this.next_toolStripButton,
-            this.last_toolStripButton,
-            this.new_toolStripButton});
+            this.nextRecord_button,
+            this.lastRecord_button,
+            this.saveRecord_button,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 133);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 25);
             this.toolStrip1.TabIndex = 12;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // first_toolStripButton
+            // firstRecord_button
             // 
-            this.first_toolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.first_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("first_toolStripButton.Image")));
-            this.first_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.first_toolStripButton.Name = "first_toolStripButton";
-            this.first_toolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.first_toolStripButton.Text = "toolStripButton1";
+            this.firstRecord_button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.firstRecord_button.Image = ((System.Drawing.Image)(resources.GetObject("firstRecord_button.Image")));
+            this.firstRecord_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.firstRecord_button.Name = "firstRecord_button";
+            this.firstRecord_button.Size = new System.Drawing.Size(23, 22);
+            this.firstRecord_button.Text = "First Record";
+            this.firstRecord_button.Click += new System.EventHandler(this.FirstRecord_button_Click);
             // 
-            // prev_toolStripButton
+            // prevRecord_button
             // 
-            this.prev_toolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.prev_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("prev_toolStripButton.Image")));
-            this.prev_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.prev_toolStripButton.Name = "prev_toolStripButton";
-            this.prev_toolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.prev_toolStripButton.Text = "toolStripButton2";
+            this.prevRecord_button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.prevRecord_button.Image = ((System.Drawing.Image)(resources.GetObject("prevRecord_button.Image")));
+            this.prevRecord_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.prevRecord_button.Name = "prevRecord_button";
+            this.prevRecord_button.Size = new System.Drawing.Size(23, 22);
+            this.prevRecord_button.Text = "Previous Record";
+            this.prevRecord_button.Click += new System.EventHandler(this.PrevRecord_button_Click);
             // 
             // toolStripSeparator1
             // 
@@ -180,8 +184,8 @@
             // currentRecord_toolStripLabel
             // 
             this.currentRecord_toolStripLabel.Name = "currentRecord_toolStripLabel";
-            this.currentRecord_toolStripLabel.Size = new System.Drawing.Size(86, 22);
-            this.currentRecord_toolStripLabel.Text = "toolStripLabel1";
+            this.currentRecord_toolStripLabel.Size = new System.Drawing.Size(13, 22);
+            this.currentRecord_toolStripLabel.Text = "1";
             // 
             // of_toolStripLabel
             // 
@@ -192,40 +196,43 @@
             // totalRecords_toolStripLabel
             // 
             this.totalRecords_toolStripLabel.Name = "totalRecords_toolStripLabel";
-            this.totalRecords_toolStripLabel.Size = new System.Drawing.Size(86, 22);
-            this.totalRecords_toolStripLabel.Text = "toolStripLabel3";
+            this.totalRecords_toolStripLabel.Size = new System.Drawing.Size(13, 22);
+            this.totalRecords_toolStripLabel.Text = "0";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // next_toolStripButton
+            // nextRecord_button
             // 
-            this.next_toolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.next_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("next_toolStripButton.Image")));
-            this.next_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.next_toolStripButton.Name = "next_toolStripButton";
-            this.next_toolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.next_toolStripButton.Text = "toolStripButton3";
+            this.nextRecord_button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nextRecord_button.Image = ((System.Drawing.Image)(resources.GetObject("nextRecord_button.Image")));
+            this.nextRecord_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nextRecord_button.Name = "nextRecord_button";
+            this.nextRecord_button.Size = new System.Drawing.Size(23, 22);
+            this.nextRecord_button.Text = "Next Record";
+            this.nextRecord_button.Click += new System.EventHandler(this.NextRecord_button_Click);
             // 
-            // last_toolStripButton
+            // lastRecord_button
             // 
-            this.last_toolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.last_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("last_toolStripButton.Image")));
-            this.last_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.last_toolStripButton.Name = "last_toolStripButton";
-            this.last_toolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.last_toolStripButton.Text = "toolStripButton4";
+            this.lastRecord_button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.lastRecord_button.Image = ((System.Drawing.Image)(resources.GetObject("lastRecord_button.Image")));
+            this.lastRecord_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.lastRecord_button.Name = "lastRecord_button";
+            this.lastRecord_button.Size = new System.Drawing.Size(23, 22);
+            this.lastRecord_button.Text = "Last Record";
+            this.lastRecord_button.Click += new System.EventHandler(this.LastRecord_button_Click);
             // 
-            // new_toolStripButton
+            // saveRecord_button
             // 
-            this.new_toolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.new_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("new_toolStripButton.Image")));
-            this.new_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.new_toolStripButton.Name = "new_toolStripButton";
-            this.new_toolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.new_toolStripButton.Text = "toolStripButton5";
+            this.saveRecord_button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveRecord_button.Image = ((System.Drawing.Image)(resources.GetObject("saveRecord_button.Image")));
+            this.saveRecord_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveRecord_button.Name = "saveRecord_button";
+            this.saveRecord_button.Size = new System.Drawing.Size(23, 22);
+            this.saveRecord_button.Text = "Save Vendor";
+            this.saveRecord_button.Click += new System.EventHandler(this.SaveRecord_button_Click);
             // 
             // label1
             // 
@@ -235,6 +242,16 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "label1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "Cancel / Close";
             // 
             // VendorSetup
             // 
@@ -269,22 +286,23 @@
         private System.Windows.Forms.Label contactName_label;
         private System.Windows.Forms.Label email_label;
         private System.Windows.Forms.Label phone_label;
-        private System.Windows.Forms.TextBox venNum_textBox;
-        private System.Windows.Forms.TextBox venName_textBox;
-        private System.Windows.Forms.TextBox contact_textBox;
-        private System.Windows.Forms.TextBox email_textBox;
-        private System.Windows.Forms.TextBox phone_textBox;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton first_toolStripButton;
-        private System.Windows.Forms.ToolStripButton prev_toolStripButton;
+        private System.Windows.Forms.ToolStripButton firstRecord_button;
+        private System.Windows.Forms.ToolStripButton prevRecord_button;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel currentRecord_toolStripLabel;
         private System.Windows.Forms.ToolStripLabel of_toolStripLabel;
         private System.Windows.Forms.ToolStripLabel totalRecords_toolStripLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton next_toolStripButton;
-        private System.Windows.Forms.ToolStripButton last_toolStripButton;
-        private System.Windows.Forms.ToolStripButton new_toolStripButton;
+        private System.Windows.Forms.ToolStripButton nextRecord_button;
+        private System.Windows.Forms.ToolStripButton lastRecord_button;
+        private System.Windows.Forms.ToolStripButton saveRecord_button;
         public System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        public System.Windows.Forms.TextBox venName_textBox;
+        public System.Windows.Forms.TextBox venNum_textBox;
+        public System.Windows.Forms.TextBox contact_textBox;
+        public System.Windows.Forms.TextBox email_textBox;
+        public System.Windows.Forms.TextBox phone_textBox;
     }
 }

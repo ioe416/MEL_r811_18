@@ -84,7 +84,7 @@ namespace MEL_r811_18
         {
             int index = Convert.ToInt16(openWR_dataGridView.Rows[e.RowIndex].Cells[0].Value); // get the Row Index
             WorkRequestEntry wre = new WorkRequestEntry(Convert.ToInt16(openWR_dataGridView.Rows[e.RowIndex].Cells[0].Value));
-            wre.FormClosed += new FormClosedEventHandler(PO_FormClosed);
+            wre.FormClosed += new FormClosedEventHandler(WorkRequestEntryClosed);
             wre.Show();
         }
 
@@ -137,57 +137,14 @@ namespace MEL_r811_18
 
         private void MainScreen_load(object sender, EventArgs e)
         {
-            //this.pRTableAdapter.Fill(this.mELDataSet.PR);
-            //if (!Directory.Exists(path + "\\MEL"))
-            //    Directory.CreateDirectory(path + "\\MEL");
-
-            //if (!File.Exists(path + "\\MEL\\machine.xml"))
-            //{
-            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\machine.xml", Encoding.UTF8);
-            //    xw.WriteStartElement("Machines");
-            //    xw.WriteEndElement();
-            //    xw.Close();
-            //}
-            //if (!File.Exists(path + "\\MEL\\vendor.xml"))
-            //{
-            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\vendor.xml", Encoding.UTF8);
-            //    xw.WriteStartElement("Vendors");
-            //    xw.WriteEndElement();
-            //    xw.Close();
-            //}
-            //if (!File.Exists(path + "\\MEL\\part.xml"))
-            //{
-            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\part.xml", Encoding.UTF8);
-            //    xw.WriteStartElement("Parts");
-            //    xw.WriteEndElement();
-            //    xw.Close();
-            //}
-            //if (!File.Exists(path + "\\MEL\\employee.xml"))
-            //{
-            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\employee.xml", Encoding.UTF8);
-            //    xw.WriteStartElement("Employees");
-            //    xw.WriteEndElement();
-            //    xw.Close();
-            //}
-            //if (!File.Exists(path + "\\MEL\\pr.xml"))
-            //{
-            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\pr.xml", Encoding.UTF8);
-            //    xw.WriteStartElement("PurchaseRequisitions");
-            //    xw.WriteEndElement();
-            //    xw.Close();
-            //}
-            //if (!File.Exists(path + "\\MEL\\pr_details.xml"))
-            //{
-            //    XmlTextWriter xw = new XmlTextWriter(path + "\\MEL\\pr_details.xml", Encoding.UTF8);
-            //    xw.WriteStartElement("OrderDetails");
-            //    xw.WriteEndElement();
-            //    xw.Close();
-            //}
-
             OpenPO_Fill();
             OverduePO_Fill();
             OpenPR_Fill();
             OpenWR_Fill();
+            Fill_SelectDepartment_ComboBox();
+            Fill_SelectMachine_ComboBox();
+            Fill_SelectVendor_ComboBox();
+            Fill_SelectTech_ComboBox();
         }
 
         private void OpenPO_Fill()
@@ -396,10 +353,12 @@ namespace MEL_r811_18
                 conn = new SqlConnection(conn_string);
                 conn.Open();
 
-                q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], [Type].[Type] ,[Priority].[Priority], [WorkRequest].[WorkRequested] " +
+                q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], [Type].[Type], " +
+                    "[Priority].[Priority], [WorkRequest].[WorkRequested], [WorkRequest].[RequestConverted] " +
                     "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
                     "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
-                    "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority]";
+                    "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority]" +
+                    "WHERE [WorkRequest].[RequestConverted] = 'False'";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
 
@@ -440,6 +399,73 @@ namespace MEL_r811_18
             }
 
         }
+        private void HistoricalPO_Fill(string q)
+        {
+            try
+            {
+                conn = new SqlConnection(conn_string);
+                conn.Open();
+
+                //q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                //    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                //    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                //    "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'True') AND (PR.PONumber IS NOT NULL)";
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                historicalPO_datagridView.DataSource = dt;
+
+                historicalPO_datagridView.Columns[0].FillWeight = 30;
+                historicalPO_datagridView.Columns[0].HeaderText = "ID";
+                historicalPO_datagridView.Columns[0].ReadOnly = true;
+                historicalPO_datagridView.Columns[0].Visible = false;
+
+                historicalPO_datagridView.Columns[1].FillWeight = 80;
+                historicalPO_datagridView.Columns[1].HeaderText = "Vendor";
+                historicalPO_datagridView.Columns[1].ReadOnly = true;
+
+                historicalPO_datagridView.Columns[2].FillWeight = 50;
+                historicalPO_datagridView.Columns[2].HeaderText = "PO Number";
+                historicalPO_datagridView.Columns[2].ReadOnly = true;
+
+                historicalPO_datagridView.Columns[3].FillWeight = 50;
+                historicalPO_datagridView.Columns[3].HeaderText = "Qty";
+                historicalPO_datagridView.Columns[3].ReadOnly = true;
+
+                historicalPO_datagridView.Columns[4].FillWeight = 40;
+                historicalPO_datagridView.Columns[4].Visible = false;
+
+                historicalPO_datagridView.Columns[5].FillWeight = 100;
+                historicalPO_datagridView.Columns[5].HeaderText = "Part Number";
+                historicalPO_datagridView.Columns[5].ReadOnly = true;
+
+                historicalPO_datagridView.Columns[6].FillWeight = 200;
+                historicalPO_datagridView.Columns[6].HeaderText = "Description";
+                historicalPO_datagridView.Columns[6].ReadOnly = true;
+
+                historicalPO_datagridView.Columns[7].FillWeight = 50;
+                historicalPO_datagridView.Columns[7].Visible = false;
+
+                historicalPO_datagridView.Columns[8].FillWeight = 50;
+                historicalPO_datagridView.Columns[8].HeaderText = "DUE";
+                historicalPO_datagridView.Columns[8].ReadOnly = true;
+
+                historicalPO_datagridView.Columns[9].FillWeight = 50;
+                historicalPO_datagridView.Columns[9].HeaderText = "Rec'd";
+                historicalPO_datagridView.Columns[9].ReadOnly = false;
+
+                open_po_count = historicalPO_datagridView.Rows.Count.ToString();
+                totalRecords_toolStripLabel.Text = open_po_count;
+
+                conn.Close();
+            }
+            catch
+            {
+
+            }
+        }
 
         private void MachineToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -463,6 +489,7 @@ namespace MEL_r811_18
         private void NewVendorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             VendorSetup vs = new VendorSetup(this);
+            vs.label1.Text = "Add New Vendor To Vendor Table";
             vs.FormClosed += new FormClosedEventHandler(VendorSetupClosed);
             vs.Show();
         }
@@ -501,7 +528,170 @@ namespace MEL_r811_18
 
         }
 
-       
+        private void TabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            open_po_count = openPO_dataGridView.Rows.Count.ToString();
+            totalRecords_toolStripLabel.Text = open_po_count;
+        }
+
+        private void SelectDepartemnt_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " + 
+                "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
+                "PR_Details.DueDate, PR_Details.Received, Department.DepartmentName " +
+                "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID " +
+                "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                "INNER JOIN Department ON PR.DepartmentID = Department.DepartmentID " +
+                "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
+                "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
+                "(Department.DepartmentName = '" + comboBox1.Text + "')";
+
+            HistoricalPO_Fill(q);
+            comboBox3.Text = "-Select Vendor-";
+            comboBox2.Text = "-Select Machine-";
+            comboBox4.Text = "-Select Tech-";
+        }
+        private void SelectMachine_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
+                "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
+                "PR_Details.DueDate, PR_Details.Received, Machines.BTNumber " +
+                "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID " +
+                "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                "INNER JOIN Machines ON PR.MachineID = Machines.MachineID " +
+                "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
+                "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
+                "(Machines.BTNumber = '" + comboBox2.Text + "')";
+
+            HistoricalPO_Fill(q);
+            comboBox1.Text = "-Select Department-";
+            comboBox3.Text = "-Select Vendor-";
+            comboBox4.Text = "-Select Tech-";
+        }
+        private void SelectVendor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
+                "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
+                "PR_Details.DueDate, PR_Details.Received " +
+                "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID " +
+                "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
+                "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
+                "(Vendors.VendorName = '" + comboBox3.Text + "')";
+
+            HistoricalPO_Fill(q);
+            comboBox1.Text = "-Select Department-";
+            comboBox2.Text = "-Select Machine-";
+            comboBox4.Text = "-Select Tech-";
+        }
+        private void SelectTech_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
+                "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
+                "PR_Details.DueDate, PR_Details.Received, Employee.Tech " +
+                "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID " +
+                "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                "INNER JOIN Employee ON PR.EmployeeID = Employee.EmployeeID " +
+                "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
+                "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
+                "(Employee.Tech = '" + comboBox4.Text + "')";
+
+            HistoricalPO_Fill(q);
+            comboBox1.Text = "-Select Department-";
+            comboBox2.Text = "-Select Machine-";
+            comboBox3.Text = "-Select Vendor-";
+        }
+
+        private void Fill_SelectDepartment_ComboBox()
+        {
+            string department_fill_q = "SELECT DepartmentID, DepartmentName FROM Department";
+            DataTable table = new DataTable("DepartmentData");
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(department_fill_q, conn))
+                {
+                    da.Fill(table);
+
+                    DataRow row = table.NewRow();
+                    row["DepartmentName"] = "-Select Department-";
+                    table.Rows.InsertAt(row, 0);
+
+                    comboBox1.DataSource = table;
+                    comboBox1.DisplayMember = "DepartmentName";
+                    comboBox1.ValueMember = "DepartmentID";
+                }
+
+            }
+        }
+        private void Fill_SelectMachine_ComboBox()
+        {
+            string machine_fill_q = "SELECT MachineID, BTNumber FROM Machines";
+
+            DataTable table = new DataTable("MachineData");
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn))
+                {
+                    da.Fill(table);
+
+                    DataRow row = table.NewRow();
+                    row["BTNumber"] = "-Select Machine-";
+                    table.Rows.InsertAt(row, 0);
+
+                    comboBox2.DataSource = table;
+                    comboBox2.DisplayMember = "BTNumber";
+                    comboBox2.ValueMember = "MachineID";
+                }
+
+            }
+        }
+        private void Fill_SelectVendor_ComboBox()
+        {
+            string vendor_fill_q = "SELECT VendorID, VendorName FROM Vendors";
+            DataTable table = new DataTable("VendorData");
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(vendor_fill_q, conn))
+                {
+                    da.Fill(table);
+
+                    DataRow row = table.NewRow();
+                    row["VendorName"] = "-Select Vendor-";
+                    table.Rows.InsertAt(row, 0);
+
+                    comboBox3.DataSource = table;
+                    comboBox3.DisplayMember = "VendorName";
+                    comboBox3.ValueMember = "VendorID";
+                }
+            }
+        }
+        private void Fill_SelectTech_ComboBox()
+        {
+            string employee_fill_q = "SELECT EmployeeID, Tech FROM Employee";
+            DataTable table = new DataTable("EmployeeData");
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(employee_fill_q, conn))
+                {
+                    da.Fill(table);
+
+                    DataRow row = table.NewRow();
+                    row["Tech"] = "-Select Technician-";
+                    table.Rows.InsertAt(row, 0);
+
+                    comboBox4.DataSource = table;
+                    comboBox4.DisplayMember = "Tech";
+                    comboBox4.ValueMember = "EmployeeID";
+                }
+
+            }
+        }
+
+
     }
 
 

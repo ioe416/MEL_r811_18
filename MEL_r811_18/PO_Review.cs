@@ -55,7 +55,9 @@ namespace MEL_r811_18
             {
                 conn.Open();
 
-                details = " SELECT PR_Details.OrderDetailsID, PR_Details.OrderID, PR_Details.Quantity, PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                details = " SELECT PR_Details.OrderDetailsID, PR_Details.OrderID, PR_Details.Quantity, " +
+                    "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.UnitPrice, PR_Details.Per, " +
+                    "PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_details.PartID " +
                     "WHERE OrderID = " + id;
 
@@ -96,19 +98,25 @@ namespace MEL_r811_18
                 dataGridView1.Columns[5].Visible = true;
 
                 dataGridView1.Columns[6].FillWeight = 50;
-                dataGridView1.Columns[6].HeaderText = "Per";
+                dataGridView1.Columns[6].HeaderText = "Price";
                 dataGridView1.Columns[6].ReadOnly = false;
                 dataGridView1.Columns[6].Visible = true;
+                dataGridView1.Columns[6].DefaultCellStyle.Format = "c";
 
-                dataGridView1.Columns[7].FillWeight = 100;
-                dataGridView1.Columns[7].HeaderText = "Due Date";
+                dataGridView1.Columns[7].FillWeight = 25;
+                dataGridView1.Columns[7].HeaderText = "Per";
                 dataGridView1.Columns[7].ReadOnly = false;
                 dataGridView1.Columns[7].Visible = true;
 
-                dataGridView1.Columns[8].FillWeight = 50;
-                dataGridView1.Columns[8].HeaderText = "Recieved";
+                dataGridView1.Columns[8].FillWeight = 100;
+                dataGridView1.Columns[8].HeaderText = "Due Date";
                 dataGridView1.Columns[8].ReadOnly = false;
                 dataGridView1.Columns[8].Visible = true;
+
+                dataGridView1.Columns[9].FillWeight = 50;
+                dataGridView1.Columns[9].HeaderText = "Recieved";
+                dataGridView1.Columns[9].ReadOnly = false;
+                dataGridView1.Columns[9].Visible = true;
 
                 order = "SELECT PR.OrderID, Vendors.VendorName, PR.DateIssued, Department.DepartmentName, Machines.BTNumber, Employee.Tech, PR.DeliverTo, PR.PONumber " +
                     "FROM Vendors INNER JOIN PR ON Vendors.VendorID = PR.VendorID " +

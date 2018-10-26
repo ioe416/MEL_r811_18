@@ -365,14 +365,20 @@
             this.tableAdapterManager.MachinesTableAdapter = this.machinesTableAdapter;
             this.tableAdapterManager.PartsTableAdapter = null;
             this.tableAdapterManager.PR_DetailsTableAdapter = this.pR_DetailsTableAdapter;
+            this.tableAdapterManager.PriorityTableAdapter = null;
             this.tableAdapterManager.PRTableAdapter = null;
+            this.tableAdapterManager.StatusTableAdapter = null;
+            this.tableAdapterManager.TypeTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = MEL_r811_18.MELDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             this.tableAdapterManager.VendorsTableAdapter = this.vendorsTableAdapter;
+            this.tableAdapterManager.WorkOrderTableAdapter = null;
+            this.tableAdapterManager.WorkRequestTableAdapter = null;
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(33, 116);
             this.dataGridView1.Name = "dataGridView1";

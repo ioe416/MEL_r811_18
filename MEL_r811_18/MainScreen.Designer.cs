@@ -60,6 +60,12 @@
             this.overduePO_dataGridView = new System.Windows.Forms.DataGridView();
             this.openPrTab = new System.Windows.Forms.TabPage();
             this.openPR_dataGridView = new System.Windows.Forms.DataGridView();
+            this.historicalPoTab = new System.Windows.Forms.TabPage();
+            this.historicalPO_datagridView = new System.Windows.Forms.DataGridView();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.totalRecords_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.of_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
@@ -95,6 +101,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.overduePO_dataGridView)).BeginInit();
             this.openPrTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openPR_dataGridView)).BeginInit();
+            this.historicalPoTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.historicalPO_datagridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -320,6 +328,7 @@
             this.tabControl1.Controls.Add(this.openPoTab);
             this.tabControl1.Controls.Add(this.overduePoTab);
             this.tabControl1.Controls.Add(this.openPrTab);
+            this.tabControl1.Controls.Add(this.historicalPoTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
@@ -402,6 +411,79 @@
             this.openPR_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openPR_dataGridView.TabIndex = 0;
             this.openPR_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenPR_dataGridView_CellContentClick);
+            // 
+            // historicalPoTab
+            // 
+            this.historicalPoTab.BackColor = System.Drawing.Color.DodgerBlue;
+            this.historicalPoTab.Controls.Add(this.historicalPO_datagridView);
+            this.historicalPoTab.Controls.Add(this.comboBox4);
+            this.historicalPoTab.Controls.Add(this.comboBox3);
+            this.historicalPoTab.Controls.Add(this.comboBox2);
+            this.historicalPoTab.Controls.Add(this.comboBox1);
+            this.historicalPoTab.Location = new System.Drawing.Point(4, 22);
+            this.historicalPoTab.Name = "historicalPoTab";
+            this.historicalPoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.historicalPoTab.Size = new System.Drawing.Size(586, 138);
+            this.historicalPoTab.TabIndex = 3;
+            this.historicalPoTab.Text = "PO History";
+            // 
+            // historicalPO_datagridView
+            // 
+            this.historicalPO_datagridView.AllowUserToAddRows = false;
+            this.historicalPO_datagridView.AllowUserToDeleteRows = false;
+            this.historicalPO_datagridView.AllowUserToResizeColumns = false;
+            this.historicalPO_datagridView.AllowUserToResizeRows = false;
+            this.historicalPO_datagridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.historicalPO_datagridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.historicalPO_datagridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
+            this.historicalPO_datagridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.historicalPO_datagridView.Location = new System.Drawing.Point(6, 33);
+            this.historicalPO_datagridView.Name = "historicalPO_datagridView";
+            this.historicalPO_datagridView.RowHeadersVisible = false;
+            this.historicalPO_datagridView.Size = new System.Drawing.Size(574, 102);
+            this.historicalPO_datagridView.TabIndex = 4;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(386, 6);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(121, 21);
+            this.comboBox4.TabIndex = 3;
+            this.comboBox4.Text = "-Choose Tech-";
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.SelectTech_comboBox_SelectedIndexChanged);
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(259, 6);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.TabIndex = 2;
+            this.comboBox3.Text = "-Choose Vendor-";
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.SelectVendor_comboBox_SelectedIndexChanged);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(132, 6);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 1;
+            this.comboBox2.Text = "-Choose Machine-";
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.SelectMachine_comboBox_SelectedIndexChanged);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(5, 6);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 0;
+            this.comboBox1.Text = "-Choose Department-";
+            this.comboBox1.SelectedValueChanged += new System.EventHandler(this.SelectDepartemnt_comboBox_SelectedIndexChanged);
             // 
             // toolStrip1
             // 
@@ -538,8 +620,8 @@
             // tabControl3
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.tabControl3, 3);
-            this.tabControl3.Controls.Add(this.openWoTab);
             this.tabControl3.Controls.Add(this.openWrTab);
+            this.tabControl3.Controls.Add(this.openWoTab);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl3.Location = new System.Drawing.Point(203, 215);
             this.tabControl3.Name = "tabControl3";
@@ -684,6 +766,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.overduePO_dataGridView)).EndInit();
             this.openPrTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.openPR_dataGridView)).EndInit();
+            this.historicalPoTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.historicalPO_datagridView)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
@@ -767,5 +851,11 @@
         private System.Windows.Forms.ToolStripMenuItem workRequestToolStripMenuItem;
         private System.Windows.Forms.TabPage openWrTab;
         private System.Windows.Forms.DataGridView openWR_dataGridView;
+        private System.Windows.Forms.TabPage historicalPoTab;
+        private System.Windows.Forms.DataGridView historicalPO_datagridView;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

@@ -15,16 +15,7 @@ namespace MEL_r811_18
     {
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
-        public string q;
-        public string q2;
-        public string type_q;
-        public string priority_q;
-        public string department_q;
-        public string machine_q;
-        public string type_fill_q;
-        public string priority_fill_q;
-        public string machine_fill_q;
-        public string department_fill_q;
+
         public string machToAdd;
 
         public int departmentId;
@@ -58,17 +49,13 @@ namespace MEL_r811_18
                 {
                     conn.Open();
 
-                    q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], " +
+                    string q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], " +
                         "[Type].[Type] ,[Priority].[Priority], [WorkRequest].[WorkRequested], [Department].[DepartmentName] " +
                         "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
                         "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
                         "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority] " +
                         "INNER JOIN[Department] ON [Department].[DepartmentID] = [WorkRequest].[DepartmentID] " +
                         "WHERE[WorkRequest].[RequestID] = '" + id + "'";
-
-                    //q2 = "SELECT [Machines].[MachineID], [Department].[DepartmentName] " +
-                    //    "FROM [Department] INNER JOIN [Machines] ON [Machines].[DepartmentID] = [Department].[DepartmentID]" +
-                    //    "WHERE [MAchines].[BTNumber] = '" + machine_comboBox.Text + "'";
 
                     SqlCommand command = new SqlCommand(q, conn);
 
@@ -84,17 +71,6 @@ namespace MEL_r811_18
                         department_comboBox.Text = (string)dr["DepartmentName"];
                     }
 
-                    //dr.Close();
-
-                    //SqlCommand command2 = new SqlCommand(q2, conn);
-
-                    //SqlDataReader dr2 = command.ExecuteReader();
-
-                    //while (dr2.Read())
-                    //{
-                    //    department_comboBox.Text = (string)dr2["DepartmentName"];
-                    //}
-                    //dr2.Close();
                 }
 
             }
@@ -108,11 +84,11 @@ namespace MEL_r811_18
 
         private void Fill_Department_ComboBox()
         {
-            department_fill_q = "SELECT DepartmentID, DepartmentName FROM Department";
+            string q = "SELECT DepartmentID, DepartmentName FROM Department";
             DataTable table = new DataTable("DepartmentData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter(department_fill_q, conn))
+                using (SqlDataAdapter da = new SqlDataAdapter(q, conn))
                 {
                     da.Fill(table);
 
@@ -130,12 +106,12 @@ namespace MEL_r811_18
         }
         private void Fill_Machine_ComboBox()
         {
-            machine_fill_q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '"
+            string q = "SELECT MachineID, BTNumber FROM Machines WHERE DepartmentID = '"
                     + (department_comboBox.SelectedValue.ToString()) + "'";
             DataTable table = new DataTable("MachineData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn))
+                using (SqlDataAdapter da = new SqlDataAdapter(q, conn))
                 {
                     da.Fill(table);
 
@@ -152,11 +128,11 @@ namespace MEL_r811_18
         }
         private void Fill_RequestType_ComboBox()
         {
-            type_fill_q = "SELECT TypeID, Type FROM Type";
+            string q = "SELECT TypeID, Type FROM Type";
             DataTable table = new DataTable("TypeData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter(type_fill_q, conn))
+                using (SqlDataAdapter da = new SqlDataAdapter(q, conn))
                 {
                     da.Fill(table);
 
@@ -173,11 +149,11 @@ namespace MEL_r811_18
         }
         private void Fill_Priority_ComboBox()
         {
-            priority_fill_q = "SELECT PriorityID, Priority FROM Priority";
+            string q = "SELECT PriorityID, Priority FROM Priority";
             DataTable table = new DataTable("PriorityData");
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter(priority_fill_q, conn))
+                using (SqlDataAdapter da = new SqlDataAdapter(q, conn))
                 {
                     da.Fill(table);
 
@@ -197,10 +173,10 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                department_q = "SELECT DepartmentID FROM Department WHERE DepartmentName = '" + department + "'";
+                string q = "SELECT DepartmentID FROM Department WHERE DepartmentName = '" + department + "'";
                 conn.Open();
 
-                SqlCommand command = new SqlCommand(department_q, conn);
+                SqlCommand command = new SqlCommand(q, conn);
                 SqlDataReader myReader = command.ExecuteReader();
                 while (myReader.Read())
                 {
@@ -214,10 +190,10 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                machine_q = "SELECT MachineID FROM Machines WHERE BTNumber = '" + mach + "'";
+                string q = "SELECT MachineID FROM Machines WHERE BTNumber = '" + mach + "'";
                 conn.Open();
 
-                SqlCommand command = new SqlCommand(machine_q, conn);
+                SqlCommand command = new SqlCommand(q, conn);
                 SqlDataReader myReader = command.ExecuteReader();
                 while (myReader.Read())
                 {
@@ -231,10 +207,10 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                type_q = "SELECT TypeID FROM Type WHERE Type = '" + type + "'";
+                string q = "SELECT TypeID FROM Type WHERE Type = '" + type + "'";
                 conn.Open();
 
-                SqlCommand command = new SqlCommand(type_q, conn);
+                SqlCommand command = new SqlCommand(q, conn);
                 SqlDataReader myReader = command.ExecuteReader();
                 while (myReader.Read())
                 {
@@ -248,10 +224,10 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                priority_q = "SELECT PriorityID FROM Priority WHERE Priority = '" + priority + "'";
+                string q = "SELECT PriorityID FROM Priority WHERE Priority = '" + priority + "'";
                 conn.Open();
 
-                SqlCommand command = new SqlCommand(priority_q, conn);
+                SqlCommand command = new SqlCommand(q, conn);
                 SqlDataReader myReader = command.ExecuteReader();
                 while (myReader.Read())
                 {
@@ -277,17 +253,10 @@ namespace MEL_r811_18
                 {
                     machToAdd = machine_comboBox.Text;
                 }
-                if (requestConverted_radioButton.Checked == true)
-                {
-                    converted = true;
-                }
-                else
-                {
-                    converted = false;
-                }
+                converted = false;
                 using (SqlConnection conn = new SqlConnection(conn_string))
                 {
-                    q = "INSERT INTO WorkRequest (DepartmentID, MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
+                    string q = "INSERT INTO WorkRequest (DepartmentID, MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
                         "VALUES (@DepartmentID, @MachineID, @RequestDate, @TypeID, @PriorityID, @WorkPerformed, @RequestConverted)";
 
                     using (SqlCommand command = new SqlCommand(q, conn))
@@ -306,11 +275,39 @@ namespace MEL_r811_18
                     }
                 }
                 this.Close();
+
+
             }
             else if (id != 0)
             {
-                
+                if (requestConverted_radioButton.Checked == true)
+                {
+                    converted = true;
+                    using (SqlConnection conn = new SqlConnection(conn_string))
+                    {
+                        using (SqlCommand command = conn.CreateCommand())
+                        {
+                            command.CommandText = "UPDATE WorkRequest SET RequestConverted = @Converted WHERE RequestID = " + id;
 
+                            command.Parameters.AddWithValue("@Converted", converted);
+
+                            conn.Open();
+                            command.ExecuteNonQuery();
+                        }                    
+                    }
+                    WorkOrder popup = new WorkOrder(id);
+                    popup.workRequestID_textBox.Text = id.ToString();
+                    //popup.venNum_textBox.Text = "";
+                    //popup.contact_textBox.Text = "";
+                    //popup.phone_textBox.Text = "";
+                    //popup.email_textBox.Text = "";
+                    popup.ShowDialog();
+                }
+                else
+                {
+                    
+                }
+                this.Close();
             }
         }
 

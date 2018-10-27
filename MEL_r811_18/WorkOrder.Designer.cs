@@ -45,9 +45,9 @@
             this.qty_textBox = new System.Windows.Forms.TextBox();
             this.stock_radioButton = new System.Windows.Forms.RadioButton();
             this.ordered_radioButton = new System.Windows.Forms.RadioButton();
-            this.vendor_comboBox = new System.Windows.Forms.ComboBox();
             this.save_button = new System.Windows.Forms.Button();
             this.cancel_button = new System.Windows.Forms.Button();
+            this.partDesc_textbox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -167,14 +167,15 @@
             // part_comboBox
             // 
             this.part_comboBox.FormattingEnabled = true;
-            this.part_comboBox.Location = new System.Drawing.Point(15, 281);
+            this.part_comboBox.Location = new System.Drawing.Point(12, 281);
             this.part_comboBox.Name = "part_comboBox";
-            this.part_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.part_comboBox.Size = new System.Drawing.Size(90, 21);
             this.part_comboBox.TabIndex = 13;
+            this.part_comboBox.SelectedIndexChanged += new System.EventHandler(this.part_comboBox_SelectedIndexChanged);
             // 
             // qty_textBox
             // 
-            this.qty_textBox.Location = new System.Drawing.Point(143, 281);
+            this.qty_textBox.Location = new System.Drawing.Point(279, 282);
             this.qty_textBox.Name = "qty_textBox";
             this.qty_textBox.Size = new System.Drawing.Size(67, 20);
             this.qty_textBox.TabIndex = 14;
@@ -182,7 +183,7 @@
             // stock_radioButton
             // 
             this.stock_radioButton.AutoSize = true;
-            this.stock_radioButton.Location = new System.Drawing.Point(217, 283);
+            this.stock_radioButton.Location = new System.Drawing.Point(355, 287);
             this.stock_radioButton.Name = "stock_radioButton";
             this.stock_radioButton.Size = new System.Drawing.Size(76, 17);
             this.stock_radioButton.TabIndex = 15;
@@ -193,22 +194,13 @@
             // ordered_radioButton
             // 
             this.ordered_radioButton.AutoSize = true;
-            this.ordered_radioButton.Location = new System.Drawing.Point(309, 283);
+            this.ordered_radioButton.Location = new System.Drawing.Point(437, 287);
             this.ordered_radioButton.Name = "ordered_radioButton";
             this.ordered_radioButton.Size = new System.Drawing.Size(86, 17);
             this.ordered_radioButton.TabIndex = 16;
             this.ordered_radioButton.TabStop = true;
             this.ordered_radioButton.Text = "Ordered Item";
             this.ordered_radioButton.UseVisualStyleBackColor = true;
-            // 
-            // vendor_comboBox
-            // 
-            this.vendor_comboBox.FormattingEnabled = true;
-            this.vendor_comboBox.Location = new System.Drawing.Point(401, 281);
-            this.vendor_comboBox.Name = "vendor_comboBox";
-            this.vendor_comboBox.Size = new System.Drawing.Size(121, 21);
-            this.vendor_comboBox.TabIndex = 17;
-            this.vendor_comboBox.Visible = false;
             // 
             // save_button
             // 
@@ -230,14 +222,21 @@
             this.cancel_button.UseVisualStyleBackColor = true;
             this.cancel_button.Click += new System.EventHandler(this.Cancel_button_Click);
             // 
+            // partDesc_textbox
+            // 
+            this.partDesc_textbox.Location = new System.Drawing.Point(108, 280);
+            this.partDesc_textbox.Name = "partDesc_textbox";
+            this.partDesc_textbox.Size = new System.Drawing.Size(165, 20);
+            this.partDesc_textbox.TabIndex = 21;
+            // 
             // WorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 463);
+            this.Controls.Add(this.partDesc_textbox);
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.save_button);
-            this.Controls.Add(this.vendor_comboBox);
             this.Controls.Add(this.ordered_radioButton);
             this.Controls.Add(this.stock_radioButton);
             this.Controls.Add(this.qty_textBox);
@@ -281,9 +280,9 @@
         private System.Windows.Forms.TextBox qty_textBox;
         private System.Windows.Forms.RadioButton stock_radioButton;
         private System.Windows.Forms.RadioButton ordered_radioButton;
-        private System.Windows.Forms.ComboBox vendor_comboBox;
         public System.Windows.Forms.TextBox workRequestID_textBox;
         private System.Windows.Forms.Button save_button;
         private System.Windows.Forms.Button cancel_button;
+        private System.Windows.Forms.TextBox partDesc_textbox;
     }
 }

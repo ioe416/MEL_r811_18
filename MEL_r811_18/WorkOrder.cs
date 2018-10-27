@@ -16,6 +16,11 @@ namespace MEL_r811_18
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
 
         bool woclosed;
+        int woid;
+        int partid;
+        int vendorid;
+        int employeeid;
+        int statusid;
 
         public WorkOrder(int id)
         {
@@ -82,8 +87,8 @@ namespace MEL_r811_18
         private void Save_WorkOrder()
         {
             string requestID = workRequestID_textBox.Text;
-            string employee = dateIsued_dtp.Text;
-            string status = dep_combo.Text;
+            string employee = tech_comboBox.Text;
+            string status = status_comboBox.Text;
             if (checkBox1.Checked == true)
             {
                 woclosed = true;
@@ -93,68 +98,202 @@ namespace MEL_r811_18
                 woclosed = false;
             }
             string dateClosed = dateTimePicker1.Text;
-            string work = textBox2.Text;
 
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                string q = "INSERT INTO PR (WorkRequestID, EmployeeID, StatusID, WODetailsID, WOCLosed, DateWOCLosed, WorkPerformed) OUTPUT INSERTED.OrderID " +
-                    "VALUES (@WorkRequestID, @EmployeeID, @StatusID, @WODetailsID, @WOCLosed, @DateWOCLosed, @WorkPerformed)";
+                string q = "INSERT INTO PR (WorkRequestID, EmployeeID, StatusID, WOCLosed, DateWOCLosed) OUTPUT INSERTED.OrderID " +
+                    "VALUES (@WorkRequestID, @EmployeeID, @StatusID, @WOCLosed, @DateWOCLosed)";
 
                 using (SqlCommand command = new SqlCommand(q, conn))
                 {
-                    command.Parameters.AddWithValue("@WorkRequestID", requestID);
-                    command.Parameters.AddWithValue("@EmployeeID", employee);
-                    command.Parameters.AddWithValue("@StatusID", status);
-                    command.Parameters.AddWithValue("@WODetailsID", Get_MachineID(machToAdd));
+                    command.Parameters.AddWithValue("@WorkRequestID", Convert.ToInt16(requestID));
+                    command.Parameters.AddWithValue("@EmployeeID", Get_EmployeeID(employee));
+                    command.Parameters.AddWithValue("@StatusID", Get_StatusID(status));
                     command.Parameters.AddWithValue("@WOCLosed", woclosed);
                     command.Parameters.AddWithValue("@DateWOCLosed", dateClosed);
-                    command.Parameters.AddWithValue("@WorkPerformed", work);
 
                     conn.Open();
                     int orderID = (int)command.ExecuteScalar();
-
-                    Save_WorkOrderDetails();
-
                 }
+                
             }
-            
+            Save_WorkOrderDetails();
         }
-        private int Save_WorkOrderDetails()
+        private void Save_WorkOrderDetails()
         {
-            string q = "INSERT INTO PR_Details (OrderID, Quantity, Unit, PartID, UnitPrice, Per, DueDate, Received) OUTPUT INSERTED.OrderDetailsID VALUES " +
-               "(@OrderID, @Quantity, @Unit, @PartID, @UnitPrice, @Per, @DueDate, @Received)";
+            string q = "INSERT INTO WODetails (WOID, PartID, Qty, WorkPerformed, Stock/Ordered) OUTPUT INSERTED.WODetailsID VALUES " +
+               "(@WOID, @PartID, @Qty, @WorkPerformed, @Stock/Ordered)";
 
             SqlConnection conn = new SqlConnection(conn_string);
             SqlCommand cmd = new SqlCommand(q, conn);
             {
-                cmd.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@Quantity", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@Unit", SqlDbType.VarChar));
+                cmd.Parameters.Add(new SqlParameter("@WOID", SqlDbType.Int));
                 cmd.Parameters.Add(new SqlParameter("@PartID", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@UnitPrice", SqlDbType.Money));
-                cmd.Parameters.Add(new SqlParameter("@Per", SqlDbType.VarChar));
-                cmd.Parameters.Add(new SqlParameter("@DueDate", SqlDbType.VarChar));
-                cmd.Parameters.Add(new SqlParameter("@Received", SqlDbType.VarChar));
+                cmd.Parameters.Add(new SqlParameter("@Qty", SqlDbType.Int));
+                cmd.Parameters.Add(new SqlParameter("@WorkPerformed", SqlDbType.NVarChar));
+                cmd.Parameters.Add(new SqlParameter("@Stock/Ordered", SqlDbType.Bit));
 
                 conn.Open();
 
-                foreach (DataGridViewRow row in newOrderDetails_dataGridView.Rows)
+                foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    cmd.Parameters["@OrderID"].Value = orderID;
-                    cmd.Parameters["@Quantity"].Value = row.Cells[0].Value;
-                    cmd.Parameters["@Unit"].Value = row.Cells[1].Value;
-                    cmd.Parameters["@PartID"].Value = row.Cells[2].Value;
-                    cmd.Parameters["@UnitPrice"].Value = row.Cells[5].Value;
-                    cmd.Parameters["@Per"].Value = row.Cells[6].Value;
-                    cmd.Parameters["@DueDate"].Value = DBNull.Value;
-                    cmd.Parameters["@Received"].Value = row.Cells[8].Value;
+                    cmd.Parameters["@WOID"].Value = woid;
+                    cmd.Parameters["@PartID"].Value = row.Cells[0].Value;
+                    cmd.Parameters["@Qty"].Value = row.Cells[1].Value;
+                    cmd.Parameters["@WorkPerformed"].Value = row.Cells[2].Value;
+                    cmd.Parameters["@Stock/Ordered"].Value = row.Cells[5].Value;
 
                     cmd.ExecuteNonQuery();
 
                 }
                 conn.Close();
             }
-            return detailsID;
+        }
+
+        private int Get_VendorID(string vendor)
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                string vendor_q = "SELECT VendorID FROM Vendors WHERE VendorName = '" + vendor + "'";
+                conn.Open();
+
+                SqlCommand command = new SqlCommand(vendor_q, conn);
+                SqlDataReader myReader = command.ExecuteReader();
+                while (myReader.Read())
+                {
+                    vendorid = Convert.ToInt16(myReader["VendorID"].ToString());
+                }
+                myReader.Close();
+            }
+            return vendorid;
+        }
+        private int Get_PartID(string part)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(conn_string))
+                {
+                    string part_q = "SELECT PartID FROM Parts WHERE PartNumber = '" + part + "'";
+                    conn.Open();
+
+                    SqlCommand command = new SqlCommand(part_q, conn);
+                    SqlDataReader myReader = command.ExecuteReader();
+                    while (myReader.Read())
+                    {
+                        partid = Convert.ToInt16(myReader["PartID"].ToString());
+                    }
+                    myReader.Close();
+                }
+                return partid;
+            }
+            catch (SqlException e) when (e.Number == 2601)
+            {
+                return 0;
+            }
+
+        }
+        private int Get_EmployeeID(string emp)
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                string employee_q = "SELECT EmployeeID FROM Employee WHERE Tech = '" + emp + "'";
+                conn.Open();
+
+                SqlCommand command = new SqlCommand(employee_q, conn);
+                SqlDataReader myReader = command.ExecuteReader();
+                while (myReader.Read())
+                {
+                    employeeid = Convert.ToInt16(myReader["EmployeeID"].ToString());
+                }
+                myReader.Close();
+            }
+            return employeeid;
+        }
+        private int Get_StatusID(string stat)
+        {
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                string status_q = "SELECT SttatusID FROM Status WHERE Status = '" + stat + "'";
+                conn.Open();
+
+                SqlCommand command = new SqlCommand(status_q, conn);
+                SqlDataReader myReader = command.ExecuteReader();
+                while (myReader.Read())
+                {
+                    statusid = Convert.ToInt16(myReader["StatusID"].ToString());
+                }
+                myReader.Close();
+            }
+            return statusid;
+        }
+
+        private void AddToOrder_btn_Click(object sender, EventArgs e)
+        {
+            Get_PartID(part_comboBox.Text);
+
+            switch (partid)
+            {
+                case 0:
+                    if (MessageBox.Show("Part does not exist! \nDo you want to Add " + part_comboBox.Text +
+                    " to the Parts table?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        string partnumber = part_comboBox.Text;
+                        string partdescription = partDesc_textbox.Text;
+                        decimal unitprice = 0;
+
+                        NewPart np = new NewPart(ms);
+
+                        using (SqlConnection conn = new SqlConnection(conn_string))
+                        {
+                            string q = "SELECT PartID, PartDescription, UnitPrice " +
+                                "FROM Parts " +
+                                "WHERE PartID = '" + np.Save_Part_With_Return(partnumber, partdescription, unitprice) + "'";
+
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = conn;
+                            cmd.CommandType = CommandType.Text;
+                            cmd.CommandText = q;
+
+                            DataTable td = new DataTable();
+                            SqlDataAdapter da = new SqlDataAdapter(q, conn);
+                            conn.Open();
+                            da.Fill(td);
+                            conn.Close();
+                            partDesc_textbox.Text = td.Rows[0].ItemArray[1].ToString();
+                            
+                        }
+                        int qty = Convert.ToInt16(qty_textBox.Text);
+                        decimal price = Convert.ToDecimal(0);
+
+                        Fill_Part_ComboBox();
+                    }
+                    break;
+
+                default:
+                    dataGridView1.Rows.Add(new String[]
+                    {part_comboBox.SelectedValue.ToString(),
+                    qty_textBox.Text,
+                    .Text,
+                    textBox2.Text,
+                    });
+
+                    dataGridView1.Sort(part, ListSortDirection.Ascending);
+                    qty_txb.Clear();
+                    unit_combo.SelectedIndex = 0;
+                    part_combo.SelectedIndex = 0;
+                    desc_txb.Clear();
+                    price_txb.Clear();
+                    per_combo.SelectedIndex = 0;
+                    total_txb.Clear();
+                    partID = 0;
+                    break;
+
+            }
+        }
+
+        private void part_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
     

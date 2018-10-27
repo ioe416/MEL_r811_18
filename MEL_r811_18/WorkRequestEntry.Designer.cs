@@ -39,14 +39,12 @@
             this.requestPriority_comboBox = new System.Windows.Forms.ComboBox();
             this.priorityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.workRequested_textBox = new System.Windows.Forms.TextBox();
-            this.requestConverted_radioButton = new System.Windows.Forms.RadioButton();
             this.saveUpdate_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.department_comboBox = new System.Windows.Forms.ComboBox();
             this.departmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label7 = new System.Windows.Forms.Label();
@@ -54,6 +52,8 @@
             this.machinesTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.MachinesTableAdapter();
             this.typeTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.TypeTableAdapter();
             this.priorityTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PriorityTableAdapter();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typeBindingSource)).BeginInit();
@@ -136,25 +136,13 @@
             this.workRequested_textBox.Size = new System.Drawing.Size(621, 107);
             this.workRequested_textBox.TabIndex = 4;
             // 
-            // requestConverted_radioButton
-            // 
-            this.requestConverted_radioButton.AutoSize = true;
-            this.requestConverted_radioButton.Location = new System.Drawing.Point(715, 81);
-            this.requestConverted_radioButton.Name = "requestConverted_radioButton";
-            this.requestConverted_radioButton.Size = new System.Drawing.Size(94, 17);
-            this.requestConverted_radioButton.TabIndex = 5;
-            this.requestConverted_radioButton.TabStop = true;
-            this.requestConverted_radioButton.Text = "Work Request";
-            this.requestConverted_radioButton.UseVisualStyleBackColor = true;
-            this.requestConverted_radioButton.CheckedChanged += new System.EventHandler(this.RequestConverted_radioButton_CheckedChanged);
-            // 
             // saveUpdate_button
             // 
-            this.saveUpdate_button.Location = new System.Drawing.Point(715, 137);
+            this.saveUpdate_button.Location = new System.Drawing.Point(712, 74);
             this.saveUpdate_button.Name = "saveUpdate_button";
             this.saveUpdate_button.Size = new System.Drawing.Size(97, 23);
             this.saveUpdate_button.TabIndex = 6;
-            this.saveUpdate_button.Text = "Save Changes";
+            this.saveUpdate_button.Text = "Save Request";
             this.saveUpdate_button.UseVisualStyleBackColor = true;
             this.saveUpdate_button.Click += new System.EventHandler(this.Save_Request);
             // 
@@ -203,15 +191,6 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Describe work to be performed.";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(682, 65);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(147, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Tick to convert to work order.";
-            // 
             // department_comboBox
             // 
             this.department_comboBox.DataSource = this.departmentBindingSource;
@@ -254,21 +233,41 @@
             // 
             this.priorityTableAdapter.ClearBeforeFill = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(712, 111);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(97, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Convert to WO";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Covert_Request);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(712, 148);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(97, 23);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Cancel_Request);
+            // 
             // WorkRequestEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 197);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.department_comboBox);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.saveUpdate_button);
-            this.Controls.Add(this.requestConverted_radioButton);
             this.Controls.Add(this.workRequested_textBox);
             this.Controls.Add(this.requestPriority_comboBox);
             this.Controls.Add(this.requestType_comboBox);
@@ -295,14 +294,12 @@
         private System.Windows.Forms.ComboBox requestType_comboBox;
         private System.Windows.Forms.ComboBox requestPriority_comboBox;
         private System.Windows.Forms.TextBox workRequested_textBox;
-        private System.Windows.Forms.RadioButton requestConverted_radioButton;
         private System.Windows.Forms.Button saveUpdate_button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox department_comboBox;
         private System.Windows.Forms.Label label7;
         private MELDataSet mELDataSet;
@@ -315,5 +312,7 @@
         private MELDataSetTableAdapters.TypeTableAdapter typeTableAdapter;
         private System.Windows.Forms.BindingSource priorityBindingSource;
         private MELDataSetTableAdapters.PriorityTableAdapter priorityTableAdapter;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

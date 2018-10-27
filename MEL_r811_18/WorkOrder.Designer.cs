@@ -46,6 +46,8 @@
             this.stock_radioButton = new System.Windows.Forms.RadioButton();
             this.ordered_radioButton = new System.Windows.Forms.RadioButton();
             this.vendor_comboBox = new System.Windows.Forms.ComboBox();
+            this.save_button = new System.Windows.Forms.Button();
+            this.cancel_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -208,11 +210,33 @@
             this.vendor_comboBox.TabIndex = 17;
             this.vendor_comboBox.Visible = false;
             // 
+            // save_button
+            // 
+            this.save_button.Location = new System.Drawing.Point(529, 26);
+            this.save_button.Name = "save_button";
+            this.save_button.Size = new System.Drawing.Size(75, 23);
+            this.save_button.TabIndex = 18;
+            this.save_button.Text = "Save";
+            this.save_button.UseVisualStyleBackColor = true;
+            this.save_button.Click += new System.EventHandler(this.Save_button_Click);
+            // 
+            // cancel_button
+            // 
+            this.cancel_button.Location = new System.Drawing.Point(529, 68);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(75, 23);
+            this.cancel_button.TabIndex = 19;
+            this.cancel_button.Text = "Cancel";
+            this.cancel_button.UseVisualStyleBackColor = true;
+            this.cancel_button.Click += new System.EventHandler(this.Cancel_button_Click);
+            // 
             // WorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 463);
+            this.Controls.Add(this.cancel_button);
+            this.Controls.Add(this.save_button);
             this.Controls.Add(this.vendor_comboBox);
             this.Controls.Add(this.ordered_radioButton);
             this.Controls.Add(this.stock_radioButton);
@@ -259,5 +283,7 @@
         private System.Windows.Forms.RadioButton ordered_radioButton;
         private System.Windows.Forms.ComboBox vendor_comboBox;
         public System.Windows.Forms.TextBox workRequestID_textBox;
+        private System.Windows.Forms.Button save_button;
+        private System.Windows.Forms.Button cancel_button;
     }
 }

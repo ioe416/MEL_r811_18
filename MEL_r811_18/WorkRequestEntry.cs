@@ -240,88 +240,65 @@ namespace MEL_r811_18
 
         private void Save_Request(object Sender, EventArgs e)
         {
-            if (id == 0)
+            string type = requestType_comboBox.Text;
+            string priority = requestPriority_comboBox.Text;
+            string department = department_comboBox.Text;
+            if (machine_comboBox.Text == "-Select Machine-")
             {
-                string type = requestType_comboBox.Text;
-                string priority = requestPriority_comboBox.Text;
-                string department = department_comboBox.Text;
-                if (machine_comboBox.Text == "-Select Machine-")
-                {
-                    machToAdd = "No Machine";
-                }
-                else
-                {
-                    machToAdd = machine_comboBox.Text;
-                }
-                converted = false;
-                using (SqlConnection conn = new SqlConnection(conn_string))
-                {
-                    string q = "INSERT INTO WorkRequest (DepartmentID, MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
-                        "VALUES (@DepartmentID, @MachineID, @RequestDate, @TypeID, @PriorityID, @WorkPerformed, @RequestConverted)";
-
-                    using (SqlCommand command = new SqlCommand(q, conn))
-                    {
-                        command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(department));
-                        command.Parameters.AddWithValue("@TypeID", Get_TypeID(type));
-                        command.Parameters.AddWithValue("@RequestDate", requestDate_datePicker.Text);
-                        command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
-                        command.Parameters.AddWithValue("@PriorityID", Get_PriorityID(priority));
-                        command.Parameters.AddWithValue("@WorkPerformed", workRequested_textBox.Text);
-                        command.Parameters.AddWithValue("@RequestConverted", converted);
-
-                        conn.Open();
-                        requestID = (int)command.ExecuteScalar();
-
-                    }
-                }
-                this.Close();
-
-
-            }
-            else if (id != 0)
-            {
-                if (requestConverted_radioButton.Checked == true)
-                {
-                    converted = true;
-                    using (SqlConnection conn = new SqlConnection(conn_string))
-                    {
-                        using (SqlCommand command = conn.CreateCommand())
-                        {
-                            command.CommandText = "UPDATE WorkRequest SET RequestConverted = @Converted WHERE RequestID = " + id;
-
-                            command.Parameters.AddWithValue("@Converted", converted);
-
-                            conn.Open();
-                            command.ExecuteNonQuery();
-                        }                    
-                    }
-                    WorkOrder popup = new WorkOrder(id);
-                    popup.workRequestID_textBox.Text = id.ToString();
-                    //popup.venNum_textBox.Text = "";
-                    //popup.contact_textBox.Text = "";
-                    //popup.phone_textBox.Text = "";
-                    //popup.email_textBox.Text = "";
-                    popup.ShowDialog();
-                }
-                else
-                {
-                    
-                }
-                this.Close();
-            }
-        }
-
-        private void RequestConverted_radioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (requestConverted_radioButton.Checked == true)
-            {
-                requestConverted_radioButton.Text = "Work Order";
+                machToAdd = "No Machine";
             }
             else
             {
-                requestConverted_radioButton.Text = "Work Request";
+                machToAdd = machine_comboBox.Text;
             }
-            
+            converted = false;
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                string q = "INSERT INTO WorkRequest (DepartmentID, MachineID, RequestDate, RequestType, RequestPriority, WorkRequested, RequestConverted) OUTPUT INSERTED.RequestID " +
+                    "VALUES (@DepartmentID, @MachineID, @RequestDate, @TypeID, @PriorityID, @WorkPerformed, @RequestConverted)";
+
+                using (SqlCommand command = new SqlCommand(q, conn))
+                {
+                    command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(department));
+                    command.Parameters.AddWithValue("@TypeID", Get_TypeID(type));
+                    command.Parameters.AddWithValue("@RequestDate", requestDate_datePicker.Text);
+                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
+                    command.Parameters.AddWithValue("@PriorityID", Get_PriorityID(priority));
+                    command.Parameters.AddWithValue("@WorkPerformed", workRequested_textBox.Text);
+                    command.Parameters.AddWithValue("@RequestConverted", converted);
+
+                    conn.Open();
+                    requestID = (int)command.ExecuteScalar();
+
+                }
+            }
+            this.Close();
+        }
+        private void Covert_Request(object Sender, EventArgs e)
+        {
+            converted = true;
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlCommand command = conn.CreateCommand())
+                {
+                    command.CommandText = "UPDATE WorkRequest SET RequestConverted = @Converted WHERE RequestID = " + id;
+
+                    command.Parameters.AddWithValue("@Converted", converted);
+
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            WorkOrder popup = new WorkOrder(id);
+            popup.workRequestID_textBox.Text = id.ToString();
+            popup.ShowDialog();
+            this.Close();
+        }
+
+        private void Cancel_Request(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
+

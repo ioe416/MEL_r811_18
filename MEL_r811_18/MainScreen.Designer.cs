@@ -80,10 +80,10 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dataGridView7 = new System.Windows.Forms.DataGridView();
             this.tabControl3 = new System.Windows.Forms.TabControl();
-            this.openWoTab = new System.Windows.Forms.TabPage();
-            this.openWO_dataGridView = new System.Windows.Forms.DataGridView();
             this.openWrTab = new System.Windows.Forms.TabPage();
             this.openWR_dataGridView = new System.Windows.Forms.DataGridView();
+            this.openWoTab = new System.Windows.Forms.TabPage();
+            this.openWO_dataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tasksTab = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
@@ -111,10 +111,10 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
             this.tabControl3.SuspendLayout();
-            this.openWoTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).BeginInit();
             this.openWrTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).BeginInit();
+            this.openWoTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).BeginInit();
             this.tabControl4.SuspendLayout();
             this.tasksTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
@@ -629,27 +629,6 @@
             this.tabControl3.Size = new System.Drawing.Size(594, 164);
             this.tabControl3.TabIndex = 6;
             // 
-            // openWoTab
-            // 
-            this.openWoTab.Controls.Add(this.openWO_dataGridView);
-            this.openWoTab.Location = new System.Drawing.Point(4, 22);
-            this.openWoTab.Name = "openWoTab";
-            this.openWoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.openWoTab.Size = new System.Drawing.Size(586, 138);
-            this.openWoTab.TabIndex = 0;
-            this.openWoTab.Text = "Open Work Orders";
-            this.openWoTab.UseVisualStyleBackColor = true;
-            // 
-            // openWO_dataGridView
-            // 
-            this.openWO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
-            this.openWO_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.openWO_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openWO_dataGridView.Location = new System.Drawing.Point(3, 3);
-            this.openWO_dataGridView.Name = "openWO_dataGridView";
-            this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
-            this.openWO_dataGridView.TabIndex = 0;
-            // 
             // openWrTab
             // 
             this.openWrTab.Controls.Add(this.openWR_dataGridView);
@@ -678,6 +657,29 @@
             this.openWR_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openWR_dataGridView.TabIndex = 0;
             this.openWR_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenWR_dataGridView_CellContentClick);
+            // 
+            // openWoTab
+            // 
+            this.openWoTab.Controls.Add(this.openWO_dataGridView);
+            this.openWoTab.Location = new System.Drawing.Point(4, 22);
+            this.openWoTab.Name = "openWoTab";
+            this.openWoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.openWoTab.Size = new System.Drawing.Size(586, 138);
+            this.openWoTab.TabIndex = 0;
+            this.openWoTab.Text = "Open Work Orders";
+            this.openWoTab.UseVisualStyleBackColor = true;
+            // 
+            // openWO_dataGridView
+            // 
+            this.openWO_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.openWO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
+            this.openWO_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.openWO_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openWO_dataGridView.Location = new System.Drawing.Point(3, 3);
+            this.openWO_dataGridView.Name = "openWO_dataGridView";
+            this.openWO_dataGridView.RowHeadersVisible = false;
+            this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
+            this.openWO_dataGridView.TabIndex = 0;
             // 
             // tabControl4
             // 
@@ -778,10 +780,10 @@
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
             this.tabControl3.ResumeLayout(false);
-            this.openWoTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).EndInit();
             this.openWrTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.openWR_dataGridView)).EndInit();
+            this.openWoTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).EndInit();
             this.tabControl4.ResumeLayout(false);
             this.tasksTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();

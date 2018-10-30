@@ -40,6 +40,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.part = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.partDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockOrdered = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.work = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addToList_button = new System.Windows.Forms.Button();
             this.part_comboBox = new System.Windows.Forms.ComboBox();
             this.qty_textBox = new System.Windows.Forms.TextBox();
@@ -48,7 +53,13 @@
             this.save_button = new System.Windows.Forms.Button();
             this.cancel_button = new System.Windows.Forms.Button();
             this.partDesc_textbox = new System.Windows.Forms.TextBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // workRequestID_textBox
@@ -150,10 +161,47 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.part,
+            this.qty,
+            this.partDesc,
+            this.stockOrdered,
+            this.work});
             this.dataGridView1.Location = new System.Drawing.Point(15, 310);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(592, 141);
             this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.Visible = false;
+            // 
+            // part
+            // 
+            this.part.HeaderText = "Part Used";
+            this.part.Name = "part";
+            this.part.ReadOnly = true;
+            // 
+            // qty
+            // 
+            this.qty.HeaderText = "Qty Used";
+            this.qty.Name = "qty";
+            this.qty.ReadOnly = true;
+            // 
+            // partDesc
+            // 
+            this.partDesc.HeaderText = "Part Description";
+            this.partDesc.Name = "partDesc";
+            this.partDesc.ReadOnly = true;
+            // 
+            // stockOrdered
+            // 
+            this.stockOrdered.HeaderText = "Stock/Ordered";
+            this.stockOrdered.Name = "stockOrdered";
+            this.stockOrdered.ReadOnly = true;
+            // 
+            // work
+            // 
+            this.work.HeaderText = "Work Performed";
+            this.work.Name = "work";
+            this.work.ReadOnly = true;
             // 
             // addToList_button
             // 
@@ -163,6 +211,8 @@
             this.addToList_button.TabIndex = 12;
             this.addToList_button.Text = "Add";
             this.addToList_button.UseVisualStyleBackColor = true;
+            this.addToList_button.Visible = false;
+            this.addToList_button.Click += new System.EventHandler(this.AddToOrder_btn_Click);
             // 
             // part_comboBox
             // 
@@ -171,36 +221,39 @@
             this.part_comboBox.Name = "part_comboBox";
             this.part_comboBox.Size = new System.Drawing.Size(90, 21);
             this.part_comboBox.TabIndex = 13;
-            this.part_comboBox.SelectedIndexChanged += new System.EventHandler(this.part_comboBox_SelectedIndexChanged);
+            this.part_comboBox.Visible = false;
             // 
             // qty_textBox
             // 
-            this.qty_textBox.Location = new System.Drawing.Point(279, 282);
+            this.qty_textBox.Location = new System.Drawing.Point(279, 281);
             this.qty_textBox.Name = "qty_textBox";
             this.qty_textBox.Size = new System.Drawing.Size(67, 20);
             this.qty_textBox.TabIndex = 14;
+            this.qty_textBox.Visible = false;
             // 
             // stock_radioButton
             // 
             this.stock_radioButton.AutoSize = true;
-            this.stock_radioButton.Location = new System.Drawing.Point(355, 287);
+            this.stock_radioButton.Location = new System.Drawing.Point(12, 2);
             this.stock_radioButton.Name = "stock_radioButton";
             this.stock_radioButton.Size = new System.Drawing.Size(76, 17);
             this.stock_radioButton.TabIndex = 15;
             this.stock_radioButton.TabStop = true;
             this.stock_radioButton.Text = "Stock Item";
             this.stock_radioButton.UseVisualStyleBackColor = true;
+            this.stock_radioButton.Visible = false;
             // 
             // ordered_radioButton
             // 
             this.ordered_radioButton.AutoSize = true;
-            this.ordered_radioButton.Location = new System.Drawing.Point(437, 287);
+            this.ordered_radioButton.Location = new System.Drawing.Point(88, 3);
             this.ordered_radioButton.Name = "ordered_radioButton";
             this.ordered_radioButton.Size = new System.Drawing.Size(86, 17);
             this.ordered_radioButton.TabIndex = 16;
             this.ordered_radioButton.TabStop = true;
             this.ordered_radioButton.Text = "Ordered Item";
             this.ordered_radioButton.UseVisualStyleBackColor = true;
+            this.ordered_radioButton.Visible = false;
             // 
             // save_button
             // 
@@ -224,21 +277,67 @@
             // 
             // partDesc_textbox
             // 
-            this.partDesc_textbox.Location = new System.Drawing.Point(108, 280);
+            this.partDesc_textbox.Location = new System.Drawing.Point(108, 281);
             this.partDesc_textbox.Name = "partDesc_textbox";
             this.partDesc_textbox.Size = new System.Drawing.Size(165, 20);
             this.partDesc_textbox.TabIndex = 21;
+            this.partDesc_textbox.Visible = false;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(7, 19);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(43, 17);
+            this.radioButton1.TabIndex = 22;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Yes";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(56, 19);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(39, 17);
+            this.radioButton2.TabIndex = 23;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "No";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButton2_CheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Location = new System.Drawing.Point(368, 111);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(133, 45);
+            this.groupBox1.TabIndex = 24;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Were Parts Used?";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.stock_radioButton);
+            this.groupBox2.Controls.Add(this.ordered_radioButton);
+            this.groupBox2.Location = new System.Drawing.Point(349, 279);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(171, 24);
+            this.groupBox2.TabIndex = 25;
+            this.groupBox2.TabStop = false;
             // 
             // WorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 463);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.partDesc_textbox);
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.save_button);
-            this.Controls.Add(this.ordered_radioButton);
-            this.Controls.Add(this.stock_radioButton);
             this.Controls.Add(this.qty_textBox);
             this.Controls.Add(this.part_comboBox);
             this.Controls.Add(this.addToList_button);
@@ -258,6 +357,10 @@
             this.Text = "WorkOrder";
             this.Load += new System.EventHandler(this.WorkOrder_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,5 +387,14 @@
         private System.Windows.Forms.Button save_button;
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.TextBox partDesc_textbox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn part;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qty;
+        private System.Windows.Forms.DataGridViewTextBoxColumn partDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stockOrdered;
+        private System.Windows.Forms.DataGridViewTextBoxColumn work;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

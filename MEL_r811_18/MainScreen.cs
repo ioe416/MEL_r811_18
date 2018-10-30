@@ -133,6 +133,7 @@ namespace MEL_r811_18
         {
             this.Show();
             OpenWR_Fill();
+            OpenWO_Fill();
         }
 
         private void MainScreen_load(object sender, EventArgs e)
@@ -145,6 +146,7 @@ namespace MEL_r811_18
             Fill_SelectMachine_ComboBox();
             Fill_SelectVendor_ComboBox();
             Fill_SelectTech_ComboBox();
+            OpenWO_Fill();
         }
 
         private void OpenPO_Fill()
@@ -465,6 +467,50 @@ namespace MEL_r811_18
             {
 
             }
+        }
+        private void OpenWO_Fill()
+        {
+            try
+            {
+                conn = new SqlConnection(conn_string);
+                conn.Open();
+
+                q = "SELECT[WorkOrder].[WorkRequestID], [Employee].[Tech], [Status].[Status], [WorkRequest].[WorkRequested] " +
+                    "FROM[WorkOrder] INNER JOIN[Employee] ON[Employee].[EmployeeID] = [WorkOrder].[EmployeeID] " +
+                    "INNER JOIN[Status] ON [Status].[StatusID] = [WorkOrder].[StatusID] " +
+                    "INNER JOIN[WorkRequest] ON[WorkRequest].[RequestID] = [WorkOrder].[WorkRequestID]" +
+                    "WHERE [WorkRequest].[RequestConverted] = 'True' AND [WorkOrder].[WOClosed] = 'False'";
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+                openWO_dataGridView.DataSource = dt;
+
+                openWO_dataGridView.Columns[0].FillWeight = 30;
+                openWO_dataGridView.Columns[0].HeaderText = "ID";
+                openWO_dataGridView.Columns[0].ReadOnly = true;
+                openWO_dataGridView.Columns[0].Visible = true;
+
+                openWO_dataGridView.Columns[1].FillWeight = 120;
+                openWO_dataGridView.Columns[1].HeaderText = "Tech";
+                openWO_dataGridView.Columns[1].ReadOnly = true;
+
+                openWO_dataGridView.Columns[2].FillWeight = 100;
+                openWO_dataGridView.Columns[2].HeaderText = "Status";
+                openWO_dataGridView.Columns[2].ReadOnly = true;
+
+                openWO_dataGridView.Columns[3].FillWeight = 1200;
+                openWO_dataGridView.Columns[3].HeaderText = "Work Requested";
+                openWO_dataGridView.Columns[3].ReadOnly = true;
+
+                conn.Close();
+            }
+            catch
+            {
+
+            }
+
         }
 
         private void MachineToolStripMenuItem1_Click(object sender, EventArgs e)

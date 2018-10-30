@@ -15,21 +15,27 @@ namespace MEL_r811_18
     {
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
 
+        MainScreen ms;
+
         bool woclosed;
+        bool stock;
         int woid;
         int partid;
         int vendorid;
         int employeeid;
         int statusid;
 
+
         public WorkOrder(int id)
         {
             InitializeComponent();
         }
+
         private void WorkOrder_Load(object sender, EventArgs e)
         {
             Tech_comboBox_Fill();
             Status_comboBox_Fill();
+
         }
 
         private void Tech_comboBox_Fill()
@@ -74,14 +80,55 @@ namespace MEL_r811_18
 
             }
         }
+        private void Part_comboBox_Fill()
+        {
+            string part_fill_q = "SELECT PartID, PartNumber FROM Parts";
+            DataTable table = new DataTable("myData");
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(part_fill_q, conn))
+                {
+
+                    da.Fill(table);
+
+
+                    DataRow row0 = table.NewRow();
+                    DataRow row1 = table.NewRow();
+                    row0["PartNumber"] = "-Select Part-";
+                    row1["PartNumber"] = "-Add Part-";
+                    table.Rows.InsertAt(row0, 0);
+                    table.Rows.InsertAt(row1, 1);
+                    table.DefaultView.Sort = "PartNumber asc";
+
+                    part_comboBox.DataSource = table;
+                    part_comboBox.DisplayMember = "PartNumber";
+                    part_comboBox.ValueMember = "PartID";
+                }
+
+            }
+
+        }
 
         private void Cancel_button_Click(object sender, EventArgs e)
         {
+            bool converted = false;
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                using (SqlCommand command = conn.CreateCommand())
+                {
+                    command.CommandText = "UPDATE WorkRequest SET RequestConverted = @Converted WHERE RequestID = " + Convert.ToInt16(workRequestID_textBox.Text);
+
+                    command.Parameters.AddWithValue("@Converted", converted);
+
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
             this.Close();
         }
         private void Save_button_Click(object sender, EventArgs e)
         {
-
+            Save_WorkOrder();
         }
 
         private void Save_WorkOrder()
@@ -101,7 +148,7 @@ namespace MEL_r811_18
 
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                string q = "INSERT INTO PR (WorkRequestID, EmployeeID, StatusID, WOCLosed, DateWOCLosed) OUTPUT INSERTED.OrderID " +
+                string q = "INSERT INTO WorkOrder (WorkRequestID, EmployeeID, StatusID, WOCLosed, DateWOCLosed) OUTPUT INSERTED.WOID " +
                     "VALUES (@WorkRequestID, @EmployeeID, @StatusID, @WOCLosed, @DateWOCLosed)";
 
                 using (SqlCommand command = new SqlCommand(q, conn))
@@ -113,41 +160,74 @@ namespace MEL_r811_18
                     command.Parameters.AddWithValue("@DateWOCLosed", dateClosed);
 
                     conn.Open();
-                    int orderID = (int)command.ExecuteScalar();
+                    int woid = (int)command.ExecuteScalar();
+                    Save_WorkOrderDetails(woid);
                 }
                 
             }
-            Save_WorkOrderDetails();
+            
         }
-        private void Save_WorkOrderDetails()
+        private void Save_WorkOrderDetails(int id)
         {
-            string q = "INSERT INTO WODetails (WOID, PartID, Qty, WorkPerformed, Stock/Ordered) OUTPUT INSERTED.WODetailsID VALUES " +
-               "(@WOID, @PartID, @Qty, @WorkPerformed, @Stock/Ordered)";
-
-            SqlConnection conn = new SqlConnection(conn_string);
-            SqlCommand cmd = new SqlCommand(q, conn);
+            if (radioButton1.Checked == true)
             {
-                cmd.Parameters.Add(new SqlParameter("@WOID", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@PartID", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@Qty", SqlDbType.Int));
-                cmd.Parameters.Add(new SqlParameter("@WorkPerformed", SqlDbType.NVarChar));
-                cmd.Parameters.Add(new SqlParameter("@Stock/Ordered", SqlDbType.Bit));
+                string q = "INSERT INTO WODetails (WOID, PartID, Qty, WorkPerformed, Stock/Ordered) OUTPUT INSERTED.WODetailsID VALUES " +
+                   "(@WOID, @PartID, @Qty, @WorkPerformed, @Stock/Ordered)";
 
-                conn.Open();
-
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                SqlConnection conn = new SqlConnection(conn_string);
+                SqlCommand cmd = new SqlCommand(q, conn);
                 {
-                    cmd.Parameters["@WOID"].Value = woid;
-                    cmd.Parameters["@PartID"].Value = row.Cells[0].Value;
-                    cmd.Parameters["@Qty"].Value = row.Cells[1].Value;
-                    cmd.Parameters["@WorkPerformed"].Value = row.Cells[2].Value;
-                    cmd.Parameters["@Stock/Ordered"].Value = row.Cells[5].Value;
+                    cmd.Parameters.Add(new SqlParameter("@WOID", SqlDbType.Int));
+                    cmd.Parameters.Add(new SqlParameter("@PartID", SqlDbType.Int));
+                    cmd.Parameters.Add(new SqlParameter("@Qty", SqlDbType.Int));
+                    cmd.Parameters.Add(new SqlParameter("@WorkPerformed", SqlDbType.NVarChar));
+                    cmd.Parameters.Add(new SqlParameter("@Stock/Ordered", SqlDbType.Bit));
 
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
 
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        cmd.Parameters["@WOID"].Value = id;
+                        cmd.Parameters["@PartID"].Value = row.Cells[0].Value;
+                        cmd.Parameters["@Qty"].Value = row.Cells[1].Value;
+                        cmd.Parameters["@Stock/Ordered"].Value = row.Cells[3].Value;
+                        cmd.Parameters["@WorkPerformed"].Value = row.Cells[4].Value;
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    conn.Close();
                 }
-                conn.Close();
             }
+            else if (radioButton2.Checked == true)
+            {
+                string q = "INSERT INTO WODetails (WOID, PartID, Qty, WorkPerformed, [Stock/Ordered]) OUTPUT INSERTED.WODetailsID VALUES " +
+                   "(@WOID, @PartID, @Qty, @WorkPerformed, @StockOrdered)";
+
+                SqlConnection conn = new SqlConnection(conn_string);
+                SqlCommand cmd = new SqlCommand(q, conn);
+                {
+                    cmd.Parameters.Add(new SqlParameter("@WOID", SqlDbType.Int));
+                    cmd.Parameters.Add(new SqlParameter("@PartID", SqlDbType.Int));
+                    cmd.Parameters.Add(new SqlParameter("@Qty", SqlDbType.Int));
+                    cmd.Parameters.Add(new SqlParameter("@WorkPerformed", SqlDbType.NVarChar));
+                    cmd.Parameters.Add(new SqlParameter("@StockOrdered", SqlDbType.Bit));
+
+                    conn.Open();
+
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        cmd.Parameters["@WOID"].Value = id;
+                        cmd.Parameters["@PartID"].Value = DBNull.Value;
+                        cmd.Parameters["@Qty"].Value = DBNull.Value;
+                        cmd.Parameters["@StockOrdered"].Value = DBNull.Value;
+                        cmd.Parameters["@WorkPerformed"].Value = textBox2.Text;
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    conn.Close();
+                }
+            }
+            this.Close();
         }
 
         private int Get_VendorID(string vendor)
@@ -213,7 +293,7 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
-                string status_q = "SELECT SttatusID FROM Status WHERE Status = '" + stat + "'";
+                string status_q = "SELECT StatusID FROM Status WHERE Status = '" + stat + "'";
                 conn.Open();
 
                 SqlCommand command = new SqlCommand(status_q, conn);
@@ -265,35 +345,73 @@ namespace MEL_r811_18
                         int qty = Convert.ToInt16(qty_textBox.Text);
                         decimal price = Convert.ToDecimal(0);
 
-                        Fill_Part_ComboBox();
+                        Part_comboBox_Fill();
+                    }
+                    else
+                    {
+                        dataGridView1.Rows.Add(new String[]
+                        {DBNull.Value.ToString(),
+                        DBNull.Value.ToString(),
+                        DBNull.Value.ToString(),
+                        DBNull.Value.ToString(),
+                        textBox2.Text,
+                        });
                     }
                     break;
 
                 default:
+                    if (stock_radioButton.Checked == true)
+                    {
+                        stock = true;
+                    }
+                    else if (ordered_radioButton.Checked == true)
+                    {
+                        stock = false;
+                    }
                     dataGridView1.Rows.Add(new String[]
                     {part_comboBox.SelectedValue.ToString(),
                     qty_textBox.Text,
-                    .Text,
+                    partDesc_textbox.Text,
+                    stock.ToString(),
                     textBox2.Text,
                     });
 
                     dataGridView1.Sort(part, ListSortDirection.Ascending);
-                    qty_txb.Clear();
-                    unit_combo.SelectedIndex = 0;
-                    part_combo.SelectedIndex = 0;
-                    desc_txb.Clear();
-                    price_txb.Clear();
-                    per_combo.SelectedIndex = 0;
-                    total_txb.Clear();
-                    partID = 0;
+                    qty_textBox.Clear();
+                    partDesc_textbox.Clear();
+                    textBox2.Clear();
+
                     break;
 
             }
         }
 
-        private void part_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            if (radioButton1.Checked == true)
+            {
+                part_comboBox.Visible = true;
+                partDesc_textbox.Visible = true;
+                qty_textBox.Visible = true;
+                stock_radioButton.Visible = true;
+                ordered_radioButton.Visible = true;
+                addToList_button.Visible = true;
+                dataGridView1.Visible = true;
+            }
+        }
 
+        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked == true)
+            {
+                part_comboBox.Visible = false;
+                partDesc_textbox.Visible = false;
+                qty_textBox.Visible = false;
+                stock_radioButton.Visible = false;
+                ordered_radioButton.Visible = false;
+                addToList_button.Visible = false;
+                dataGridView1.Visible = false;
+            }
         }
     }
     

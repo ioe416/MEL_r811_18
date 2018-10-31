@@ -669,6 +669,7 @@ namespace MEL_r811_18
                     comboBox1.DataSource = table;
                     comboBox1.DisplayMember = "DepartmentName";
                     comboBox1.ValueMember = "DepartmentID";
+
                 }
 
             }

@@ -257,7 +257,7 @@ namespace MEL_r811_18
                     {
                         cmd.Parameters["@due"].Value = DBNull.Value;
                     }
-                    cmd.Parameters["@rec"].Value = row.Cells[8].Value;
+                    cmd.Parameters["@rec"].Value = row.Cells[9].Value;
 
                     cmd.ExecuteNonQuery();
                 }

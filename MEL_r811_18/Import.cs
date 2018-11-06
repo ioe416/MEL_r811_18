@@ -18,7 +18,7 @@ namespace MEL_r811_18
     public partial class Import : Form
     {
         List<Department> departmentList = new List<Department>();
-        List<Machine> machineList = new List<Machine>(); 
+        List<Machine> machineList = new List<Machine>();
         List<Part> partList = new List<Part>();
         List<Vendor> vendorList = new List<Vendor>();
         List<Employee> employeeList = new List<Employee>();
@@ -26,7 +26,7 @@ namespace MEL_r811_18
         List<PR_Details> pr_detailsList = new List<PR_Details>();
         string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        public string fname = ""; 
+        public string fname = "";
         public string q;
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
@@ -37,7 +37,7 @@ namespace MEL_r811_18
         }
         public void ImportScreen_Load(object sender, EventArgs e)
         {
-            
+
         }
         private void LoadDepartmentFromExcel()
         {
@@ -49,7 +49,7 @@ namespace MEL_r811_18
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
             Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
-            
+
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
@@ -121,7 +121,7 @@ namespace MEL_r811_18
             }
             this.Cursor = Cursors.Default;
             LoadMachinesFromExcel();
-            
+
         }
 
         private void LoadEmployeeFromExcel()
@@ -619,7 +619,7 @@ namespace MEL_r811_18
                         + pr.DepartmentID_PR + " " + pr.MachineID_PR + " " + pr.EmployeeID_PR + " " + pr.DeliverTo + " "
                         + pr.PONumber;
 
-                        command.Parameters.AddWithValue("@OrderID", pr.OrderID); 
+                        command.Parameters.AddWithValue("@OrderID", pr.OrderID);
                         command.Parameters.AddWithValue("@VendorID", pr.VendorID_PR);
                         if (String.IsNullOrEmpty(pr.DateIssued))
                         {
@@ -627,17 +627,17 @@ namespace MEL_r811_18
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@DateIsssued", pr.DateIssued); 
+                            command.Parameters.AddWithValue("@DateIsssued", pr.DateIssued);
                         }
                         command.Parameters.AddWithValue("@DepartmentID", pr.DepartmentID_PR);
-                        if (pr.MachineID_PR == 0 )
+                        if (pr.MachineID_PR == 0)
                         {
                             command.Parameters.AddWithValue("@MachineID", DBNull.Value);
                         }
                         else
                         {
                             command.Parameters.AddWithValue("@MachineID", pr.MachineID_PR);
-                        }                       
+                        }
                         command.Parameters.AddWithValue("@EmployeeID", pr.EmployeeID_PR);
                         command.Parameters.AddWithValue("@DeliverTo", pr.DeliverTo);
                         if (String.IsNullOrEmpty(pr.PONumber))
@@ -927,7 +927,7 @@ namespace MEL_r811_18
             //Add Department Constraints
             SqlCommand add_PK_Department = new SqlCommand(query_add_PK_Department, conn);
             add_PK_Department.ExecuteNonQuery();
-            
+
             //Employee Contraint strings
             string query_add_PK_Employee = "IF OBJECT_ID('dbo.[PK_Employee]') IS NULL ALTER TABLE dbo.Employee ADD CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED ([EmployeeID] ASC)";
 
@@ -1017,7 +1017,7 @@ namespace MEL_r811_18
             string query_remove_FK_PR_Machine = "IF OBJECT_ID('dbo.[FK_PR_Machines]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Machines]";
             string query_remove_FK_PR_Department = "IF OBJECT_ID('dbo.[FK_PR_Department]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Department]";
             string query_remove_FK_PR_Vendor = "IF OBJECT_ID('dbo.[FK_PR_Vendor]') IS NOT NULL ALTER TABLE dbo.PR DROP CONSTRAINT [FK_PR_Vendor]";
- 
+
             //Remove PR Constraints          
             SqlCommand remove_PK_PR = new SqlCommand(query_remove_PK_PR, conn);
             remove_PK_PR.ExecuteNonQuery();
@@ -1029,7 +1029,7 @@ namespace MEL_r811_18
             remove_FK_PR_Department.ExecuteNonQuery();
             SqlCommand remove_FK_PR_Vendor = new SqlCommand(query_remove_FK_PR_Vendor, conn);
             remove_FK_PR_Vendor.ExecuteNonQuery();
-            
+
             //WorkRequest Contraint strings
             string query_remove_FK_WorkRequest_Department = "IF OBJECT_ID('dbo.[FK_WorkRequest_Department]') IS NOT NULL ALTER TABLE dbo.WorkRequest DROP CONSTRAINT [FK_WorkRequest_Department]";
             string query_remove_FK_WorkRequest_Machines = "IF OBJECT_ID('dbo.[FK_WorkRequest_Machines]') IS NOT NULL ALTER TABLE dbo.WorkRequest DROP CONSTRAINT [FK_WorkRequest_Machines]";

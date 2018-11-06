@@ -62,10 +62,10 @@
             this.openPR_dataGridView = new System.Windows.Forms.DataGridView();
             this.historicalPoTab = new System.Windows.Forms.TabPage();
             this.historicalPO_datagridView = new System.Windows.Forms.DataGridView();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tech_comboBox = new System.Windows.Forms.ComboBox();
+            this.vendor_comboBox = new System.Windows.Forms.ComboBox();
+            this.machine_comboBox = new System.Windows.Forms.ComboBox();
+            this.department_comboBox = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.totalRecords_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.of_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
@@ -416,10 +416,10 @@
             // 
             this.historicalPoTab.BackColor = System.Drawing.Color.DodgerBlue;
             this.historicalPoTab.Controls.Add(this.historicalPO_datagridView);
-            this.historicalPoTab.Controls.Add(this.comboBox4);
-            this.historicalPoTab.Controls.Add(this.comboBox3);
-            this.historicalPoTab.Controls.Add(this.comboBox2);
-            this.historicalPoTab.Controls.Add(this.comboBox1);
+            this.historicalPoTab.Controls.Add(this.tech_comboBox);
+            this.historicalPoTab.Controls.Add(this.vendor_comboBox);
+            this.historicalPoTab.Controls.Add(this.machine_comboBox);
+            this.historicalPoTab.Controls.Add(this.department_comboBox);
             this.historicalPoTab.Location = new System.Drawing.Point(4, 22);
             this.historicalPoTab.Name = "historicalPoTab";
             this.historicalPoTab.Padding = new System.Windows.Forms.Padding(3);
@@ -445,45 +445,45 @@
             this.historicalPO_datagridView.Size = new System.Drawing.Size(574, 102);
             this.historicalPO_datagridView.TabIndex = 4;
             // 
-            // comboBox4
+            // tech_comboBox
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(386, 6);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 3;
-            this.comboBox4.Text = "-Choose Tech-";
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.SelectTech_comboBox_SelectedIndexChanged);
+            this.tech_comboBox.FormattingEnabled = true;
+            this.tech_comboBox.Location = new System.Drawing.Point(386, 6);
+            this.tech_comboBox.Name = "tech_comboBox";
+            this.tech_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.tech_comboBox.TabIndex = 3;
+            this.tech_comboBox.Text = "-Choose Tech-";
+            this.tech_comboBox.SelectedIndexChanged += new System.EventHandler(this.SelectTech_comboBox_SelectedIndexChanged);
             // 
-            // comboBox3
+            // vendor_comboBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(259, 6);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 2;
-            this.comboBox3.Text = "-Choose Vendor-";
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.SelectVendor_comboBox_SelectedIndexChanged);
+            this.vendor_comboBox.FormattingEnabled = true;
+            this.vendor_comboBox.Location = new System.Drawing.Point(259, 6);
+            this.vendor_comboBox.Name = "vendor_comboBox";
+            this.vendor_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.vendor_comboBox.TabIndex = 2;
+            this.vendor_comboBox.Text = "-Choose Vendor-";
+            this.vendor_comboBox.SelectedIndexChanged += new System.EventHandler(this.SelectVendor_comboBox_SelectedIndexChanged);
             // 
-            // comboBox2
+            // machine_comboBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(132, 6);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 1;
-            this.comboBox2.Text = "-Choose Machine-";
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.SelectMachine_comboBox_SelectedIndexChanged);
+            this.machine_comboBox.FormattingEnabled = true;
+            this.machine_comboBox.Location = new System.Drawing.Point(132, 6);
+            this.machine_comboBox.Name = "machine_comboBox";
+            this.machine_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.machine_comboBox.TabIndex = 1;
+            this.machine_comboBox.Text = "-Choose Machine-";
+            this.machine_comboBox.SelectedIndexChanged += new System.EventHandler(this.SelectMachine_comboBox_SelectedIndexChanged);
             // 
-            // comboBox1
+            // department_comboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(5, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.Text = "-Choose Department-";
-            this.comboBox1.SelectedValueChanged += new System.EventHandler(this.SelectDepartemnt_comboBox_SelectedIndexChanged);
+            this.department_comboBox.FormattingEnabled = true;
+            this.department_comboBox.Location = new System.Drawing.Point(5, 6);
+            this.department_comboBox.Name = "department_comboBox";
+            this.department_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.department_comboBox.TabIndex = 0;
+            this.department_comboBox.Text = "-Choose Department-";
+            this.department_comboBox.SelectedValueChanged += new System.EventHandler(this.SelectDepartemnt_comboBox_SelectedIndexChanged);
             // 
             // toolStrip1
             // 
@@ -671,13 +671,11 @@
             // 
             // openWO_dataGridView
             // 
-            this.openWO_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.openWO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
             this.openWO_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.openWO_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.openWO_dataGridView.Location = new System.Drawing.Point(3, 3);
             this.openWO_dataGridView.Name = "openWO_dataGridView";
-            this.openWO_dataGridView.RowHeadersVisible = false;
             this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openWO_dataGridView.TabIndex = 0;
             // 
@@ -855,9 +853,9 @@
         private System.Windows.Forms.DataGridView openWR_dataGridView;
         private System.Windows.Forms.TabPage historicalPoTab;
         private System.Windows.Forms.DataGridView historicalPO_datagridView;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox tech_comboBox;
+        private System.Windows.Forms.ComboBox vendor_comboBox;
+        private System.Windows.Forms.ComboBox machine_comboBox;
+        private System.Windows.Forms.ComboBox department_comboBox;
     }
 }

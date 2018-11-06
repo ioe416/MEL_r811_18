@@ -13,55 +13,65 @@ namespace MEL_r811_18
     {
         public string q;
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
-        public string open_po_count;
-        SqlConnection conn = null;
         public string today = DateTime.Today.ToShortDateString();
 
         string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        public string machineID;
-        public string bTNumber;
-        public string commonName;
-        public string make;
-        public string model;
-        public string serial;
-        public string departmentID_Machine;
-        public int partID;
-        public string partNumber;
-        public string partDescription;
-        public decimal unitPrice;
-        public string partImage;
-        public int vendorID;
-        public string vendorNumber;
-        public string vendorName;
-        public string contact;
-        public string vendorEmail;
-        public string vendorPhone;
-        public int employeeID;
-        public string tech;
-        public string craft;
-        public string employeePhone;
-        public string employeeEmail;
-        public int orderID;
-        public int vendorID_PR;
-        public string dateIssued;
-        public int departmentID_PR;
-        public int machineID_PR;
-        public int employeeID_PR;
-        public string deliverTo;
-        public string pONumber;
-        public int quantity;
-        public string unit;
-        public int partID_PRD;
-        public string per;
-        public string dueDate;
-        public bool received;
-        public int id;
-        public bool updatedValue;
+        //public string machineID;
+        //public string bTNumber;
+        //public string commonName;
+        //public string make;
+        //public string model;
+        //public string serial;
+        //public string departmentID_Machine;
+        //public int partID;
+        //public string partNumber;
+        //public string partDescription;
+        //public decimal unitPrice;
+        //public string partImage;
+        //public int vendorID;
+        //public string vendorNumber;
+        //public string vendorName;
+        //public string contact;
+        //public string vendorEmail;
+        //public string vendorPhone;
+        //public int employeeID;
+        //public string tech;
+        //public string craft;
+        //public string employeePhone;
+        //public string employeeEmail;
+        //public int orderID;
+        //public int vendorID_PR;
+        //public string dateIssued;
+        //public int departmentID_PR;
+        //public int machineID_PR;
+        //public int employeeID_PR;
+        //public string deliverTo;
+        //public string pONumber;
+        //public int quantity;
+        //public string unit;
+        //public int partID_PRD;
+        //public string per;
+        //public string dueDate;
+        //public bool received;
+        //public int id;
+        //public bool updatedValue;
 
         public MainScreen()
         {
             InitializeComponent();
+        }
+        private void MainScreen_load(object sender, EventArgs e)
+        {
+            Fill_OpenPO_DataGridView();
+            Fill_OverduePO_DataGridView();
+            Fill_OpenPR_DataGridView();
+            Fill_OpenWR_DataGridView();
+            Fill_SelectDepartment_ComboBox();
+            Fill_SelectMachine_ComboBox();
+            Fill_SelectVendor_ComboBox();
+            Fill_SelectTech_ComboBox();
+            Fill_OpenWO_DataGridView();
         }
 
         private void OpenPO_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -106,16 +116,16 @@ namespace MEL_r811_18
         private void PO_FormClosed(object sender, EventArgs e)
         {
             this.Show();
-            OpenPO_Fill();
-            OverduePO_Fill();
-            OpenPR_Fill();
+            Fill_OpenPO_DataGridView();
+            Fill_OverduePO_DataGridView();
+            Fill_OpenPR_DataGridView();
         }
         private void PR_EntryClosed(object sender, EventArgs e)
         {
             this.Show();
-            OpenPO_Fill();
-            OverduePO_Fill();
-            OpenPR_Fill();
+            Fill_OpenPO_DataGridView();
+            Fill_OverduePO_DataGridView();
+            Fill_OpenPR_DataGridView();
         }
         private void EditMachineClosed(object sender, EventArgs e)
         {
@@ -132,385 +142,270 @@ namespace MEL_r811_18
         private void WorkRequestEntryClosed(object sender, EventArgs e)
         {
             this.Show();
-            OpenWR_Fill();
-            OpenWO_Fill();
+            Fill_OpenWR_DataGridView();
+            Fill_OpenWO_DataGridView();
         }
 
-        private void MainScreen_load(object sender, EventArgs e)
+        
+
+        private void Fill_OpenPO_DataGridView()
         {
-            OpenPO_Fill();
-            OverduePO_Fill();
-            OpenPR_Fill();
-            OpenWR_Fill();
-            Fill_SelectDepartment_ComboBox();
-            Fill_SelectMachine_ComboBox();
-            Fill_SelectVendor_ComboBox();
-            Fill_SelectTech_ComboBox();
-            OpenWO_Fill();
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                        "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                        "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                        "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'False') AND (PR.PONumber IS NOT NULL)";
+
+            openPO_dataGridView.Fill(q);
+
+            openPO_dataGridView.Columns[0].FillWeight = 30;
+            openPO_dataGridView.Columns[0].HeaderText = "ID";
+            openPO_dataGridView.Columns[0].ReadOnly = true;
+            openPO_dataGridView.Columns[0].Visible = false;
+
+            openPO_dataGridView.Columns[1].FillWeight = 80;
+            openPO_dataGridView.Columns[1].HeaderText = "Vendor";
+            openPO_dataGridView.Columns[1].ReadOnly = true;
+
+            openPO_dataGridView.Columns[2].FillWeight = 50;
+            openPO_dataGridView.Columns[2].HeaderText = "PO Number";
+            openPO_dataGridView.Columns[2].ReadOnly = true;
+
+            openPO_dataGridView.Columns[3].FillWeight = 50;
+            openPO_dataGridView.Columns[3].HeaderText = "Qty";
+            openPO_dataGridView.Columns[3].ReadOnly = true;
+
+            openPO_dataGridView.Columns[4].FillWeight = 40;
+            openPO_dataGridView.Columns[4].Visible = false;
+
+            openPO_dataGridView.Columns[5].FillWeight = 100;
+            openPO_dataGridView.Columns[5].HeaderText = "Part Number";
+            openPO_dataGridView.Columns[5].ReadOnly = true;
+
+            openPO_dataGridView.Columns[6].FillWeight = 200;
+            openPO_dataGridView.Columns[6].HeaderText = "Description";
+            openPO_dataGridView.Columns[6].ReadOnly = true;
+
+            openPO_dataGridView.Columns[7].FillWeight = 50;
+            openPO_dataGridView.Columns[7].Visible = false;
+
+            openPO_dataGridView.Columns[8].FillWeight = 50;
+            openPO_dataGridView.Columns[8].HeaderText = "DUE";
+            openPO_dataGridView.Columns[8].ReadOnly = true;
+
+            openPO_dataGridView.Columns[9].FillWeight = 50;
+            openPO_dataGridView.Columns[9].HeaderText = "Rec'd";
+            openPO_dataGridView.Columns[9].ReadOnly = false;
         }
-
-        private void OpenPO_Fill()
+        private void Fill_OverduePO_DataGridView()
         {
-            try
-            {
-                conn = new SqlConnection(conn_string);
-                conn.Open();
-
-                q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
-                    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
-                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'False') AND (PR.PONumber IS NOT NULL)";
-
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
-
-                DataTable dt = new DataTable();
-                dataAdapter.Fill(dt);
-                openPO_dataGridView.DataSource = dt;
-
-                openPO_dataGridView.Columns[0].FillWeight = 30;
-                openPO_dataGridView.Columns[0].HeaderText = "ID";
-                openPO_dataGridView.Columns[0].ReadOnly = true;
-                openPO_dataGridView.Columns[0].Visible = false;
-
-                openPO_dataGridView.Columns[1].FillWeight = 80;
-                openPO_dataGridView.Columns[1].HeaderText = "Vendor";
-                openPO_dataGridView.Columns[1].ReadOnly = true;
-
-                openPO_dataGridView.Columns[2].FillWeight = 50;
-                openPO_dataGridView.Columns[2].HeaderText = "PO Number";
-                openPO_dataGridView.Columns[2].ReadOnly = true;
-
-                openPO_dataGridView.Columns[3].FillWeight = 50;
-                openPO_dataGridView.Columns[3].HeaderText = "Qty";
-                openPO_dataGridView.Columns[3].ReadOnly = true;
-
-                openPO_dataGridView.Columns[4].FillWeight = 40;
-                openPO_dataGridView.Columns[4].Visible = false;
-
-                openPO_dataGridView.Columns[5].FillWeight = 100;
-                openPO_dataGridView.Columns[5].HeaderText = "Part Number";
-                openPO_dataGridView.Columns[5].ReadOnly = true;
-
-                openPO_dataGridView.Columns[6].FillWeight = 200;
-                openPO_dataGridView.Columns[6].HeaderText = "Description";
-                openPO_dataGridView.Columns[6].ReadOnly = true;
-
-                openPO_dataGridView.Columns[7].FillWeight = 50;
-                openPO_dataGridView.Columns[7].Visible = false;
-
-                openPO_dataGridView.Columns[8].FillWeight = 50;
-                openPO_dataGridView.Columns[8].HeaderText = "DUE";
-                openPO_dataGridView.Columns[8].ReadOnly = true;
-
-                openPO_dataGridView.Columns[9].FillWeight = 50;
-                openPO_dataGridView.Columns[9].HeaderText = "Rec'd";
-                openPO_dataGridView.Columns[9].ReadOnly = false;
-
-                open_po_count = openPO_dataGridView.Rows.Count.ToString();
-                totalRecords_toolStripLabel.Text = open_po_count;
-
-                conn.Close();
-            }
-            catch
-            {
-
-            }
-            
-        }
-        private void OverduePO_Fill()
-        {
-            try
-            {
-                conn = new SqlConnection(conn_string);
-                conn.Open();
-
-                q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
                     "WHERE (PR_Details.Received = 'False') AND (PR_Details.DueDate < '" + today + "')";
 
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+            overduePO_dataGridView.Fill(q);
 
-                DataTable dt = new DataTable();
-                dataAdapter.Fill(dt);
-                overduePO_dataGridView.DataSource = dt;
+            overduePO_dataGridView.Columns[0].FillWeight = 30;
+            overduePO_dataGridView.Columns[0].HeaderText = "ID";
+            overduePO_dataGridView.Columns[0].ReadOnly = true;
+            overduePO_dataGridView.Columns[0].Visible = false;
 
-                overduePO_dataGridView.Columns[0].FillWeight = 30;
-                overduePO_dataGridView.Columns[0].HeaderText = "ID";
-                overduePO_dataGridView.Columns[0].ReadOnly = true;
-                overduePO_dataGridView.Columns[0].Visible = false;
+            overduePO_dataGridView.Columns[1].FillWeight = 80;
+            overduePO_dataGridView.Columns[1].HeaderText = "Vendor";
+            overduePO_dataGridView.Columns[1].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[1].FillWeight = 80;
-                overduePO_dataGridView.Columns[1].HeaderText = "Vendor";
-                overduePO_dataGridView.Columns[1].ReadOnly = true;
+            overduePO_dataGridView.Columns[2].FillWeight = 50;
+            overduePO_dataGridView.Columns[2].HeaderText = "PO Number";
+            overduePO_dataGridView.Columns[2].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[2].FillWeight = 50;
-                overduePO_dataGridView.Columns[2].HeaderText = "PO Number";
-                overduePO_dataGridView.Columns[2].ReadOnly = true;
+            overduePO_dataGridView.Columns[3].FillWeight = 50;
+            overduePO_dataGridView.Columns[3].HeaderText = "Qty";
+            overduePO_dataGridView.Columns[3].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[3].FillWeight = 50;
-                overduePO_dataGridView.Columns[3].HeaderText = "Qty";
-                overduePO_dataGridView.Columns[3].ReadOnly = true;
+            overduePO_dataGridView.Columns[4].FillWeight = 40;
+            overduePO_dataGridView.Columns[4].Visible = false;
 
-                overduePO_dataGridView.Columns[4].FillWeight = 40;
-                overduePO_dataGridView.Columns[4].Visible = false;
+            overduePO_dataGridView.Columns[5].FillWeight = 100;
+            overduePO_dataGridView.Columns[5].HeaderText = "Part Number";
+            overduePO_dataGridView.Columns[5].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[5].FillWeight = 100;
-                overduePO_dataGridView.Columns[5].HeaderText = "Part Number";
-                overduePO_dataGridView.Columns[5].ReadOnly = true;
+            overduePO_dataGridView.Columns[6].FillWeight = 200;
+            overduePO_dataGridView.Columns[6].HeaderText = "Description";
+            overduePO_dataGridView.Columns[6].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[6].FillWeight = 200;
-                overduePO_dataGridView.Columns[6].HeaderText = "Description";
-                overduePO_dataGridView.Columns[6].ReadOnly = true;
+            overduePO_dataGridView.Columns[7].FillWeight = 50;
+            overduePO_dataGridView.Columns[7].Visible = false;
 
-                overduePO_dataGridView.Columns[7].FillWeight = 50;
-                overduePO_dataGridView.Columns[7].Visible = false;
+            overduePO_dataGridView.Columns[8].FillWeight = 50;
+            overduePO_dataGridView.Columns[8].HeaderText = "DUE";
+            overduePO_dataGridView.Columns[8].ReadOnly = true;
 
-                overduePO_dataGridView.Columns[8].FillWeight = 50;
-                overduePO_dataGridView.Columns[8].HeaderText = "DUE";
-                overduePO_dataGridView.Columns[8].ReadOnly = true;
-
-                overduePO_dataGridView.Columns[9].FillWeight = 50;
-                overduePO_dataGridView.Columns[9].HeaderText = "Rec'd";
-                overduePO_dataGridView.Columns[9].ReadOnly = false;
-
-                conn.Close();
-            }
-            catch
-            {
-
-            }
-
+            overduePO_dataGridView.Columns[9].FillWeight = 50;
+            overduePO_dataGridView.Columns[9].HeaderText = "Rec'd";
+            overduePO_dataGridView.Columns[9].ReadOnly = false;
         }
-        private void OpenPR_Fill()
+        private void Fill_OpenPR_DataGridView()
         {
-            try
-            {
-                conn = new SqlConnection(conn_string);
-                conn.Open();
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                        "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                        "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                        "WHERE (PR.PONumber IS NULL) AND (PR_Details.Received = 'False')";
 
-                q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
-                    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
-                    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                    "WHERE (PR.PONumber IS NULL) AND (PR_Details.Received = 'False')";
+            openPR_dataGridView.Fill(q);
 
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+            openPR_dataGridView.Columns[0].FillWeight = 80;
+            openPR_dataGridView.Columns[0].HeaderText = "ID";
+            openPR_dataGridView.Columns[0].ReadOnly = true;
+            openPR_dataGridView.Columns[0].Visible = false;
 
-                DataTable dt = new DataTable();
-                dataAdapter.Fill(dt);
-                openPR_dataGridView.DataSource = dt;
+            openPR_dataGridView.Columns[1].FillWeight = 80;
+            openPR_dataGridView.Columns[1].HeaderText = "Vendor";
+            openPR_dataGridView.Columns[1].ReadOnly = true;
 
-                openPR_dataGridView.Columns[0].FillWeight = 80;
-                openPR_dataGridView.Columns[0].HeaderText = "ID";
-                openPR_dataGridView.Columns[0].ReadOnly = true;
-                openPR_dataGridView.Columns[0].Visible = false;
+            openPR_dataGridView.Columns[2].FillWeight = 50;
+            openPR_dataGridView.Columns[2].HeaderText = "PO Number";
+            openPR_dataGridView.Columns[2].ReadOnly = true;
+            openPR_dataGridView.Columns[2].Visible = true;
 
-                openPR_dataGridView.Columns[1].FillWeight = 80;
-                openPR_dataGridView.Columns[1].HeaderText = "Vendor";
-                openPR_dataGridView.Columns[1].ReadOnly = true;
+            openPR_dataGridView.Columns[3].FillWeight = 50;
+            openPR_dataGridView.Columns[3].HeaderText = "Qty";
+            openPR_dataGridView.Columns[3].ReadOnly = true;
 
-                openPR_dataGridView.Columns[2].FillWeight = 50;
-                openPR_dataGridView.Columns[2].HeaderText = "PO Number";
-                openPR_dataGridView.Columns[2].ReadOnly = true;
-                openPR_dataGridView.Columns[2].Visible = true;
+            openPR_dataGridView.Columns[4].FillWeight = 40;
+            openPR_dataGridView.Columns[4].Visible = false;
 
-                openPR_dataGridView.Columns[3].FillWeight = 50;
-                openPR_dataGridView.Columns[3].HeaderText = "Qty";
-                openPR_dataGridView.Columns[3].ReadOnly = true;
+            openPR_dataGridView.Columns[5].FillWeight = 100;
+            openPR_dataGridView.Columns[5].HeaderText = "Part Number";
+            openPR_dataGridView.Columns[5].ReadOnly = true;
 
-                openPR_dataGridView.Columns[4].FillWeight = 40;
-                openPR_dataGridView.Columns[4].Visible = false;
+            openPR_dataGridView.Columns[6].FillWeight = 200;
+            openPR_dataGridView.Columns[6].HeaderText = "Description";
+            openPR_dataGridView.Columns[6].ReadOnly = true;
 
-                openPR_dataGridView.Columns[5].FillWeight = 100;
-                openPR_dataGridView.Columns[5].HeaderText = "Part Number";
-                openPR_dataGridView.Columns[5].ReadOnly = true;
+            openPR_dataGridView.Columns[7].FillWeight = 50;
+            openPR_dataGridView.Columns[7].Visible = false;
 
-                openPR_dataGridView.Columns[6].FillWeight = 200;
-                openPR_dataGridView.Columns[6].HeaderText = "Description";
-                openPR_dataGridView.Columns[6].ReadOnly = true;
+            openPR_dataGridView.Columns[8].FillWeight = 50;
+            openPR_dataGridView.Columns[8].HeaderText = "DUE";
+            openPR_dataGridView.Columns[8].ReadOnly = true;
 
-                openPR_dataGridView.Columns[7].FillWeight = 50;
-                openPR_dataGridView.Columns[7].Visible = false;
-
-                openPR_dataGridView.Columns[8].FillWeight = 50;
-                openPR_dataGridView.Columns[8].HeaderText = "DUE";
-                openPR_dataGridView.Columns[8].ReadOnly = true;
-
-                openPR_dataGridView.Columns[9].FillWeight = 50;
-                openPR_dataGridView.Columns[9].HeaderText = "Rec'd";
-                openPR_dataGridView.Columns[9].ReadOnly = false;
-
-                conn.Close();
-            }
-            catch
-            {
-
-            }
-
+            openPR_dataGridView.Columns[9].FillWeight = 50;
+            openPR_dataGridView.Columns[9].HeaderText = "Rec'd";
+            openPR_dataGridView.Columns[9].ReadOnly = false;
         }
-        private void OpenWR_Fill()
+        private void Fill_OpenWR_DataGridView()
         {
-            try
-            {
-                conn = new SqlConnection(conn_string);
-                conn.Open();
+            string q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], [Type].[Type], " +
+                        "[Priority].[Priority], [WorkRequest].[WorkRequested], [WorkRequest].[RequestConverted] " +
+                        "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
+                        "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
+                        "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority]" +
+                        "WHERE [WorkRequest].[RequestConverted] = 'False'";
 
-                q = "SELECT[WorkRequest].[RequestID], [Machines].[BTNumber], [WorkRequest].[RequestDate], [Type].[Type], " +
-                    "[Priority].[Priority], [WorkRequest].[WorkRequested], [WorkRequest].[RequestConverted] " +
-                    "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
-                    "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
-                    "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority]" +
-                    "WHERE [WorkRequest].[RequestConverted] = 'False'";
+            openWR_dataGridView.Fill(q);
 
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+            openWR_dataGridView.Columns[0].FillWeight = 30;
+            openWR_dataGridView.Columns[0].HeaderText = "ID";
+            openWR_dataGridView.Columns[0].ReadOnly = true;
+            openWR_dataGridView.Columns[0].Visible = true;
 
-                DataTable dt = new DataTable();
-                dataAdapter.Fill(dt);
-                openWR_dataGridView.DataSource = dt;
+            openWR_dataGridView.Columns[1].FillWeight = 120;
+            openWR_dataGridView.Columns[1].HeaderText = "Machine";
+            openWR_dataGridView.Columns[1].ReadOnly = true;
 
-                openWR_dataGridView.Columns[0].FillWeight = 30;
-                openWR_dataGridView.Columns[0].HeaderText = "ID";
-                openWR_dataGridView.Columns[0].ReadOnly = true;
-                openWR_dataGridView.Columns[0].Visible = true;
+            openWR_dataGridView.Columns[2].FillWeight = 100;
+            openWR_dataGridView.Columns[2].HeaderText = "Request Date";
+            openWR_dataGridView.Columns[2].ReadOnly = true;
 
-                openWR_dataGridView.Columns[1].FillWeight = 120;
-                openWR_dataGridView.Columns[1].HeaderText = "Machine";
-                openWR_dataGridView.Columns[1].ReadOnly = true;
+            openWR_dataGridView.Columns[3].FillWeight = 150;
+            openWR_dataGridView.Columns[3].HeaderText = "Type";
+            openWR_dataGridView.Columns[3].ReadOnly = true;
 
-                openWR_dataGridView.Columns[2].FillWeight = 100;
-                openWR_dataGridView.Columns[2].HeaderText = "Request Date";
-                openWR_dataGridView.Columns[2].ReadOnly = true;
+            openWR_dataGridView.Columns[4].FillWeight = 250;
+            openWR_dataGridView.Columns[4].HeaderText = "Priority";
+            openWR_dataGridView.Columns[4].ReadOnly = true;
 
-                openWR_dataGridView.Columns[3].FillWeight = 150;
-                openWR_dataGridView.Columns[3].HeaderText = "Type";
-                openWR_dataGridView.Columns[3].ReadOnly = true;
-
-                openWR_dataGridView.Columns[4].FillWeight = 250;
-                openWR_dataGridView.Columns[4].HeaderText = "Priority";
-                openWR_dataGridView.Columns[4].ReadOnly = true;
-
-                openWR_dataGridView.Columns[5].FillWeight = 800;
-                openWR_dataGridView.Columns[5].HeaderText = "Work Requested";
-                openWR_dataGridView.Columns[5].ReadOnly = true;
-
-                conn.Close();
-            }
-            catch
-            {
-
-            }
-
+            openWR_dataGridView.Columns[5].FillWeight = 800;
+            openWR_dataGridView.Columns[5].HeaderText = "Work Requested";
+            openWR_dataGridView.Columns[5].ReadOnly = true;
         }
-        private void HistoricalPO_Fill(string q)
+        private void Fill_HistoricalPO_DataGridView()
         {
-            try
-            {
-                conn = new SqlConnection(conn_string);
-                conn.Open();
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
+                "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'True') AND (PR.PONumber IS NOT NULL)";
 
-                //q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity,  PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, PR_Details.DueDate, PR_Details.Received " +
-                //    "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
-                //    "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                //    "WHERE (PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') AND (PR_Details.Received = 'True') AND (PR.PONumber IS NOT NULL)";
+            historicalPO_datagridView.Fill(q);
 
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+            historicalPO_datagridView.Columns[0].FillWeight = 30;
+            historicalPO_datagridView.Columns[0].HeaderText = "ID";
+            historicalPO_datagridView.Columns[0].ReadOnly = true;
+            historicalPO_datagridView.Columns[0].Visible = false;
 
-                DataTable dt = new DataTable();
-                dataAdapter.Fill(dt);
-                historicalPO_datagridView.DataSource = dt;
+            historicalPO_datagridView.Columns[1].FillWeight = 80;
+            historicalPO_datagridView.Columns[1].HeaderText = "Vendor";
+            historicalPO_datagridView.Columns[1].ReadOnly = true;
 
-                historicalPO_datagridView.Columns[0].FillWeight = 30;
-                historicalPO_datagridView.Columns[0].HeaderText = "ID";
-                historicalPO_datagridView.Columns[0].ReadOnly = true;
-                historicalPO_datagridView.Columns[0].Visible = false;
+            historicalPO_datagridView.Columns[2].FillWeight = 50;
+            historicalPO_datagridView.Columns[2].HeaderText = "PO Number";
+            historicalPO_datagridView.Columns[2].ReadOnly = true;
 
-                historicalPO_datagridView.Columns[1].FillWeight = 80;
-                historicalPO_datagridView.Columns[1].HeaderText = "Vendor";
-                historicalPO_datagridView.Columns[1].ReadOnly = true;
+            historicalPO_datagridView.Columns[3].FillWeight = 50;
+            historicalPO_datagridView.Columns[3].HeaderText = "Qty";
+            historicalPO_datagridView.Columns[3].ReadOnly = true;
 
-                historicalPO_datagridView.Columns[2].FillWeight = 50;
-                historicalPO_datagridView.Columns[2].HeaderText = "PO Number";
-                historicalPO_datagridView.Columns[2].ReadOnly = true;
+            historicalPO_datagridView.Columns[4].FillWeight = 40;
+            historicalPO_datagridView.Columns[4].Visible = false;
 
-                historicalPO_datagridView.Columns[3].FillWeight = 50;
-                historicalPO_datagridView.Columns[3].HeaderText = "Qty";
-                historicalPO_datagridView.Columns[3].ReadOnly = true;
+            historicalPO_datagridView.Columns[5].FillWeight = 100;
+            historicalPO_datagridView.Columns[5].HeaderText = "Part Number";
+            historicalPO_datagridView.Columns[5].ReadOnly = true;
 
-                historicalPO_datagridView.Columns[4].FillWeight = 40;
-                historicalPO_datagridView.Columns[4].Visible = false;
+            historicalPO_datagridView.Columns[6].FillWeight = 200;
+            historicalPO_datagridView.Columns[6].HeaderText = "Description";
+            historicalPO_datagridView.Columns[6].ReadOnly = true;
 
-                historicalPO_datagridView.Columns[5].FillWeight = 100;
-                historicalPO_datagridView.Columns[5].HeaderText = "Part Number";
-                historicalPO_datagridView.Columns[5].ReadOnly = true;
+            historicalPO_datagridView.Columns[7].FillWeight = 50;
+            historicalPO_datagridView.Columns[7].Visible = false;
 
-                historicalPO_datagridView.Columns[6].FillWeight = 200;
-                historicalPO_datagridView.Columns[6].HeaderText = "Description";
-                historicalPO_datagridView.Columns[6].ReadOnly = true;
+            historicalPO_datagridView.Columns[8].FillWeight = 50;
+            historicalPO_datagridView.Columns[8].HeaderText = "DUE";
+            historicalPO_datagridView.Columns[8].ReadOnly = true;
 
-                historicalPO_datagridView.Columns[7].FillWeight = 50;
-                historicalPO_datagridView.Columns[7].Visible = false;
+            historicalPO_datagridView.Columns[9].FillWeight = 50;
+            historicalPO_datagridView.Columns[9].HeaderText = "Rec'd";
+            historicalPO_datagridView.Columns[9].ReadOnly = false;
 
-                historicalPO_datagridView.Columns[8].FillWeight = 50;
-                historicalPO_datagridView.Columns[8].HeaderText = "DUE";
-                historicalPO_datagridView.Columns[8].ReadOnly = true;
-
-                historicalPO_datagridView.Columns[9].FillWeight = 50;
-                historicalPO_datagridView.Columns[9].HeaderText = "Rec'd";
-                historicalPO_datagridView.Columns[9].ReadOnly = false;
-
-                open_po_count = historicalPO_datagridView.Rows.Count.ToString();
-                totalRecords_toolStripLabel.Text = open_po_count;
-
-                conn.Close();
-            }
-            catch
-            {
-
-            }
+            //open_po_count = historicalPO_datagridView.Rows.Count.ToString();
+            //totalRecords_toolStripLabel.Text = open_po_count;
         }
-        private void OpenWO_Fill()
+        private void Fill_OpenWO_DataGridView()
         {
-            try
-            {
-                conn = new SqlConnection(conn_string);
-                conn.Open();
+            string q = "SELECT[WorkOrder].[WorkRequestID], [Employee].[Tech], [Status].[Status], [WorkRequest].[WorkRequested] " +
+                   "FROM[WorkOrder] INNER JOIN[Employee] ON[Employee].[EmployeeID] = [WorkOrder].[EmployeeID] " +
+                   "INNER JOIN[Status] ON [Status].[StatusID] = [WorkOrder].[StatusID] " +
+                   "INNER JOIN[WorkRequest] ON[WorkRequest].[RequestID] = [WorkOrder].[WorkRequestID]" +
+                   "WHERE [WorkRequest].[RequestConverted] = 'True' AND [WorkOrder].[WOClosed] = 'False'";
 
-                q = "SELECT[WorkOrder].[WorkRequestID], [Employee].[Tech], [Status].[Status], [WorkRequest].[WorkRequested] " +
-                    "FROM[WorkOrder] INNER JOIN[Employee] ON[Employee].[EmployeeID] = [WorkOrder].[EmployeeID] " +
-                    "INNER JOIN[Status] ON [Status].[StatusID] = [WorkOrder].[StatusID] " +
-                    "INNER JOIN[WorkRequest] ON[WorkRequest].[RequestID] = [WorkOrder].[WorkRequestID]" +
-                    "WHERE [WorkRequest].[RequestConverted] = 'True' AND [WorkOrder].[WOClosed] = 'False'";
+            openWO_dataGridView.Fill(q);
 
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, conn);
+            openWO_dataGridView.Columns[0].FillWeight = 30;
+            openWO_dataGridView.Columns[0].HeaderText = "ID";
+            openWO_dataGridView.Columns[0].ReadOnly = true;
+            openWO_dataGridView.Columns[0].Visible = true;
 
-                DataTable dt = new DataTable();
-                dataAdapter.Fill(dt);
-                openWO_dataGridView.DataSource = dt;
+            openWO_dataGridView.Columns[1].FillWeight = 120;
+            openWO_dataGridView.Columns[1].HeaderText = "Tech";
+            openWO_dataGridView.Columns[1].ReadOnly = true;
 
-                openWO_dataGridView.Columns[0].FillWeight = 30;
-                openWO_dataGridView.Columns[0].HeaderText = "ID";
-                openWO_dataGridView.Columns[0].ReadOnly = true;
-                openWO_dataGridView.Columns[0].Visible = true;
+            openWO_dataGridView.Columns[2].FillWeight = 100;
+            openWO_dataGridView.Columns[2].HeaderText = "Status";
+            openWO_dataGridView.Columns[2].ReadOnly = true;
 
-                openWO_dataGridView.Columns[1].FillWeight = 120;
-                openWO_dataGridView.Columns[1].HeaderText = "Tech";
-                openWO_dataGridView.Columns[1].ReadOnly = true;
-
-                openWO_dataGridView.Columns[2].FillWeight = 100;
-                openWO_dataGridView.Columns[2].HeaderText = "Status";
-                openWO_dataGridView.Columns[2].ReadOnly = true;
-
-                openWO_dataGridView.Columns[3].FillWeight = 1200;
-                openWO_dataGridView.Columns[3].HeaderText = "Work Requested";
-                openWO_dataGridView.Columns[3].ReadOnly = true;
-
-                conn.Close();
-            }
-            catch
-            {
-
-            }
-
+            openWO_dataGridView.Columns[3].FillWeight = 1200;
+            openWO_dataGridView.Columns[3].HeaderText = "Work Requested";
+            openWO_dataGridView.Columns[3].ReadOnly = true;
         }
 
         private void MachineToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -576,31 +471,32 @@ namespace MEL_r811_18
 
         private void TabControl1_Selected(object sender, TabControlEventArgs e)
         {
-            open_po_count = openPO_dataGridView.Rows.Count.ToString();
+            string open_po_count = openPO_dataGridView.Rows.Count.ToString();
             totalRecords_toolStripLabel.Text = open_po_count;
         }
 
         private void SelectDepartemnt_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " + 
-                "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
-                "PR_Details.DueDate, PR_Details.Received, Department.DepartmentName " +
-                "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
-                "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID " +
-                "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
-                "INNER JOIN Department ON PR.DepartmentID = Department.DepartmentID " +
-                "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
-                "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
-                "(Department.DepartmentName = '" + comboBox1.Text + "')";
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " + 
+                        "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
+                        "PR_Details.DueDate, PR_Details.Received, Department.DepartmentName " +
+                        "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
+                        "INNER JOIN PR ON PR.OrderID = PR_Details.OrderID " +
+                        "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
+                        "INNER JOIN Department ON PR.DepartmentID = Department.DepartmentID " +
+                        "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
+                        "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
+                        "(Department.DepartmentName = '" + department_comboBox.Text + "')";
 
-            HistoricalPO_Fill(q);
-            comboBox3.Text = "-Select Vendor-";
-            comboBox2.Text = "-Select Machine-";
-            comboBox4.Text = "-Select Tech-";
+            historicalPO_datagridView.Fill(q);
+
+            vendor_comboBox.Text = "-Select Vendor-";
+            machine_comboBox.Text = "-Select Machine-";
+            tech_comboBox.Text = "-Select Tech-";
         }
         private void SelectMachine_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
                 "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
                 "PR_Details.DueDate, PR_Details.Received, Machines.BTNumber " +
                 "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
@@ -609,16 +505,17 @@ namespace MEL_r811_18
                 "INNER JOIN Machines ON PR.MachineID = Machines.MachineID " +
                 "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
                 "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
-                "(Machines.BTNumber = '" + comboBox2.Text + "')";
+                "(Machines.BTNumber = '" + machine_comboBox.Text + "')";
 
-            HistoricalPO_Fill(q);
-            comboBox1.Text = "-Select Department-";
-            comboBox3.Text = "-Select Vendor-";
-            comboBox4.Text = "-Select Tech-";
+            historicalPO_datagridView.Fill(q);
+
+            department_comboBox.Text = "-Select Department-";
+            vendor_comboBox.Text = "-Select Vendor-";
+            tech_comboBox.Text = "-Select Tech-";
         }
         private void SelectVendor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
                 "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
                 "PR_Details.DueDate, PR_Details.Received " +
                 "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
@@ -626,16 +523,17 @@ namespace MEL_r811_18
                 "INNER JOIN Vendors ON PR.VendorID = Vendors.VendorID " +
                 "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
                 "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
-                "(Vendors.VendorName = '" + comboBox3.Text + "')";
+                "(Vendors.VendorName = '" + vendor_comboBox.Text + "')";
 
-            HistoricalPO_Fill(q);
-            comboBox1.Text = "-Select Department-";
-            comboBox2.Text = "-Select Machine-";
-            comboBox4.Text = "-Select Tech-";
+            historicalPO_datagridView.Fill(q);
+
+            department_comboBox.Text = "-Select Department-";
+            machine_comboBox.Text = "-Select Machine-";
+            tech_comboBox.Text = "-Select Tech-";
         }
         private void SelectTech_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
+            string q = "SELECT PR.OrderID, Vendors.VendorName, PR.PONumber, PR_Details.Quantity, " +
                 "PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.Per, " +
                 "PR_Details.DueDate, PR_Details.Received, Employee.Tech " +
                 "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
@@ -644,101 +542,36 @@ namespace MEL_r811_18
                 "INNER JOIN Employee ON PR.EmployeeID = Employee.EmployeeID " +
                 "WHERE(PR_Details.DueDate IS NULL OR PR_Details.DueDate >= '" + today + "') " +
                 "AND(PR_Details.Received = 'True') AND(PR.PONumber IS NOT NULL) AND " +
-                "(Employee.Tech = '" + comboBox4.Text + "')";
+                "(Employee.Tech = '" + tech_comboBox.Text + "')";
 
-            HistoricalPO_Fill(q);
-            comboBox1.Text = "-Select Department-";
-            comboBox2.Text = "-Select Machine-";
-            comboBox3.Text = "-Select Vendor-";
+            historicalPO_datagridView.Fill(q);
+
+            department_comboBox.Text = "-Select Department-";
+            machine_comboBox.Text = "-Select Machine-";
+            vendor_comboBox.Text = "-Select Vendor-";
         }
 
         private void Fill_SelectDepartment_ComboBox()
         {
-            string department_fill_q = "SELECT DepartmentID, DepartmentName FROM Department";
-            DataTable table = new DataTable("DepartmentData");
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(department_fill_q, conn))
-                {
-                    da.Fill(table);
-
-                    DataRow row = table.NewRow();
-                    row["DepartmentName"] = "-Select Department-";
-                    table.Rows.InsertAt(row, 0);
-
-                    comboBox1.DataSource = table;
-                    comboBox1.DisplayMember = "DepartmentName";
-                    comboBox1.ValueMember = "DepartmentID";
-
-                }
-
-            }
+            string q = "SELECT DepartmentID, DepartmentName FROM Department";
+            department_comboBox.Load(q, "DepartmentID", "DepartmentName", "Department");
         }
         private void Fill_SelectMachine_ComboBox()
         {
-            string machine_fill_q = "SELECT MachineID, BTNumber FROM Machines";
-
-            DataTable table = new DataTable("MachineData");
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(machine_fill_q, conn))
-                {
-                    da.Fill(table);
-
-                    DataRow row = table.NewRow();
-                    row["BTNumber"] = "-Select Machine-";
-                    table.Rows.InsertAt(row, 0);
-
-                    comboBox2.DataSource = table;
-                    comboBox2.DisplayMember = "BTNumber";
-                    comboBox2.ValueMember = "MachineID";
-                }
-
-            }
+            string q = "SELECT MachineID, BTNumber FROM Machines";
+            machine_comboBox.Load(q, "MachineID", "BTNumber", "Machine");
         }
         private void Fill_SelectVendor_ComboBox()
         {
-            string vendor_fill_q = "SELECT VendorID, VendorName FROM Vendors";
-            DataTable table = new DataTable("VendorData");
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(vendor_fill_q, conn))
-                {
-                    da.Fill(table);
-
-                    DataRow row = table.NewRow();
-                    row["VendorName"] = "-Select Vendor-";
-                    table.Rows.InsertAt(row, 0);
-
-                    comboBox3.DataSource = table;
-                    comboBox3.DisplayMember = "VendorName";
-                    comboBox3.ValueMember = "VendorID";
-                }
-            }
+            string q = "SELECT VendorID, VendorName FROM Vendors";
+            vendor_comboBox.Load(q, "VendorID", "VendorName", "Vendor");
         }
         private void Fill_SelectTech_ComboBox()
         {
-            string employee_fill_q = "SELECT EmployeeID, Tech FROM Employee";
-            DataTable table = new DataTable("EmployeeData");
-            using (SqlConnection conn = new SqlConnection(conn_string))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(employee_fill_q, conn))
-                {
-                    da.Fill(table);
-
-                    DataRow row = table.NewRow();
-                    row["Tech"] = "-Select Technician-";
-                    table.Rows.InsertAt(row, 0);
-
-                    comboBox4.DataSource = table;
-                    comboBox4.DisplayMember = "Tech";
-                    comboBox4.ValueMember = "EmployeeID";
-                }
-
-            }
+            string q = "SELECT EmployeeID, Tech FROM Employee";
+            tech_comboBox.Load(q, "EmployeeID", "Tech", "Tech");
         }
-
-
+   
     }
 
 

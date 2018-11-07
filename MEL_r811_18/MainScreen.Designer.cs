@@ -671,11 +671,17 @@
             // 
             // openWO_dataGridView
             // 
+            this.openWO_dataGridView.AllowUserToAddRows = false;
+            this.openWO_dataGridView.AllowUserToDeleteRows = false;
+            this.openWO_dataGridView.AllowUserToResizeColumns = false;
+            this.openWO_dataGridView.AllowUserToResizeRows = false;
+            this.openWO_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.openWO_dataGridView.BackgroundColor = System.Drawing.Color.DodgerBlue;
             this.openWO_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.openWO_dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.openWO_dataGridView.Location = new System.Drawing.Point(3, 3);
             this.openWO_dataGridView.Name = "openWO_dataGridView";
+            this.openWO_dataGridView.RowHeadersVisible = false;
             this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
             this.openWO_dataGridView.TabIndex = 0;
             // 

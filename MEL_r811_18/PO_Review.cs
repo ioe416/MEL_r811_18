@@ -237,33 +237,49 @@ namespace MEL_r811_18
 
         private void Update_Details()
         {
-            q = "UPDATE PR_Details SET DueDate = @due, Received = @rec " +
+            string q1 = "UPDATE PR_Details SET DueDate = @due, Received = @rec " +
                         "WHERE OrderID = " + id;
 
-            SqlConnection conn = new SqlConnection(conn_string);
-            SqlCommand cmd = new SqlCommand(q, conn);
+            string q2 = "UPDATE PR_Details SET Received = @rec " +
+                        "WHERE OrderID = " + id;
+            if (checkBox1.Checked == true)
             {
-                cmd.Parameters.Add(new SqlParameter("@due", SqlDbType.Date));
-                cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
-                conn.Open();
-
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                SqlConnection conn = new SqlConnection(conn_string);
+                SqlCommand cmd = new SqlCommand(q1, conn);
                 {
-                    if (checkBox1.Checked == true)
+                    cmd.Parameters.Add(new SqlParameter("@due", SqlDbType.Date));
+                    cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
+                    conn.Open();
+
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
                     {
                         cmd.Parameters["@due"].Value = dateTimePicker1.Value;
+                        cmd.Parameters["@rec"].Value = row.Cells[9].Value;
+                        cmd.ExecuteNonQuery();                       
                     }
-                    else
-                    {
-                        cmd.Parameters["@due"].Value = DBNull.Value;
-                    }
-                    cmd.Parameters["@rec"].Value = row.Cells[9].Value;
-
-                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    this.Close();
                 }
-                conn.Close();
             }
-            this.Close();
+            else if (checkBox1.Checked == false)
+            {
+                SqlConnection conn = new SqlConnection(conn_string);
+                SqlCommand cmd = new SqlCommand(q2, conn);
+                {
+                    cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
+                    conn.Open();
+
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        cmd.Parameters["@rec"].Value = row.Cells[9].Value;
+                        cmd.ExecuteNonQuery();
+                    }
+                    conn.Close();
+                    this.Close();
+                }
+            }
+            
+            
         }
         private void Load_PRDetails()
         {

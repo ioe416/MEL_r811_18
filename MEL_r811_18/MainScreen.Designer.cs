@@ -76,7 +76,6 @@
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dataGridView7 = new System.Windows.Forms.DataGridView();
             this.tabControl3 = new System.Windows.Forms.TabControl();
@@ -92,6 +91,7 @@
             this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PRTableAdapter();
+            this.lstMsg = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -107,7 +107,6 @@
             this.toolStrip2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
             this.tabControl3.SuspendLayout();
@@ -299,8 +298,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.5F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
@@ -548,7 +547,7 @@
             this.toolStrip3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip3.Location = new System.Drawing.Point(0, 382);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(200, 44);
+            this.toolStrip3.Size = new System.Drawing.Size(388, 44);
             this.toolStrip3.TabIndex = 3;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -557,9 +556,9 @@
             this.toolStrip4.BackColor = System.Drawing.Color.DodgerBlue;
             this.tableLayoutPanel1.SetColumnSpan(this.toolStrip4, 3);
             this.toolStrip4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip4.Location = new System.Drawing.Point(200, 382);
+            this.toolStrip4.Location = new System.Drawing.Point(388, 382);
             this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(600, 44);
+            this.toolStrip4.Size = new System.Drawing.Size(412, 44);
             this.toolStrip4.TabIndex = 4;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -571,29 +570,19 @@
             this.tabControl2.Location = new System.Drawing.Point(3, 215);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(194, 164);
+            this.tabControl2.Size = new System.Drawing.Size(382, 164);
             this.tabControl2.TabIndex = 5;
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.dataGridView2);
+            this.tabPage3.Controls.Add(this.lstMsg);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(186, 138);
+            this.tabPage3.Size = new System.Drawing.Size(374, 138);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.DodgerBlue;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(180, 132);
-            this.dataGridView2.TabIndex = 0;
             // 
             // tabPage4
             // 
@@ -623,10 +612,10 @@
             this.tabControl3.Controls.Add(this.openWrTab);
             this.tabControl3.Controls.Add(this.openWoTab);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl3.Location = new System.Drawing.Point(203, 215);
+            this.tabControl3.Location = new System.Drawing.Point(391, 215);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(594, 164);
+            this.tabControl3.Size = new System.Drawing.Size(406, 164);
             this.tabControl3.TabIndex = 6;
             // 
             // openWrTab
@@ -635,7 +624,7 @@
             this.openWrTab.Location = new System.Drawing.Point(4, 22);
             this.openWrTab.Name = "openWrTab";
             this.openWrTab.Padding = new System.Windows.Forms.Padding(3);
-            this.openWrTab.Size = new System.Drawing.Size(586, 138);
+            this.openWrTab.Size = new System.Drawing.Size(398, 138);
             this.openWrTab.TabIndex = 1;
             this.openWrTab.Text = "Work Requests";
             this.openWrTab.UseVisualStyleBackColor = true;
@@ -654,7 +643,7 @@
             this.openWR_dataGridView.Location = new System.Drawing.Point(3, 3);
             this.openWR_dataGridView.Name = "openWR_dataGridView";
             this.openWR_dataGridView.RowHeadersVisible = false;
-            this.openWR_dataGridView.Size = new System.Drawing.Size(580, 132);
+            this.openWR_dataGridView.Size = new System.Drawing.Size(392, 132);
             this.openWR_dataGridView.TabIndex = 0;
             this.openWR_dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenWR_dataGridView_CellContentClick);
             // 
@@ -748,6 +737,15 @@
             // 
             this.pRTableAdapter.ClearBeforeFill = true;
             // 
+            // lstMsg
+            // 
+            this.lstMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstMsg.Location = new System.Drawing.Point(3, 3);
+            this.lstMsg.Name = "lstMsg";
+            this.lstMsg.Size = new System.Drawing.Size(368, 132);
+            this.lstMsg.TabIndex = 1;
+            this.lstMsg.UseCompatibleStateImageBehavior = false;
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -780,7 +778,6 @@
             this.toolStrip2.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
             this.tabControl3.ResumeLayout(false);
@@ -833,7 +830,6 @@
         private System.Windows.Forms.ToolStrip toolStrip4;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabControl tabControl3;
         private System.Windows.Forms.TabPage openWoTab;
@@ -863,5 +859,6 @@
         private System.Windows.Forms.ComboBox vendor_comboBox;
         private System.Windows.Forms.ComboBox machine_comboBox;
         private System.Windows.Forms.ComboBox department_comboBox;
+        private System.Windows.Forms.ListView lstMsg;
     }
 }

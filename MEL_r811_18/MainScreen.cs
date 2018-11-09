@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Exchange.WebServices.Data;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -16,6 +17,8 @@ namespace MEL_r811_18
         public string today = DateTime.Today.ToShortDateString();
 
         string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        ExchangeService exchange = null;
 
         //public string machineID;
         //public string bTNumber;
@@ -60,6 +63,14 @@ namespace MEL_r811_18
         public MainScreen()
         {
             InitializeComponent();
+            lstMsg.Clear();
+            lstMsg.View = View.Details;
+            lstMsg.Columns.Add("Date", 150);
+            lstMsg.Columns.Add("From", 250);
+            lstMsg.Columns.Add("Subject", 400);
+            lstMsg.Columns.Add("Has Attachment", 50);
+            lstMsg.Columns.Add("Id", 100);
+            lstMsg.FullRowSelect = true;
         }
         private void MainScreen_load(object sender, EventArgs e)
         {
@@ -72,6 +83,7 @@ namespace MEL_r811_18
             Fill_SelectVendor_ComboBox();
             Fill_SelectTech_ComboBox();
             Fill_OpenWO_DataGridView();
+            Fill_Email_ListView();
         }
 
         private void OpenPO_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -145,8 +157,6 @@ namespace MEL_r811_18
             Fill_OpenWR_DataGridView();
             Fill_OpenWO_DataGridView();
         }
-
-        
 
         private void Fill_OpenPO_DataGridView()
         {
@@ -307,7 +317,7 @@ namespace MEL_r811_18
             openWR_dataGridView.Columns[0].FillWeight = 30;
             openWR_dataGridView.Columns[0].HeaderText = "ID";
             openWR_dataGridView.Columns[0].ReadOnly = true;
-            openWR_dataGridView.Columns[0].Visible = true;
+            openWR_dataGridView.Columns[0].Visible = false;
 
             openWR_dataGridView.Columns[1].FillWeight = 120;
             openWR_dataGridView.Columns[1].HeaderText = "Machine";
@@ -325,7 +335,7 @@ namespace MEL_r811_18
             openWR_dataGridView.Columns[4].HeaderText = "Priority";
             openWR_dataGridView.Columns[4].ReadOnly = true;
 
-            openWR_dataGridView.Columns[5].FillWeight = 800;
+            openWR_dataGridView.Columns[5].FillWeight = 600;
             openWR_dataGridView.Columns[5].HeaderText = "Work Requested";
             openWR_dataGridView.Columns[5].ReadOnly = true;
         }
@@ -403,9 +413,39 @@ namespace MEL_r811_18
             openWO_dataGridView.Columns[2].HeaderText = "Status";
             openWO_dataGridView.Columns[2].ReadOnly = true;
 
-            openWO_dataGridView.Columns[3].FillWeight = 1200;
+            openWO_dataGridView.Columns[3].FillWeight = 600;
             openWO_dataGridView.Columns[3].HeaderText = "Work Requested";
             openWO_dataGridView.Columns[3].ReadOnly = true;
+        }
+        private void Fill_Email_ListView()
+        {
+            ConnectToExchangeServer();
+            TimeSpan ts = new TimeSpan(0, -1, 0, 0);
+            DateTime date = DateTime.Now.Add(ts);
+            //SearchFilter.IsGreaterThanOrEqualTo filter = new SearchFilter.IsGreaterThanOrEqualTo(ItemSchema.DateTimeReceived, date);
+
+            if (exchange != null)
+            {
+                //FindItemsResults<Item> findResults = exchange.FindItems(WellKnownFolderName.Inbox, filter, new ItemView(50));
+                FindItemsResults<Item> findResults = exchange.FindItems(WellKnownFolderName.Inbox, new ItemView(50));
+
+                foreach (Item item in findResults)
+                {
+
+                    EmailMessage message = EmailMessage.Bind(exchange, item.Id);
+                    ListViewItem listitem = new ListViewItem(new[]
+                    {
+                        message.DateTimeReceived.ToString(), message.From.Name.ToString() + "(" + message.From.Address.ToString() + ")", message.Subject, ((message.HasAttachments) ? "Yes" : "No"), message.Id.ToString()
+                    });
+                    lstMsg.Items.Add(listitem);
+                }
+                if (findResults.Items.Count <= 0)
+                {
+                    lstMsg.Items.Add("No Messages found!!");
+
+                }
+            }
+
         }
 
         private void MachineToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -571,7 +611,51 @@ namespace MEL_r811_18
             string q = "SELECT EmployeeID, Tech FROM Employee";
             tech_comboBox.Load(q, "EmployeeID", "Tech", "Tech");
         }
-   
+
+        
+
+        public void ConnectToExchangeServer()
+        {
+
+            //lblMsg.Text = "Connecting to Exchange Server..";
+            //lblMsg.Refresh();
+            try
+            {
+                exchange = new ExchangeService(ExchangeVersion.Exchange2007_SP1);
+                //ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2007_SP1);
+                exchange.Credentials = new WebCredentials("joewilson@ustsubaki.com", "Wfefes5245");
+                
+                //exchange.Credentials = new WebCredentials("USERNAME", "PASSWORD", "DOMAIN");
+                //exchange.AutodiscoverUrl("USERNAME@DOMAIN");
+                exchange.AutodiscoverUrl("joewilson@ustsubaki.com", RedirectionUrlValidationCallback);
+
+                //lblMsg.Text = "Connected to Exchange Server : " + exchange.Url.Host;
+                //lblMsg.Refresh();
+
+            }
+            catch (Exception ex)
+            {
+                //lblMsg.Text = "Error Connecting to Exchange Server!!" + ex.Message;
+                //lblMsg.Refresh();
+            }
+
+
+
+        }
+        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
+        {
+            // The default for the validation callback is to reject the URL.
+            bool result = false;
+            Uri redirectionUri = new Uri(redirectionUrl);
+            // Validate the contents of the redirection URL. In this simple validation
+            // callback, the redirection URL is considered valid if it is using HTTPS
+            // to encrypt the authentication credentials. 
+            if (redirectionUri.Scheme == "https")
+            {
+                result = true;
+            }
+            return result;
+        }
     }
 
 

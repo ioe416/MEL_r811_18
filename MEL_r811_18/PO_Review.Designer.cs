@@ -65,7 +65,7 @@
             this.pR_DetailsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pR_DetailsTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PR_DetailsTableAdapter();
             this.tableAdapterManager = new MEL_r811_18.MELDataSetTableAdapters.TableAdapterManager();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.poDetails_datagridview = new System.Windows.Forms.DataGridView();
             this.orderID_txb = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vendorsBindingSource)).BeginInit();
@@ -74,7 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.departmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pR_DetailsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.poDetails_datagridview)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -374,18 +374,18 @@
             this.tableAdapterManager.WorkOrderTableAdapter = null;
             this.tableAdapterManager.WorkRequestTableAdapter = null;
             // 
-            // dataGridView1
+            // poDetails_datagridview
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(33, 116);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(748, 222);
-            this.dataGridView1.TabIndex = 28;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
+            this.poDetails_datagridview.AllowUserToAddRows = false;
+            this.poDetails_datagridview.AllowUserToDeleteRows = false;
+            this.poDetails_datagridview.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.poDetails_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.poDetails_datagridview.Location = new System.Drawing.Point(33, 116);
+            this.poDetails_datagridview.Name = "poDetails_datagridview";
+            this.poDetails_datagridview.RowHeadersVisible = false;
+            this.poDetails_datagridview.Size = new System.Drawing.Size(748, 222);
+            this.poDetails_datagridview.TabIndex = 28;
+            this.poDetails_datagridview.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
             // orderID_txb
             // 
@@ -403,7 +403,7 @@
             this.ClientSize = new System.Drawing.Size(811, 351);
             this.ControlBox = false;
             this.Controls.Add(this.orderID_txb);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.poDetails_datagridview);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label8);
@@ -435,7 +435,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.departmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.machinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pR_DetailsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.poDetails_datagridview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -476,7 +476,7 @@
         private System.Windows.Forms.BindingSource pR_DetailsBindingSource;
         private MELDataSetTableAdapters.PR_DetailsTableAdapter pR_DetailsTableAdapter;
         private MELDataSetTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView poDetails_datagridview;
         private System.Windows.Forms.ToolStripButton print_btn;
         private System.Windows.Forms.ToolStripButton delete_btn;
         private System.Windows.Forms.TextBox orderID_txb;

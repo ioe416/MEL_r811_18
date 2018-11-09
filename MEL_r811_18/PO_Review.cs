@@ -25,6 +25,7 @@ namespace MEL_r811_18
         public string emp_query;
         public string delete_order_q;
         public string delete_order_details_q;
+        public string recieved;
         public int updatedVend;
         public int updatedTech;
         public int updatedDep;
@@ -41,15 +42,15 @@ namespace MEL_r811_18
         public PR_Review(int index)
         {
             InitializeComponent();
-            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
+            poDetails_datagridview.CellContentClick += DataGridView1_CellContentClick;
             id = index;
         }
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 8) dataGridView1.EndEdit();
+            if (e.ColumnIndex == 8) poDetails_datagridview.EndEdit();
         }
 
-        public void PO_Review_load(object sender, EventArgs e)
+        protected void PO_Review_load(object sender, EventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
@@ -65,58 +66,58 @@ namespace MEL_r811_18
 
                 DataTable dt = new DataTable();
                 dataAdapter.Fill(dt);
-                dataGridView1.DataSource = dt;
+                poDetails_datagridview.DataSource = dt;
 
-                dataGridView1.Columns[0].FillWeight = 50;
-                dataGridView1.Columns[0].HeaderText = "Order Details ID";
-                dataGridView1.Columns[0].ReadOnly = false;
-                dataGridView1.Columns[0].Visible = false;
+                poDetails_datagridview.Columns[0].FillWeight = 50;
+                poDetails_datagridview.Columns[0].HeaderText = "Order Details ID";
+                poDetails_datagridview.Columns[0].ReadOnly = false;
+                poDetails_datagridview.Columns[0].Visible = false;
 
-                dataGridView1.Columns[1].FillWeight = 40;
-                dataGridView1.Columns[1].HeaderText = "Order ID";
-                dataGridView1.Columns[1].ReadOnly = false;
-                dataGridView1.Columns[1].Visible = false;
+                poDetails_datagridview.Columns[1].FillWeight = 40;
+                poDetails_datagridview.Columns[1].HeaderText = "Order ID";
+                poDetails_datagridview.Columns[1].ReadOnly = false;
+                poDetails_datagridview.Columns[1].Visible = false;
 
-                dataGridView1.Columns[2].FillWeight = 40;
-                dataGridView1.Columns[2].HeaderText = "Qty";
-                dataGridView1.Columns[2].ReadOnly = false;
-                dataGridView1.Columns[2].Visible = true;
+                poDetails_datagridview.Columns[2].FillWeight = 40;
+                poDetails_datagridview.Columns[2].HeaderText = "Qty";
+                poDetails_datagridview.Columns[2].ReadOnly = false;
+                poDetails_datagridview.Columns[2].Visible = true;
 
-                dataGridView1.Columns[3].FillWeight = 50;
-                dataGridView1.Columns[3].HeaderText = "Unit";
-                dataGridView1.Columns[3].ReadOnly = false;
-                dataGridView1.Columns[3].Visible = true;
+                poDetails_datagridview.Columns[3].FillWeight = 50;
+                poDetails_datagridview.Columns[3].HeaderText = "Unit";
+                poDetails_datagridview.Columns[3].ReadOnly = false;
+                poDetails_datagridview.Columns[3].Visible = true;
 
-                dataGridView1.Columns[4].FillWeight = 75;
-                dataGridView1.Columns[4].HeaderText = "Part";
-                dataGridView1.Columns[4].ReadOnly = true;
-                dataGridView1.Columns[4].Visible = true;
+                poDetails_datagridview.Columns[4].FillWeight = 75;
+                poDetails_datagridview.Columns[4].HeaderText = "Part";
+                poDetails_datagridview.Columns[4].ReadOnly = true;
+                poDetails_datagridview.Columns[4].Visible = true;
 
-                dataGridView1.Columns[5].FillWeight = 125;
-                dataGridView1.Columns[5].HeaderText = "Description";
-                dataGridView1.Columns[5].ReadOnly = true;
-                dataGridView1.Columns[5].Visible = true;
+                poDetails_datagridview.Columns[5].FillWeight = 125;
+                poDetails_datagridview.Columns[5].HeaderText = "Description";
+                poDetails_datagridview.Columns[5].ReadOnly = true;
+                poDetails_datagridview.Columns[5].Visible = true;
 
-                dataGridView1.Columns[6].FillWeight = 50;
-                dataGridView1.Columns[6].HeaderText = "Price";
-                dataGridView1.Columns[6].ReadOnly = false;
-                dataGridView1.Columns[6].Visible = true;
-                dataGridView1.Columns[6].DefaultCellStyle.Format = "c";
+                poDetails_datagridview.Columns[6].FillWeight = 50;
+                poDetails_datagridview.Columns[6].HeaderText = "Price";
+                poDetails_datagridview.Columns[6].ReadOnly = false;
+                poDetails_datagridview.Columns[6].Visible = true;
+                poDetails_datagridview.Columns[6].DefaultCellStyle.Format = "c";
 
-                dataGridView1.Columns[7].FillWeight = 25;
-                dataGridView1.Columns[7].HeaderText = "Per";
-                dataGridView1.Columns[7].ReadOnly = false;
-                dataGridView1.Columns[7].Visible = true;
+                poDetails_datagridview.Columns[7].FillWeight = 25;
+                poDetails_datagridview.Columns[7].HeaderText = "Per";
+                poDetails_datagridview.Columns[7].ReadOnly = false;
+                poDetails_datagridview.Columns[7].Visible = true;
 
-                dataGridView1.Columns[8].FillWeight = 100;
-                dataGridView1.Columns[8].HeaderText = "Due Date";
-                dataGridView1.Columns[8].ReadOnly = false;
-                dataGridView1.Columns[8].Visible = true;
+                poDetails_datagridview.Columns[8].FillWeight = 100;
+                poDetails_datagridview.Columns[8].HeaderText = "Due Date";
+                poDetails_datagridview.Columns[8].ReadOnly = false;
+                poDetails_datagridview.Columns[8].Visible = true;
 
-                dataGridView1.Columns[9].FillWeight = 50;
-                dataGridView1.Columns[9].HeaderText = "Recieved";
-                dataGridView1.Columns[9].ReadOnly = false;
-                dataGridView1.Columns[9].Visible = true;
+                poDetails_datagridview.Columns[9].FillWeight = 50;
+                poDetails_datagridview.Columns[9].HeaderText = "Recieved";
+                poDetails_datagridview.Columns[9].ReadOnly = false;
+                poDetails_datagridview.Columns[9].Visible = true;
 
                 order = "SELECT PR.OrderID, Vendors.VendorName, PR.DateIssued, Department.DepartmentName, Machines.BTNumber, Employee.Tech, PR.DeliverTo, PR.PONumber " +
                     "FROM Vendors INNER JOIN PR ON Vendors.VendorID = PR.VendorID " +
@@ -136,15 +137,14 @@ namespace MEL_r811_18
                     machine_textBox.Text = (string)dr["BTNumber"];
                     tech_textBox.Text = (string)dr["Tech"];
                     vendor_textBox.Text = (string)dr["VendorName"];
-                    poNumber_textBox.Text = (dr["PONumber"] == DBNull.Value) ? string.Empty : (string)dr["PONumber"];                 
+                    poNumber_textBox.Text = (dr["PONumber"] == DBNull.Value) ? string.Empty : (string)dr["PONumber"];
                     deliverTo_textBox.Text = (string)dr["DeliverTO"];
                     issueDate_dateTimePicker.Text = (dr["DateIssued"] == DBNull.Value) ? string.Empty : Convert.ToString(dr["DateIssued"]);
                     orderID_txb.Text = (string)dr["OrderID"].ToString();
                 }
 
-                    dr.Close();
+                dr.Close();
             }
-
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -239,11 +239,13 @@ namespace MEL_r811_18
         {
             string q1 = "UPDATE PR_Details SET DueDate = @due, Received = @rec " +
                         "WHERE OrderID = " + id;
-
             string q2 = "UPDATE PR_Details SET Received = @rec " +
                         "WHERE OrderID = " + id;
+
             if (checkBox1.Checked == true)
             {
+                MessageBox.Show("Date Update chekbox is checked, updating recieved status and due date.");
+
                 SqlConnection conn = new SqlConnection(conn_string);
                 SqlCommand cmd = new SqlCommand(q1, conn);
                 {
@@ -251,8 +253,10 @@ namespace MEL_r811_18
                     cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
                     conn.Open();
 
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    foreach (DataGridViewRow row in poDetails_datagridview.Rows)
                     {
+                        MessageBox.Show(row.Cells[9].Value.ToString());
+                        MessageBox.Show(dateTimePicker1.Value.ToString());
                         cmd.Parameters["@due"].Value = dateTimePicker1.Value;
                         cmd.Parameters["@rec"].Value = row.Cells[9].Value;
                         cmd.ExecuteNonQuery();                       
@@ -263,23 +267,26 @@ namespace MEL_r811_18
             }
             else if (checkBox1.Checked == false)
             {
+                MessageBox.Show("Date Update chekbox is not checked, updating recieved status only.");
+
                 SqlConnection conn = new SqlConnection(conn_string);
                 SqlCommand cmd = new SqlCommand(q2, conn);
                 {
                     cmd.Parameters.Add(new SqlParameter("@rec", SqlDbType.VarChar));
                     conn.Open();
 
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    foreach (DataGridViewRow row in poDetails_datagridview.Rows)
                     {
+                        MessageBox.Show(row.Cells[9].Value.ToString());
                         cmd.Parameters["@rec"].Value = row.Cells[9].Value;
                         cmd.ExecuteNonQuery();
                     }
                     conn.Close();
                     this.Close();
                 }
+
             }
-            
-            
+    
         }
         private void Load_PRDetails()
         {
@@ -298,7 +305,7 @@ namespace MEL_r811_18
 
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                dataGridView1.DataSource = dt;
+                poDetails_datagridview.DataSource = dt;
             }
            
         }
@@ -331,7 +338,7 @@ namespace MEL_r811_18
                 using (var cmd = conn.CreateCommand())
                 {
                     conn.Open();
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    foreach (DataGridViewRow row in poDetails_datagridview.Rows)
                     {
                         cmd.CommandText = "DELETE FROM PR_Details WHERE OrderID = @orderID";
                         cmd.Parameters.AddWithValue("@orderID", Convert.ToInt16(orderID_txb.Text));
@@ -350,10 +357,6 @@ namespace MEL_r811_18
            
         }
 
-        private void PrintPreviewDialog1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
     class PO_Details
     {

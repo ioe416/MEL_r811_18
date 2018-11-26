@@ -16,7 +16,7 @@ namespace MEL_r811_18
         public string conn_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\MEL\MEL.mdf;Integrated Security=True";
         SqlConnection conn = null;
 
-        public string machToAdd;
+        public int? machToAdd;
 
         public int departmentId;
         public int machineId;
@@ -245,11 +245,11 @@ namespace MEL_r811_18
             string department = department_comboBox.Text;
             if (machine_comboBox.Text == "-Select Machine-")
             {
-                machToAdd = "No Machine";
+                machToAdd = Convert.ToInt16(null);
             }
             else
             {
-                machToAdd = machine_comboBox.Text;
+                machToAdd = Get_MachineID(machine_comboBox.Text);
             }
             converted = false;
             using (SqlConnection conn = new SqlConnection(conn_string))
@@ -262,7 +262,7 @@ namespace MEL_r811_18
                     command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(department));
                     command.Parameters.AddWithValue("@TypeID", Get_TypeID(type));
                     command.Parameters.AddWithValue("@RequestDate", requestDate_datePicker.Text);
-                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
+                    command.Parameters.AddWithValue("@MachineID", machToAdd);
                     command.Parameters.AddWithValue("@PriorityID", Get_PriorityID(priority));
                     command.Parameters.AddWithValue("@WorkPerformed", workRequested_textBox.Text);
                     command.Parameters.AddWithValue("@RequestConverted", converted);

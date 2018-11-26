@@ -35,7 +35,7 @@ namespace MEL_r811_18
         public string mach;
         public string emp;
         public string deliver;
-        public string machToAdd;
+        public int? machToAdd;
 
         public int vendorId;
         public int departmentId;
@@ -225,11 +225,12 @@ namespace MEL_r811_18
             string dep = dep_combo.Text;
             if (mach_combo.Text == "-Select Machine-")
             {
-                machToAdd = "No Machine";
+                machToAdd = null;
             }
             else
             {
-                machToAdd = mach_combo.Text;
+                machToAdd = Get_MachineID(mach_combo.Text);
+
             }
             string emp = employee_combo.Text;
             string deliver = deliverTo_txb.Text;
@@ -244,7 +245,7 @@ namespace MEL_r811_18
                     command.Parameters.AddWithValue("@VendorID", Get_VendorID(vendor));
                     command.Parameters.AddWithValue("@DateIssued", dateIsued_dtp.Text);
                     command.Parameters.AddWithValue("@DepartmentID", Get_DepartmentID(dep));
-                    command.Parameters.AddWithValue("@MachineID", Get_MachineID(machToAdd));
+                    command.Parameters.AddWithValue("@MachineID", machToAdd);
                     command.Parameters.AddWithValue("@EmployeeID", Get_EmployeeID(emp));
                     command.Parameters.AddWithValue("@DeliverTo", deliverTo_txb.Text);
 

@@ -20,46 +20,6 @@ namespace MEL_r811_18
 
         ExchangeService exchange = null;
 
-        //public string machineID;
-        //public string bTNumber;
-        //public string commonName;
-        //public string make;
-        //public string model;
-        //public string serial;
-        //public string departmentID_Machine;
-        //public int partID;
-        //public string partNumber;
-        //public string partDescription;
-        //public decimal unitPrice;
-        //public string partImage;
-        //public int vendorID;
-        //public string vendorNumber;
-        //public string vendorName;
-        //public string contact;
-        //public string vendorEmail;
-        //public string vendorPhone;
-        //public int employeeID;
-        //public string tech;
-        //public string craft;
-        //public string employeePhone;
-        //public string employeeEmail;
-        //public int orderID;
-        //public int vendorID_PR;
-        //public string dateIssued;
-        //public int departmentID_PR;
-        //public int machineID_PR;
-        //public int employeeID_PR;
-        //public string deliverTo;
-        //public string pONumber;
-        //public int quantity;
-        //public string unit;
-        //public int partID_PRD;
-        //public string per;
-        //public string dueDate;
-        //public bool received;
-        //public int id;
-        //public bool updatedValue;
-
         public MainScreen()
         {
             InitializeComponent();
@@ -156,6 +116,10 @@ namespace MEL_r811_18
             this.Show();
             Fill_OpenWR_DataGridView();
             Fill_OpenWO_DataGridView();
+        }
+        private void Export_FormClosed(object sender, EventArgs e)
+        {
+            this.Show();
         }
 
         private void Fill_OpenPO_DataGridView()
@@ -310,7 +274,7 @@ namespace MEL_r811_18
                         "FROM[WorkRequest] INNER JOIN[Machines] ON[Machines].[MachineID] = [WorkRequest].[MachineID] " +
                         "INNER JOIN[Type] ON[Type].[TypeID] = [WorkRequest].[RequestType] " +
                         "INNER JOIN[Priority] ON[Priority].[PriorityID] = [WorkRequest].[RequestPriority]" +
-                        "WHERE [WorkRequest].[RequestConverted] = 'False'";
+                        "WHERE [WorkRequest].[RequestConverted] = 'False' AND [Machines].[BTNumber] IS NULL OR [Machines].[BTNumber] IS NOT NULL";
 
             openWR_dataGridView.Fill(q);
 
@@ -655,6 +619,14 @@ namespace MEL_r811_18
                 result = true;
             }
             return result;
+        }
+
+        private void ExportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Export ex = new Export(this);
+            ex.FormClosed += new FormClosedEventHandler(Export_FormClosed);
+            ex.Show();
+            Hide();
         }
     }
 

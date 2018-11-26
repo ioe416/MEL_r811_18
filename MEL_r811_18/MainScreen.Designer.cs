@@ -30,6 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
+            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange1 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange2 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange3 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange4 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange5 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newMachineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +81,7 @@
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lstMsg = new System.Windows.Forms.ListView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dataGridView7 = new System.Windows.Forms.DataGridView();
             this.tabControl3 = new System.Windows.Forms.TabControl();
@@ -85,13 +91,14 @@
             this.openWO_dataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tasksTab = new System.Windows.Forms.TabPage();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.monthView1 = new System.Windows.Forms.Calendar.MonthView();
             this.toDoTab = new System.Windows.Forms.TabPage();
+            this.calendar1 = new System.Windows.Forms.Calendar.Calendar();
             this.mELDataSet = new MEL_r811_18.MELDataSet();
             this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRTableAdapter = new MEL_r811_18.MELDataSetTableAdapters.PRTableAdapter();
-            this.lstMsg = new System.Windows.Forms.ListView();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -116,7 +123,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).BeginInit();
             this.tabControl4.SuspendLayout();
             this.tasksTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.toDoTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).BeginInit();
@@ -131,7 +138,8 @@
             this.partsToolStripMenuItem,
             this.importToolStripMenuItem,
             this.purchaseRequestToolStripMenuItem,
-            this.workRequestToolStripMenuItem});
+            this.workRequestToolStripMenuItem,
+            this.exportToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -584,13 +592,22 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // lstMsg
+            // 
+            this.lstMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstMsg.Location = new System.Drawing.Point(3, 3);
+            this.lstMsg.Name = "lstMsg";
+            this.lstMsg.Size = new System.Drawing.Size(368, 132);
+            this.lstMsg.TabIndex = 1;
+            this.lstMsg.UseCompatibleStateImageBehavior = false;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.dataGridView7);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(186, 138);
+            this.tabPage4.Size = new System.Drawing.Size(374, 138);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -603,7 +620,7 @@
             this.dataGridView7.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.dataGridView7.Location = new System.Drawing.Point(3, 3);
             this.dataGridView7.Name = "dataGridView7";
-            this.dataGridView7.Size = new System.Drawing.Size(180, 132);
+            this.dataGridView7.Size = new System.Drawing.Size(368, 132);
             this.dataGridView7.TabIndex = 0;
             // 
             // tabControl3
@@ -653,7 +670,7 @@
             this.openWoTab.Location = new System.Drawing.Point(4, 22);
             this.openWoTab.Name = "openWoTab";
             this.openWoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.openWoTab.Size = new System.Drawing.Size(586, 138);
+            this.openWoTab.Size = new System.Drawing.Size(398, 138);
             this.openWoTab.TabIndex = 0;
             this.openWoTab.Text = "Open Work Orders";
             this.openWoTab.UseVisualStyleBackColor = true;
@@ -671,7 +688,7 @@
             this.openWO_dataGridView.Location = new System.Drawing.Point(3, 3);
             this.openWO_dataGridView.Name = "openWO_dataGridView";
             this.openWO_dataGridView.RowHeadersVisible = false;
-            this.openWO_dataGridView.Size = new System.Drawing.Size(580, 132);
+            this.openWO_dataGridView.Size = new System.Drawing.Size(392, 132);
             this.openWO_dataGridView.TabIndex = 0;
             // 
             // tabControl4
@@ -688,7 +705,7 @@
             // tasksTab
             // 
             this.tasksTab.BackColor = System.Drawing.Color.DodgerBlue;
-            this.tasksTab.Controls.Add(this.dataGridView4);
+            this.tasksTab.Controls.Add(this.monthView1);
             this.tasksTab.Location = new System.Drawing.Point(4, 22);
             this.tasksTab.Name = "tasksTab";
             this.tasksTab.Padding = new System.Windows.Forms.Padding(3);
@@ -696,27 +713,70 @@
             this.tasksTab.TabIndex = 0;
             this.tasksTab.Text = "Tasks";
             // 
-            // dataGridView4
+            // monthView1
             // 
-            this.dataGridView4.BackgroundColor = System.Drawing.Color.LightSkyBlue;
-            this.dataGridView4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView4.GridColor = System.Drawing.Color.DodgerBlue;
-            this.dataGridView4.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(180, 132);
-            this.dataGridView4.TabIndex = 0;
+            this.monthView1.ArrowsColor = System.Drawing.SystemColors.Window;
+            this.monthView1.ArrowsSelectedColor = System.Drawing.Color.Gold;
+            this.monthView1.DayBackgroundColor = System.Drawing.Color.Empty;
+            this.monthView1.DayGrayedText = System.Drawing.SystemColors.GrayText;
+            this.monthView1.DaySelectedBackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.monthView1.DaySelectedColor = System.Drawing.SystemColors.WindowText;
+            this.monthView1.DaySelectedTextColor = System.Drawing.SystemColors.HighlightText;
+            this.monthView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.monthView1.ItemPadding = new System.Windows.Forms.Padding(2);
+            this.monthView1.Location = new System.Drawing.Point(3, 3);
+            this.monthView1.MonthTitleColor = System.Drawing.SystemColors.ActiveCaption;
+            this.monthView1.MonthTitleColorInactive = System.Drawing.SystemColors.InactiveCaption;
+            this.monthView1.MonthTitleTextColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.monthView1.MonthTitleTextColorInactive = System.Drawing.SystemColors.InactiveCaptionText;
+            this.monthView1.Name = "monthView1";
+            this.monthView1.SelectionMode = System.Windows.Forms.Calendar.MonthView.MonthViewSelection.Day;
+            this.monthView1.Size = new System.Drawing.Size(180, 132);
+            this.monthView1.TabIndex = 0;
+            this.monthView1.Text = "monthView1";
+            this.monthView1.TodayBorderColor = System.Drawing.Color.Blue;
             // 
             // toDoTab
             // 
             this.toDoTab.BackColor = System.Drawing.Color.LightBlue;
+            this.toDoTab.Controls.Add(this.calendar1);
             this.toDoTab.Location = new System.Drawing.Point(4, 22);
             this.toDoTab.Name = "toDoTab";
             this.toDoTab.Padding = new System.Windows.Forms.Padding(3);
             this.toDoTab.Size = new System.Drawing.Size(186, 138);
             this.toDoTab.TabIndex = 1;
             this.toDoTab.Text = "To Do";
+            // 
+            // calendar1
+            // 
+            this.calendar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.calendar1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            calendarHighlightRange1.DayOfWeek = System.DayOfWeek.Monday;
+            calendarHighlightRange1.EndTime = System.TimeSpan.Parse("17:00:00");
+            calendarHighlightRange1.StartTime = System.TimeSpan.Parse("08:00:00");
+            calendarHighlightRange2.DayOfWeek = System.DayOfWeek.Tuesday;
+            calendarHighlightRange2.EndTime = System.TimeSpan.Parse("17:00:00");
+            calendarHighlightRange2.StartTime = System.TimeSpan.Parse("08:00:00");
+            calendarHighlightRange3.DayOfWeek = System.DayOfWeek.Wednesday;
+            calendarHighlightRange3.EndTime = System.TimeSpan.Parse("17:00:00");
+            calendarHighlightRange3.StartTime = System.TimeSpan.Parse("08:00:00");
+            calendarHighlightRange4.DayOfWeek = System.DayOfWeek.Thursday;
+            calendarHighlightRange4.EndTime = System.TimeSpan.Parse("17:00:00");
+            calendarHighlightRange4.StartTime = System.TimeSpan.Parse("08:00:00");
+            calendarHighlightRange5.DayOfWeek = System.DayOfWeek.Friday;
+            calendarHighlightRange5.EndTime = System.TimeSpan.Parse("17:00:00");
+            calendarHighlightRange5.StartTime = System.TimeSpan.Parse("08:00:00");
+            this.calendar1.HighlightRanges = new System.Windows.Forms.Calendar.CalendarHighlightRange[] {
+        calendarHighlightRange1,
+        calendarHighlightRange2,
+        calendarHighlightRange3,
+        calendarHighlightRange4,
+        calendarHighlightRange5};
+            this.calendar1.Location = new System.Drawing.Point(3, 3);
+            this.calendar1.Name = "calendar1";
+            this.calendar1.Size = new System.Drawing.Size(180, 132);
+            this.calendar1.TabIndex = 0;
+            this.calendar1.Text = "calendar1";
             // 
             // mELDataSet
             // 
@@ -737,14 +797,12 @@
             // 
             this.pRTableAdapter.ClearBeforeFill = true;
             // 
-            // lstMsg
+            // exportToolStripMenuItem
             // 
-            this.lstMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstMsg.Location = new System.Drawing.Point(3, 3);
-            this.lstMsg.Name = "lstMsg";
-            this.lstMsg.Size = new System.Drawing.Size(368, 132);
-            this.lstMsg.TabIndex = 1;
-            this.lstMsg.UseCompatibleStateImageBehavior = false;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.ExportToolStripMenuItem_Click);
             // 
             // MainScreen
             // 
@@ -787,7 +845,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.openWO_dataGridView)).EndInit();
             this.tabControl4.ResumeLayout(false);
             this.tasksTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.toDoTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mELDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRBindingSource)).EndInit();
@@ -836,8 +894,6 @@
         private System.Windows.Forms.DataGridView openWO_dataGridView;
         private System.Windows.Forms.TabControl tabControl4;
         private System.Windows.Forms.TabPage tasksTab;
-        private System.Windows.Forms.DataGridView dataGridView4;
-        private System.Windows.Forms.TabPage toDoTab;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.DataGridView dataGridView7;
         private System.Windows.Forms.ToolStripLabel totalRecords_toolStripLabel;
@@ -860,5 +916,9 @@
         private System.Windows.Forms.ComboBox machine_comboBox;
         private System.Windows.Forms.ComboBox department_comboBox;
         private System.Windows.Forms.ListView lstMsg;
+        private System.Windows.Forms.Calendar.MonthView monthView1;
+        private System.Windows.Forms.TabPage toDoTab;
+        private System.Windows.Forms.Calendar.Calendar calendar1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
     }
 }

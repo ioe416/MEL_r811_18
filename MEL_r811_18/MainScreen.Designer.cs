@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
-            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange1 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
-            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange2 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
-            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange3 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
-            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange4 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
-            System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange5 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            //System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange1 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            //System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange2 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            //System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange3 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            //System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange4 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            //System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange5 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newMachineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,9 +91,9 @@
             this.openWO_dataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tasksTab = new System.Windows.Forms.TabPage();
-            this.monthView1 = new System.Windows.Forms.Calendar.MonthView();
+            //this.monthView1 = new System.Windows.Forms.Calendar.MonthView();
             this.toDoTab = new System.Windows.Forms.TabPage();
-            this.calendar1 = new System.Windows.Forms.Calendar.Calendar();
+            //this.calendar1 = new System.Windows.Forms.Calendar.Calendar();
             this.mELDataSet = new MEL_r811_18.MELDataSet();
             this.mELDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pRBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -705,7 +705,7 @@
             // tasksTab
             // 
             this.tasksTab.BackColor = System.Drawing.Color.DodgerBlue;
-            this.tasksTab.Controls.Add(this.monthView1);
+            //this.tasksTab.Controls.Add(this.monthView1);
             this.tasksTab.Location = new System.Drawing.Point(4, 22);
             this.tasksTab.Name = "tasksTab";
             this.tasksTab.Padding = new System.Windows.Forms.Padding(3);
@@ -715,68 +715,68 @@
             // 
             // monthView1
             // 
-            this.monthView1.ArrowsColor = System.Drawing.SystemColors.Window;
-            this.monthView1.ArrowsSelectedColor = System.Drawing.Color.Gold;
-            this.monthView1.DayBackgroundColor = System.Drawing.Color.Empty;
-            this.monthView1.DayGrayedText = System.Drawing.SystemColors.GrayText;
-            this.monthView1.DaySelectedBackgroundColor = System.Drawing.SystemColors.Highlight;
-            this.monthView1.DaySelectedColor = System.Drawing.SystemColors.WindowText;
-            this.monthView1.DaySelectedTextColor = System.Drawing.SystemColors.HighlightText;
-            this.monthView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.monthView1.ItemPadding = new System.Windows.Forms.Padding(2);
-            this.monthView1.Location = new System.Drawing.Point(3, 3);
-            this.monthView1.MonthTitleColor = System.Drawing.SystemColors.ActiveCaption;
-            this.monthView1.MonthTitleColorInactive = System.Drawing.SystemColors.InactiveCaption;
-            this.monthView1.MonthTitleTextColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.monthView1.MonthTitleTextColorInactive = System.Drawing.SystemColors.InactiveCaptionText;
-            this.monthView1.Name = "monthView1";
-            this.monthView1.SelectionMode = System.Windows.Forms.Calendar.MonthView.MonthViewSelection.Day;
-            this.monthView1.Size = new System.Drawing.Size(180, 132);
-            this.monthView1.TabIndex = 0;
-            this.monthView1.Text = "monthView1";
-            this.monthView1.TodayBorderColor = System.Drawing.Color.Blue;
+            //this.monthView1.ArrowsColor = System.Drawing.SystemColors.Window;
+            //this.monthView1.ArrowsSelectedColor = System.Drawing.Color.Gold;
+            //this.monthView1.DayBackgroundColor = System.Drawing.Color.Empty;
+            //this.monthView1.DayGrayedText = System.Drawing.SystemColors.GrayText;
+            //this.monthView1.DaySelectedBackgroundColor = System.Drawing.SystemColors.Highlight;
+            //this.monthView1.DaySelectedColor = System.Drawing.SystemColors.WindowText;
+            //this.monthView1.DaySelectedTextColor = System.Drawing.SystemColors.HighlightText;
+            //this.monthView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.monthView1.ItemPadding = new System.Windows.Forms.Padding(2);
+            //this.monthView1.Location = new System.Drawing.Point(3, 3);
+            //this.monthView1.MonthTitleColor = System.Drawing.SystemColors.ActiveCaption;
+            //this.monthView1.MonthTitleColorInactive = System.Drawing.SystemColors.InactiveCaption;
+            //this.monthView1.MonthTitleTextColor = System.Drawing.SystemColors.ActiveCaptionText;
+            //this.monthView1.MonthTitleTextColorInactive = System.Drawing.SystemColors.InactiveCaptionText;
+            //this.monthView1.Name = "monthView1";
+            //this.monthView1.SelectionMode = System.Windows.Forms.Calendar.MonthView.MonthViewSelection.Day;
+            //this.monthView1.Size = new System.Drawing.Size(180, 132);
+            //this.monthView1.TabIndex = 0;
+            //this.monthView1.Text = "monthView1";
+            //this.monthView1.TodayBorderColor = System.Drawing.Color.Blue;
             // 
             // toDoTab
             // 
-            this.toDoTab.BackColor = System.Drawing.Color.LightBlue;
-            this.toDoTab.Controls.Add(this.calendar1);
-            this.toDoTab.Location = new System.Drawing.Point(4, 22);
-            this.toDoTab.Name = "toDoTab";
-            this.toDoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.toDoTab.Size = new System.Drawing.Size(186, 138);
-            this.toDoTab.TabIndex = 1;
-            this.toDoTab.Text = "To Do";
+            //this.toDoTab.BackColor = System.Drawing.Color.LightBlue;
+            //this.toDoTab.Controls.Add(this.calendar1);
+            //this.toDoTab.Location = new System.Drawing.Point(4, 22);
+            //this.toDoTab.Name = "toDoTab";
+            //this.toDoTab.Padding = new System.Windows.Forms.Padding(3);
+            //this.toDoTab.Size = new System.Drawing.Size(186, 138);
+            //this.toDoTab.TabIndex = 1;
+            //this.toDoTab.Text = "To Do";
             // 
             // calendar1
             // 
-            this.calendar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.calendar1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            calendarHighlightRange1.DayOfWeek = System.DayOfWeek.Monday;
-            calendarHighlightRange1.EndTime = System.TimeSpan.Parse("17:00:00");
-            calendarHighlightRange1.StartTime = System.TimeSpan.Parse("08:00:00");
-            calendarHighlightRange2.DayOfWeek = System.DayOfWeek.Tuesday;
-            calendarHighlightRange2.EndTime = System.TimeSpan.Parse("17:00:00");
-            calendarHighlightRange2.StartTime = System.TimeSpan.Parse("08:00:00");
-            calendarHighlightRange3.DayOfWeek = System.DayOfWeek.Wednesday;
-            calendarHighlightRange3.EndTime = System.TimeSpan.Parse("17:00:00");
-            calendarHighlightRange3.StartTime = System.TimeSpan.Parse("08:00:00");
-            calendarHighlightRange4.DayOfWeek = System.DayOfWeek.Thursday;
-            calendarHighlightRange4.EndTime = System.TimeSpan.Parse("17:00:00");
-            calendarHighlightRange4.StartTime = System.TimeSpan.Parse("08:00:00");
-            calendarHighlightRange5.DayOfWeek = System.DayOfWeek.Friday;
-            calendarHighlightRange5.EndTime = System.TimeSpan.Parse("17:00:00");
-            calendarHighlightRange5.StartTime = System.TimeSpan.Parse("08:00:00");
-            this.calendar1.HighlightRanges = new System.Windows.Forms.Calendar.CalendarHighlightRange[] {
-        calendarHighlightRange1,
-        calendarHighlightRange2,
-        calendarHighlightRange3,
-        calendarHighlightRange4,
-        calendarHighlightRange5};
-            this.calendar1.Location = new System.Drawing.Point(3, 3);
-            this.calendar1.Name = "calendar1";
-            this.calendar1.Size = new System.Drawing.Size(180, 132);
-            this.calendar1.TabIndex = 0;
-            this.calendar1.Text = "calendar1";
+        //    this.calendar1.Dock = System.Windows.Forms.DockStyle.Fill;
+        //    this.calendar1.Font = new System.Drawing.Font("Segoe UI", 9F);
+        //    calendarHighlightRange1.DayOfWeek = System.DayOfWeek.Monday;
+        //    calendarHighlightRange1.EndTime = System.TimeSpan.Parse("17:00:00");
+        //    calendarHighlightRange1.StartTime = System.TimeSpan.Parse("08:00:00");
+        //    calendarHighlightRange2.DayOfWeek = System.DayOfWeek.Tuesday;
+        //    calendarHighlightRange2.EndTime = System.TimeSpan.Parse("17:00:00");
+        //    calendarHighlightRange2.StartTime = System.TimeSpan.Parse("08:00:00");
+        //    calendarHighlightRange3.DayOfWeek = System.DayOfWeek.Wednesday;
+        //    calendarHighlightRange3.EndTime = System.TimeSpan.Parse("17:00:00");
+        //    calendarHighlightRange3.StartTime = System.TimeSpan.Parse("08:00:00");
+        //    calendarHighlightRange4.DayOfWeek = System.DayOfWeek.Thursday;
+        //    calendarHighlightRange4.EndTime = System.TimeSpan.Parse("17:00:00");
+        //    calendarHighlightRange4.StartTime = System.TimeSpan.Parse("08:00:00");
+        //    calendarHighlightRange5.DayOfWeek = System.DayOfWeek.Friday;
+        //    calendarHighlightRange5.EndTime = System.TimeSpan.Parse("17:00:00");
+        //    calendarHighlightRange5.StartTime = System.TimeSpan.Parse("08:00:00");
+        //    this.calendar1.HighlightRanges = new System.Windows.Forms.Calendar.CalendarHighlightRange[] {
+        //calendarHighlightRange1,
+        //calendarHighlightRange2,
+        //calendarHighlightRange3,
+        //calendarHighlightRange4,
+        //calendarHighlightRange5};
+        //    this.calendar1.Location = new System.Drawing.Point(3, 3);
+        //    this.calendar1.Name = "calendar1";
+        //    this.calendar1.Size = new System.Drawing.Size(180, 132);
+        //    this.calendar1.TabIndex = 0;
+        //    this.calendar1.Text = "calendar1";
             // 
             // mELDataSet
             // 
@@ -916,9 +916,9 @@
         private System.Windows.Forms.ComboBox machine_comboBox;
         private System.Windows.Forms.ComboBox department_comboBox;
         private System.Windows.Forms.ListView lstMsg;
-        private System.Windows.Forms.Calendar.MonthView monthView1;
+        //private System.Windows.Forms.Calendar.MonthView monthView1;
         private System.Windows.Forms.TabPage toDoTab;
-        private System.Windows.Forms.Calendar.Calendar calendar1;
+        //private System.Windows.Forms.Calendar.Calendar calendar1;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
     }
 }

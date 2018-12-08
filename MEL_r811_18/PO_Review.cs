@@ -132,9 +132,8 @@ namespace MEL_r811_18
 
                 while (dr.Read())
                 {
-                    vendor_textBox.Text = (string)dr["VendorName"];
                     department_textBox.Text = (string)dr["DepartmentName"];
-                    machine_textBox.Text = (string)dr["BTNumber"];
+                    machine_textBox.Text = (dr["BTNumber"] == DBNull.Value) ? string.Empty : Convert.ToString(dr["BTNumber"]);
                     tech_textBox.Text = (string)dr["Tech"];
                     vendor_textBox.Text = (string)dr["VendorName"];
                     poNumber_textBox.Text = (dr["PONumber"] == DBNull.Value) ? string.Empty : (string)dr["PONumber"];
@@ -157,7 +156,6 @@ namespace MEL_r811_18
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
                 conn.Open();
-
                 vend_query = "SELECT VendorID FROM Vendors WHERE VendorName = '" + vendor_textBox.Text + "'";
 
                 SqlCommand command = new SqlCommand(vend_query, conn);
@@ -183,7 +181,6 @@ namespace MEL_r811_18
                 }
 
                 dr_tech.Close();
-
                 dep_query = "SELECT DepartmentID FROM Department WHERE DepartmentName = '" + department_textBox.Text + "'";
 
                 SqlCommand command_dep = new SqlCommand(dep_query, conn);
@@ -207,16 +204,13 @@ namespace MEL_r811_18
                 {
                     updatedMach = (int?)dr_mach["MachineID"];
                 }
-
                 dr_mach.Close();
-
 
             }
 
             using (SqlConnection connection = new SqlConnection(conn_string))
             using (SqlCommand command = connection.CreateCommand())
             {
-
                 command.CommandText = "UPDATE PR SET DateIssued = @issued, DeliverTo = @deliver, PONumber = @po, VendorID = @vend, " +
                     "EmployeeID = @tech, DepartmentID = @dep, MachineID = @mach WHERE OrderID = " + id;
 
@@ -232,7 +226,7 @@ namespace MEL_r811_18
 
                 command.ExecuteNonQuery();
             }
-            Update_Details();
+            Update_Details(); 
         }
 
         private void Update_Details()
@@ -244,8 +238,6 @@ namespace MEL_r811_18
 
             if (checkBox1.Checked == true)
             {
-                MessageBox.Show("Date Update chekbox is checked, updating recieved status and due date.");
-
                 SqlConnection conn = new SqlConnection(conn_string);
                 SqlCommand cmd = new SqlCommand(q1, conn);
                 {
@@ -255,8 +247,6 @@ namespace MEL_r811_18
 
                     foreach (DataGridViewRow row in poDetails_datagridview.Rows)
                     {
-                        MessageBox.Show(row.Cells[9].Value.ToString());
-                        MessageBox.Show(dateTimePicker1.Value.ToString());
                         cmd.Parameters["@due"].Value = dateTimePicker1.Value;
                         cmd.Parameters["@rec"].Value = row.Cells[9].Value;
                         cmd.ExecuteNonQuery();                       
@@ -267,8 +257,6 @@ namespace MEL_r811_18
             }
             else if (checkBox1.Checked == false)
             {
-                MessageBox.Show("Date Update chekbox is not checked, updating recieved status only.");
-
                 SqlConnection conn = new SqlConnection(conn_string);
                 SqlCommand cmd = new SqlCommand(q2, conn);
                 {
@@ -277,7 +265,6 @@ namespace MEL_r811_18
 
                     foreach (DataGridViewRow row in poDetails_datagridview.Rows)
                     {
-                        MessageBox.Show(row.Cells[9].Value.ToString());
                         cmd.Parameters["@rec"].Value = row.Cells[9].Value;
                         cmd.ExecuteNonQuery();
                     }

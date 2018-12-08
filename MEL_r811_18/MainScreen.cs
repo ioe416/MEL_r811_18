@@ -43,7 +43,7 @@ namespace MEL_r811_18
             Fill_SelectVendor_ComboBox();
             Fill_SelectTech_ComboBox();
             Fill_OpenWO_DataGridView();
-            Fill_Email_ListView();
+            //Fill_Email_ListView();
         }
 
         private void OpenPO_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

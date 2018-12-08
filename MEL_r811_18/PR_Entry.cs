@@ -35,7 +35,7 @@ namespace MEL_r811_18
         public string mach;
         public string emp;
         public string deliver;
-        public int? machToAdd;
+        public object machToAdd;
 
         public int vendorId;
         public int departmentId;
@@ -162,6 +162,7 @@ namespace MEL_r811_18
         {
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
+                
                 machine_q = "SELECT MachineID FROM Machines WHERE BTNumber = '" + mach + "'";
                 conn.Open();
 
@@ -225,7 +226,7 @@ namespace MEL_r811_18
             string dep = dep_combo.Text;
             if (mach_combo.Text == "-Select Machine-")
             {
-                machToAdd = null;
+                machToAdd = 0;
             }
             else
             {

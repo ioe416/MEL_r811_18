@@ -280,7 +280,7 @@ namespace MEL_r811_18
             using (SqlConnection conn = new SqlConnection(conn_string))
             {
                 conn.Open();
-                orderDetails = "SELECT PR_Details.OrderDetailsID, PR_Details.OrderID, PR_Details.Quantity, PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, PR_Details.DueDate, PR_Details.Received " +
+                orderDetails = "SELECT PR_Details.OrderDetailsID, PR_Details.OrderID, PR_Details.Quantity, PR_Details.Unit, Parts.PartNumber, Parts.PartDescription, Parts.UnitPrice , PR_Details.DueDate, PR_Details.Received " +
                     "FROM Parts INNER JOIN PR_Details ON Parts.PartID = PR_Details.PartID " +
                     "WHERE PR.OrderID = " + id;
 
